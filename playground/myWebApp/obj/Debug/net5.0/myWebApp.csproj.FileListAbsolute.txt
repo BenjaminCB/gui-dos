@@ -9,7 +9,6 @@
 /home/bcb/git/gui-dos/playground/myWebApp/bin/Debug/net5.0/myWebApp.pdb
 /home/bcb/git/gui-dos/playground/myWebApp/bin/Debug/net5.0/myWebApp.Views.dll
 /home/bcb/git/gui-dos/playground/myWebApp/bin/Debug/net5.0/myWebApp.Views.pdb
-/home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.csprojAssemblyReference.cache
 /home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.GeneratedMSBuildEditorConfig.editorconfig
 /home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.AssemblyInfoInputs.cache
 /home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.AssemblyInfo.cs
@@ -38,3 +37,4 @@
 /home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.pdb
 /home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.genruntimeconfig.cache
 /home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.csproj.CopyComplete
+/home/bcb/git/gui-dos/playground/myWebApp/obj/Debug/net5.0/myWebApp.csproj.AssemblyReference.cache

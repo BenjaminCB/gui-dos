@@ -8,3 +8,12 @@
     <h1 class="display-4">Welcome</h1>
     <p>The time on the server is @DateTime.Now</p>
 </div>
+
+@foreach (var product in Model.Products)
+{
+    <div>
+        <h3>@product.Title</h3>
+        <p>@product.Description</p>
+        <img src="@product.Image">
+    </div>
+}
