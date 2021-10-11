@@ -15,14 +15,14 @@ namespace myWebApp.Pages
         private readonly ILogger<IndexModel> _logger;
 
         public IndexModel(ILogger<IndexModel> logger,
-            JsonProductService productService)
+            SqlProductService productService)
         {
             _logger = logger;
             ProductService = productService;
         }
 
-        public JsonProductService ProductService { get; }
-        public IEnumerable<Product> Products { get; private set; }
+        public SqlProductService ProductService { get; }
+        public List<Product> Products { get; private set; }
 
         public void OnGet()
         {

@@ -25,6 +25,8 @@ namespace myWebApp
         {
             services.AddRazorPages();
             services.AddTransient<JsonProductService>();
+            services.Add( new ServiceDescriptor(typeof(SqlProductService)
+                        , new SqlProductService(Configuration.GetConnectionString("DefaultConnection"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
