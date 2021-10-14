@@ -1,47 +1,40 @@
-using MySql.Data.MySqlClient;
 using myWebApp.Models;
 using System.Collections.Generic;
+using MySql.Data.MySqlClient;
 
 namespace myWebApp.Services
 {
-    public class SqlProductService
+    public class SqlProductService : SqlService, ISqlService<Product>
     {
-        public string ConnectionString { get; private set; }
+        public SqlProductService(string connectionString) : base(connectionString) {}
+        private string table { get; set; } = "product";
 
-        private MySqlConnection Con { get; set; }
-
-        public SqlProductService(string connectionString)
+        public List<Product> GetAll()
         {
-            ConnectionString = connectionString;
-            Con = new MySqlConnection(ConnectionString);
-            Con.Open();
+            string query = "SELECT * FROM " + table;
+            MySqlCommand cmd = new MySqlCommand(query, Con);
+            MySqlDataReader reader = cmd.ExecuteReader();
+
+            return Converter(reader);
         }
 
-        ~SqlProductService()
+        private List<Product> Converter(MySqlDataReader reader)
         {
-            Con.Close();
-        }
 
-        public List<Product> GetProducts()
-        {
-            List<Product> Products = new List<Product>();
-            string Query = "SELECT * FROM product";
-            MySqlCommand Cmd = new MySqlCommand(Query, Con);
+            List<Product> products = new List<Product>();
 
-            using (MySqlDataReader Reader = Cmd.ExecuteReader())
+            while (reader.Read())
             {
-                while (Reader.Read())
+
+                products.Add(new Product()
                 {
-                    Products.Add(new Product()
-                    {
-                        Title = Reader["title"].ToString(),
-                        Description = Reader["description"].ToString(),
-                        Image = Reader["image"].ToString()
-                    });
-                }
+                    Title = reader["title"].ToString(),
+                    Description = reader["description"].ToString(),
+                    Image = reader["image"].ToString()
+                });
             }
 
-            return Products;
+            return products;
         }
     }
 }

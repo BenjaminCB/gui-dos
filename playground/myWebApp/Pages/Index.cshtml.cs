@@ -26,7 +26,7 @@ namespace myWebApp.Pages
 
         public void OnGet()
         {
-            Products = ProductService.GetProducts();
+            Products = ProductService.GetAll();
         }
     }
 }
