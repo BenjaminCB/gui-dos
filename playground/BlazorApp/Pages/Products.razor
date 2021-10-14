@@ -1,0 +1,27 @@
+@page "/products"
+@using System.Collections.Generic
+@using BlazorApp.Models
+@using BlazorApp.Services
+@inject SqlProductService productService
+
+<h1>Products</h1>
+
+@foreach (var product in products)
+{
+    <div>
+        <h3>@product.Title</h3>
+        <p>@product.Description</p>
+        <img src="@product.Image">
+    </div>
+}
+
+@code
+{
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        products = productService.GetAll();
+    }
+}
