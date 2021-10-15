@@ -11,18 +11,13 @@ namespace BlazorApp.Services
 
         public List<Product> GetAll()
         {
-            List<Product> products = new List<Product>();
-
             // create command
             string query = "SELECT * FROM " + table;
             MySqlCommand cmd = new MySqlCommand(query, Con);
 
             // read data
-            MySqlDataReader reader = cmd.ExecuteReader();
-            products = Converter(reader);
-            reader.Close();
-
-            return products;
+            using MySqlDataReader reader = cmd.ExecuteReader();
+            return Converter(reader);
         }
 
         private List<Product> Converter(MySqlDataReader reader)
