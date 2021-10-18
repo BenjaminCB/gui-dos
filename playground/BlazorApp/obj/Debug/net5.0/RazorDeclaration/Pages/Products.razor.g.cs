@@ -115,11 +115,6 @@ using BlazorApp.Services;
  
     private List<Product> products;
 
-    /* protected override async Task OnInitializedAsync() */
-    /* { */
-    /*     await base.OnInitializedAsync(); */
-    /*     products = productService.GetAll(); */
-    /* } */
     protected override void OnInitialized()
     {
         products = productService.GetAll();
