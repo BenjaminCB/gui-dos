@@ -10,7 +10,6 @@
 /home/bcb/git/gui-dos/playground/BlazorApp/bin/Debug/net5.0/BlazorApp.pdb
 /home/bcb/git/gui-dos/playground/BlazorApp/bin/Debug/net5.0/BlazorApp.Views.dll
 /home/bcb/git/gui-dos/playground/BlazorApp/bin/Debug/net5.0/BlazorApp.Views.pdb
-/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.csprojAssemblyReference.cache
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.GeneratedMSBuildEditorConfig.editorconfig
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.AssemblyInfoInputs.cache
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.AssemblyInfo.cs
@@ -71,3 +70,6 @@
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/Products.razor.g.cs
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/Tree.razor.g.cs
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/Tree.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.csproj.AssemblyReference.cache
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/CounterPartialClass.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/CounterPartialClass.razor.g.cs

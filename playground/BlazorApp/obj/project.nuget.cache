@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "OJuLrBl2ONIiuMtWa0BZMcCoaHfwD6E4j20iRmheKX1dl2zzSiY/EIFYls0mSrDgih+Z3Ax19o1vEFSiKOu0PQ==",
+  "dgSpecHash": "KkTZImi1wSxy5IER7UefwwQqFpuDTtFULVKtf8Fq31rBTQLZyDURxSxD8G12lGpXrzwBaJzl4ex2sSyXQ3UiMg==",
   "success": true,
   "projectFilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/BlazorApp.csproj",
   "expectedPackageFiles": [
@@ -22,8 +22,7 @@
     "/home/bcb/.nuget/packages/system.security.permissions/4.7.0/system.security.permissions.4.7.0.nupkg.sha512",
     "/home/bcb/.nuget/packages/system.security.principal.windows/4.7.0/system.security.principal.windows.4.7.0.nupkg.sha512",
     "/home/bcb/.nuget/packages/system.text.encoding.codepages/4.4.0/system.text.encoding.codepages.4.4.0.nupkg.sha512",
-    "/home/bcb/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512",
-    "/home/bcb/.nuget/packages/microsoft.aspnetcore.app.ref/5.0.0/microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512"
+    "/home/bcb/.nuget/packages/system.windows.extensions/4.7.0/system.windows.extensions.4.7.0.nupkg.sha512"
   ],
   "logs": []
 }
