@@ -8,7 +8,7 @@
 
 @foreach (var product in products)
 {
-    <div>
+    <div @key="product">
         <h3>@product.Title</h3>
         <p>@product.Description</p>
         <img src="@product.Image">
