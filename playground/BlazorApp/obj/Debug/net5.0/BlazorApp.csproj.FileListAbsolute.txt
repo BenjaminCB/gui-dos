@@ -73,3 +73,5 @@
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.csproj.AssemblyReference.cache
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/CounterPartialClass.razor.g.cs
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/CounterPartialClass.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/Fragment.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/Fragment.razor.g.cs
