@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
 using BlazorApp.Data;
 using BlazorApp.Services;
 
@@ -30,8 +31,17 @@ namespace BlazorApp
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+
+            // old service with no ef core
             services.Add( new ServiceDescriptor(typeof(SqlProductService)
                         , new SqlProductService(Configuration.GetConnectionString("DefaultConnection"))));
+
+            // new service with ef core
+            var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
+            services.AddDbContextFactory<IsvaerftetDbContext>(opt =>
+                opt.UseSqlite(cs));
+            services.AddDbContext<IsvaerftetDbContext>(opt =>
+                opt.UseSqlite(cs));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

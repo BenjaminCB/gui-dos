@@ -102,6 +102,20 @@ using BlazorApp.Services;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+using BlazorApp.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+using Microsoft.EntityFrameworkCore;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/products")]
     public partial class Products : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -111,19 +125,37 @@ using BlazorApp.Services;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 19 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+#line 47 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
  
     private List<Product> products;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        products = productService.GetAll();
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            products = await ctx.Products.ToListAsync();
+        }
+    }
+
+    private async Task InsertProduct()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            ctx.Products.Add(new Product()
+                {
+                    Title = "Kujou Karen",
+                    Description = "Learns Haskell",
+                    Image = "https://raw.githubusercontent.com/laynH/Anime-Girls-Holding-Programming-Books/master/Haskell/Kujou_Karen_Learns_Haskell.png"
+                });
+            await ctx.SaveChangesAsync();
+        }
     }
 
 #line default
 #line hidden
 #nullable disable
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private SqlProductService productService { get; set; }
+        [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDbContextFactory<IsvaerftetDbContext> DbContextFactory { get; set; }
     }
 }
 #pragma warning restore 1591
