@@ -125,7 +125,7 @@ using Microsoft.EntityFrameworkCore;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 47 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+#line 45 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
  
     private List<Product> products;
 
@@ -154,7 +154,6 @@ using Microsoft.EntityFrameworkCore;
 #line default
 #line hidden
 #nullable disable
-        [global::Microsoft.AspNetCore.Components.InjectAttribute] private SqlProductService productService { get; set; }
         [global::Microsoft.AspNetCore.Components.InjectAttribute] private IDbContextFactory<IsvaerftetDbContext> DbContextFactory { get; set; }
     }
 }

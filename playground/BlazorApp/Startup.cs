@@ -32,10 +32,6 @@ namespace BlazorApp
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            // old service with no ef core
-            services.Add( new ServiceDescriptor(typeof(SqlProductService)
-                        , new SqlProductService(Configuration.GetConnectionString("DefaultConnection"))));
-
             // new service with ef core
             var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
             services.AddDbContextFactory<IsvaerftetDbContext>(opt =>
