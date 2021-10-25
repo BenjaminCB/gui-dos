@@ -6,6 +6,7 @@
 @using Microsoft.EntityFrameworkCore;
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
 
 <h1>Products</h1>
 
@@ -36,7 +37,7 @@
 }
 
 <div>
-    <button @onclick="InsertProduct">
+    <button @onclick="NavigateToProductsInsert">
         Add product
     </button>
 </div>
@@ -53,17 +54,8 @@
         }
     }
 
-    private async Task InsertProduct()
+    private void NavigateToProductsInsert()
     {
-        using (var ctx = DbContextFactory.CreateDbContext())
-        {
-            ctx.Products.Add(new Product()
-                {
-                    Title = "Kujou Karen",
-                    Description = "Learns Haskell",
-                    Image = "https://raw.githubusercontent.com/laynH/Anime-Girls-Holding-Programming-Books/master/Haskell/Kujou_Karen_Learns_Haskell.png"
-                });
-            await ctx.SaveChangesAsync();
-        }
+        NavMan.NavigateTo("products-insert");
     }
 }

@@ -82,42 +82,49 @@ using BlazorApp.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+#line 2 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor"
 using System.Collections.Generic;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+#line 3 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor"
 using BlazorApp.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+#line 4 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor"
 using BlazorApp.Services;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+#line 5 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor"
+using BlazorApp.Forms;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 6 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor"
 using BlazorApp.Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
+#line 7 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor"
 using Microsoft.EntityFrameworkCore;
 
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/products")]
-    public partial class Products : Microsoft.AspNetCore.Components.ComponentBase
+    [Microsoft.AspNetCore.Components.RouteAttribute("/products-insert")]
+    public partial class ProductsInsert : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
         protected override void BuildRenderTree(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder __builder)
@@ -125,21 +132,22 @@ using Microsoft.EntityFrameworkCore;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 46 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor"
- 
-    private List<Product> products;
+#line 35 "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor"
+       
+    private ProductForm productForm = new ProductForm();
 
-    protected override async Task OnInitializedAsync()
+    private async Task InsertProduct()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            products = await ctx.Products.ToListAsync();
+            ctx.Products.Add(new Product()
+                {
+                    Title = productForm.Name,
+                    Description = productForm.Description,
+                    Image = productForm.Image
+                });
+            await ctx.SaveChangesAsync();
         }
-    }
-
-    private void NavigateToProductsInsert()
-    {
-        NavMan.NavigateTo("products-insert");
     }
 
 #line default

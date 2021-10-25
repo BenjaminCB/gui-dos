@@ -1,0 +1,51 @@
+@page "/products-insert"
+@using System.Collections.Generic
+@using BlazorApp.Models
+@using BlazorApp.Services
+@using BlazorApp.Forms
+@using BlazorApp.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<EditForm Model="@productForm" OnValidSubmit="@InsertProduct">
+    <p>
+        <label>
+            Name:
+            <InputText @bind-Value="productForm.Name" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Description:
+            <InputTextArea @bind-Value="productForm.Description" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Image (url):
+            <InputText @bind-value="productForm.Image" />
+        </label>
+    </p>
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private ProductForm productForm = new ProductForm();
+
+    private async Task InsertProduct()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            ctx.Products.Add(new Product()
+                {
+                    Title = productForm.Name,
+                    Description = productForm.Description,
+                    Image = productForm.Image
+                });
+            await ctx.SaveChangesAsync();
+        }
+    }
+}
