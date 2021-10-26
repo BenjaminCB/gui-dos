@@ -4,12 +4,25 @@
 @using BlazorApp.Services
 @using BlazorApp.Forms
 @using BlazorApp.Data
-@using Microsoft.EntityFrameworkCore;
+@using Microsoft.EntityFrameworkCore
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
+<h1>Create new product</h1>
+
+@if (productForm == null)
+{
+    <p>is null</p>
+}
+else
+{
+    <p>is not null</P>
+}
+
 <EditForm Model="@productForm" OnValidSubmit="@InsertProduct">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     <p>
         <label>
             Name:
