@@ -104,8 +104,10 @@
 /home/bcb/git/gui-dos/playground/BlazorApp/bin/Debug/net5.0/runtimes/win-arm64/native/e_sqlite3.dll
 /home/bcb/git/gui-dos/playground/BlazorApp/bin/Debug/net5.0/runtimes/win-x64/native/e_sqlite3.dll
 /home/bcb/git/gui-dos/playground/BlazorApp/bin/Debug/net5.0/runtimes/win-x86/native/e_sqlite3.dll
-/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.csproj.AssemblyReference.cache
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/ProductsInsert.razor.g.cs
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/ProductsInsert.razor.g.cs
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/FormExample.razor.g.cs
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/FormExample.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.csprojAssemblyReference.cache
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/Isvaerftet.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/Isvaerftet.razor.g.cs

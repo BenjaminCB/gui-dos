@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     <link href="BlazorApp.styles.css" rel="stylesheet" />
+    <script src="~/script.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=&libraries=places&callback=initMap">
+    </script>
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
@@ -33,3 +38,4 @@
     <script src="_framework/blazor.server.js"></script>
 </body>
 </html>
+

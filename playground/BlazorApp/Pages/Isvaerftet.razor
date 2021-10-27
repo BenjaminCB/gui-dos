@@ -1,0 +1,52 @@
+@page "/isvaerftet"
+
+@inject IJSRuntime JSRuntime
+
+<center>
+    <img src="http://isvaerftet.dk/wp-content/uploads/2021/06/isvaerftet-logo-1536x607.png" width="640" height="240">
+
+    <p>
+        Velkommen til IsVærftet.<br>
+        Hos os kan du nyde kvalitetsis fra Ryå Is, kaffe fra Peter Larsen,<br>
+        men der er meget mere.  IsVærftet forhandler lækkerier,<br>
+        specialiteter, øl, vin og saft.
+    </p>
+
+    <p>
+        Hvis du mangler en gavekurv, bare vil forkæle dig selv eller dine<br>
+        gæster har IsVærftet et godt og bredt sortiment som er udvalgt på<br>
+        kvalitet, for at sikre at der er noget for enhver smag
+    </p>
+
+    <p style="font-weight:bold;">
+        Åbningstider<br>
+        Mandag:  Lukket<br>
+        Tirsdag:  11-18<br>
+        Onsdag:  11-18<br>
+        Torsdag: 11-18<br>
+        Fredag:   11-18<br>
+        Lørdag:   11-18<br>
+        Søndag:  11-18
+    </p>
+
+
+
+    <p>
+        <strong>Isværftet; Stjernepladsen 43, 9000 Aalborg</strong><br>
+        Mail: hej@isvaerftet.dk Mobil: 22907778
+    </p>
+
+    <div id="map" style="height:500px;width:100%;">
+    </div>
+</center>
+
+
+@code{
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initMap", null);
+        }
+    }
+}
