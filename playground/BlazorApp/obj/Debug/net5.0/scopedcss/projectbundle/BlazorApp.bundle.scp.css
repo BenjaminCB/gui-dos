@@ -1,5 +1,10 @@
 @import '';
 
+/* _content/BlazorApp/Pages/Example.razor.rz.scp.css */
+h1[b-mfsdmaac5a] {
+    color: red;
+    font-family: Tahoma, Geneva, Verdana, sans-serif;
+}
 /* _content/BlazorApp/Shared/MainLayout.razor.rz.scp.css */
 .page[b-3ij3p7wwc4] {
     position: relative;

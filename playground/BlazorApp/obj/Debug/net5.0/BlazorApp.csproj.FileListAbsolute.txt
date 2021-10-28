@@ -111,3 +111,8 @@
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/BlazorApp.csprojAssemblyReference.cache
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/Isvaerftet.razor.g.cs
 /home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/Isvaerftet.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Shared/NothingLayout.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Shared/NothingLayout.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/RazorDeclaration/Pages/Example.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/Razor/Pages/Example.razor.g.cs
+/home/bcb/git/gui-dos/playground/BlazorApp/obj/Debug/net5.0/scopedcss/Pages/Example.razor.rz.scp.css
