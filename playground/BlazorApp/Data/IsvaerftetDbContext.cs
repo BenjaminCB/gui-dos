@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using BlazorApp.Models;
 
 namespace BlazorApp.Data
 {
-    public class IsvaerftetDbContext : DbContext
+    public class IsvaerftetDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
