@@ -1,0 +1,66 @@
+@page "/products"
+@using System.Collections.Generic
+@using BlazorApp.Models
+@using BlazorApp.Services
+@using BlazorApp.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<h1>Products</h1>
+
+@if (products == null)
+{
+    <div>
+        Loading...
+    </div>
+}
+
+@if (products != null && products.Count == 0)
+{
+    <div>
+        No products found...
+    </div>
+}
+
+@if (products != null)
+{
+    @foreach (var product in products)
+    {
+        <div @key="product">
+            <h3>@product.Title</h3>
+            <p>@product.Description</p>
+            <img src="@product.Image">
+        </div>
+    }
+}
+
+<div>
+    <button @onclick="NavigateToProductsInsert">
+        Add product
+    </button>
+
+    <button @onclick="NavigateToProductsDelete">
+        Remove product
+    </button>
+</div>
+
+@code
+{
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            products = await ctx.Products.ToListAsync();
+        }
+    }
+
+    private void NavigateToProductsInsert() =>
+        NavMan.NavigateTo("products-insert");
+
+    private void NavigateToProductsDelete() =>
+        NavMan.NavigateTo("products-delete");
+}
