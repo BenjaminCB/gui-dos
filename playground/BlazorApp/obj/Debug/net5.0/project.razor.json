@@ -1,5 +1,5 @@
 {
-  "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/BlazorApp.csproj",
+  "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/BlazorApp.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "5.0",
@@ -107,6 +107,39 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorApp.Pages.FetchData",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -941552604,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.FormExample",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "FormExample"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.FormExample"
+        }
+      },
+      {
+        "HashCode": 278408148,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.FormExample",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Pages.FormExample"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.FormExample",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -236,6 +269,39 @@
         }
       },
       {
+        "HashCode": 1062932587,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.Isvaerftet",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Isvaerftet"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.Isvaerftet"
+        }
+      },
+      {
+        "HashCode": -1718670640,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.Isvaerftet",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Pages.Isvaerftet"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.Isvaerftet",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
         "HashCode": 1612685168,
         "Kind": "Components.Component",
         "Name": "BlazorApp.Pages.Products",
@@ -265,6 +331,72 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorApp.Pages.Products",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1272994370,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.ProductsDelete",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProductsDelete"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.ProductsDelete"
+        }
+      },
+      {
+        "HashCode": -623761010,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.ProductsDelete",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Pages.ProductsDelete"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.ProductsDelete",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": -1162513965,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.ProductsInsert",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "ProductsInsert"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.ProductsInsert"
+        }
+      },
+      {
+        "HashCode": -81349908,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Pages.ProductsInsert",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Pages.ProductsInsert"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Pages.ProductsInsert",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -355,35 +487,35 @@
         }
       },
       {
-        "HashCode": -1162513965,
+        "HashCode": 2043310389,
         "Kind": "Components.Component",
-        "Name": "BlazorApp.Pages.ProductsInsert",
+        "Name": "BlazorApp.Pages.Example",
         "AssemblyName": "BlazorApp",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "ProductsInsert"
+            "TagName": "Example"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Pages.ProductsInsert"
+          "Common.TypeName": "BlazorApp.Pages.Example"
         }
       },
       {
-        "HashCode": -81349908,
+        "HashCode": 1323105839,
         "Kind": "Components.Component",
-        "Name": "BlazorApp.Pages.ProductsInsert",
+        "Name": "BlazorApp.Pages.Example",
         "AssemblyName": "BlazorApp",
         "CaseSensitive": true,
         "TagMatchingRules": [
           {
-            "TagName": "BlazorApp.Pages.ProductsInsert"
+            "TagName": "BlazorApp.Pages.Example"
           }
         ],
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
-          "Common.TypeName": "BlazorApp.Pages.ProductsInsert",
+          "Common.TypeName": "BlazorApp.Pages.Example",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -417,6 +549,102 @@
         "Metadata": {
           "Runtime.Name": "Components.IComponent",
           "Common.TypeName": "BlazorApp.App",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1774100878,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Shared.NothingLayout",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "NothingLayout"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "Body",
+            "TypeName": "Microsoft.AspNetCore.Components.RenderFragment",
+            "Documentation": "\n            <summary>\n            Gets the content to be rendered inside the layout.\n            </summary>\n        ",
+            "Metadata": {
+              "Common.PropertyName": "Body",
+              "Components.ChildContent": "True"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Shared.NothingLayout"
+        }
+      },
+      {
+        "HashCode": 594254272,
+        "Kind": "Components.Component",
+        "Name": "BlazorApp.Shared.NothingLayout",
+        "AssemblyName": "BlazorApp",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "BlazorApp.Shared.NothingLayout"
+          }
+        ],
+        "BoundAttributes": [
+          {
+            "Kind": "Components.Component",
+            "Name": "Body",
+            "TypeName": "Microsoft.AspNetCore.Components.RenderFragment",
+            "Documentation": "\n            <summary>\n            Gets the content to be rendered inside the layout.\n            </summary>\n        ",
+            "Metadata": {
+              "Common.PropertyName": "Body",
+              "Components.ChildContent": "True"
+            }
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.IComponent",
+          "Common.TypeName": "BlazorApp.Shared.NothingLayout",
+          "Components.NameMatch": "Components.FullyQualifiedNameMatch"
+        }
+      },
+      {
+        "HashCode": 1298977629,
+        "Kind": "Components.ChildContent",
+        "Name": "BlazorApp.Shared.NothingLayout.Body",
+        "AssemblyName": "BlazorApp",
+        "Documentation": "\n            <summary>\n            Gets the content to be rendered inside the layout.\n            </summary>\n        ",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Body",
+            "ParentTag": "NothingLayout"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.None",
+          "Common.TypeName": "BlazorApp.Shared.NothingLayout.Body",
+          "Components.IsSpecialKind": "Components.ChildContent"
+        }
+      },
+      {
+        "HashCode": -1592239604,
+        "Kind": "Components.ChildContent",
+        "Name": "BlazorApp.Shared.NothingLayout.Body",
+        "AssemblyName": "BlazorApp",
+        "Documentation": "\n            <summary>\n            Gets the content to be rendered inside the layout.\n            </summary>\n        ",
+        "CaseSensitive": true,
+        "TagMatchingRules": [
+          {
+            "TagName": "Body",
+            "ParentTag": "BlazorApp.Shared.NothingLayout"
+          }
+        ],
+        "Metadata": {
+          "Runtime.Name": "Components.None",
+          "Common.TypeName": "BlazorApp.Shared.NothingLayout.Body",
+          "Components.IsSpecialKind": "Components.ChildContent",
           "Components.NameMatch": "Components.FullyQualifiedNameMatch"
         }
       },
@@ -16210,83 +16438,138 @@
   "RootNamespace": "BlazorApp",
   "Documents": [
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Shared/MainLayout.razor",
-      "TargetPath": "Shared\\MainLayout.razor",
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Example.razor",
+      "TargetPath": "Pages\\Example.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Splat.razor",
-      "TargetPath": "Pages\\Splat.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Counter.razor",
-      "TargetPath": "Pages\\Counter.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Index.razor",
-      "TargetPath": "Pages\\Index.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/FetchData.razor",
-      "TargetPath": "Pages\\FetchData.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Tree.razor",
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Tree.razor",
       "TargetPath": "Pages\\Tree.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/CounterPartialClass.razor",
-      "TargetPath": "Pages\\CounterPartialClass.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Error.cshtml",
-      "TargetPath": "Pages\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Products.razor",
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Products.razor",
       "TargetPath": "Pages\\Products.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Shared/SurveyPrompt.razor",
-      "TargetPath": "Shared\\SurveyPrompt.razor",
-      "FileKind": "component"
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Shared/_LoginPartial.cshtml",
+      "TargetPath": "Pages\\Shared\\_LoginPartial.cshtml",
+      "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor",
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/_ViewStart.cshtml",
+      "TargetPath": "Pages\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/ProductsInsert.razor",
       "TargetPath": "Pages\\ProductsInsert.razor",
       "FileKind": "component"
     },
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/Fragment.razor",
-      "TargetPath": "Pages\\Fragment.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Shared/NavMenu.razor",
-      "TargetPath": "Shared\\NavMenu.razor",
-      "FileKind": "component"
-    },
-    {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/Pages/_Host.cshtml",
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/_Host.cshtml",
       "TargetPath": "Pages\\_Host.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/_Imports.razor",
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/FormExample.razor",
+      "TargetPath": "Pages\\FormExample.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Fragment.razor",
+      "TargetPath": "Pages\\Fragment.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Shared/_ValidationScriptsPartial.cshtml",
+      "TargetPath": "Pages\\Shared\\_ValidationScriptsPartial.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/FetchData.razor",
+      "TargetPath": "Pages\\FetchData.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Isvaerftet.razor",
+      "TargetPath": "Pages\\Isvaerftet.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Shared/NavMenu.razor",
+      "TargetPath": "Shared\\NavMenu.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/App.razor",
+      "TargetPath": "App.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Shared/MainLayout.razor",
+      "TargetPath": "Shared\\MainLayout.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Shared/SurveyPrompt.razor",
+      "TargetPath": "Shared\\SurveyPrompt.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/_ViewImports.cshtml",
+      "TargetPath": "Pages\\_ViewImports.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Shared/NothingLayout.razor",
+      "TargetPath": "Shared\\NothingLayout.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Counter.razor",
+      "TargetPath": "Pages\\Counter.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/CounterPartialClass.razor",
+      "TargetPath": "Pages\\CounterPartialClass.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/ProductsDelete.razor",
+      "TargetPath": "Pages\\ProductsDelete.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Splat.razor",
+      "TargetPath": "Pages\\Splat.razor",
+      "FileKind": "component"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Areas/Identity/Pages/_ViewStart.cshtml",
+      "TargetPath": "Areas\\Identity\\Pages\\_ViewStart.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Shared/_Layout.cshtml",
+      "TargetPath": "Pages\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Error.cshtml",
+      "TargetPath": "Pages\\Error.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/_Imports.razor",
       "TargetPath": "_Imports.razor",
       "FileKind": "componentImport"
     },
     {
-      "FilePath": "/home/bcb/git/gui-dos/playground/BlazorApp/App.razor",
-      "TargetPath": "App.razor",
+      "FilePath": "/Users/tor/Repos/gui-dos/playground/BlazorApp/Pages/Index.razor",
+      "TargetPath": "Pages\\Index.razor",
       "FileKind": "component"
     }
   ],
