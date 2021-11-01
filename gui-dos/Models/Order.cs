@@ -12,7 +12,7 @@ namespace gui_dos.Models
         public OrderStatus Status { get; set; }
         public int Price { get; set; }
         public DateTime DateOrdered { get; set; }
-        public DateTime Deadline { get; set; }
+        public DateTime DateDeadline { get; set; }
         public string Comment { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
