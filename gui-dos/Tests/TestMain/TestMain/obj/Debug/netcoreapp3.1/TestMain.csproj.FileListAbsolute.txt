@@ -1,0 +1,17 @@
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\TestMain.exe
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\TestMain.deps.json
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\TestMain.runtimeconfig.json
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\TestMain.runtimeconfig.dev.json
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\TestMain.dll
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\TestMain.pdb
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\FsCheck.dll
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\bin\Debug\netcoreapp3.1\FSharp.Core.dll
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.csproj.AssemblyReference.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.AssemblyInfoInputs.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.AssemblyInfo.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.csproj.CoreCompileInputs.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.csproj.CopyComplete
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.dll
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.pdb
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\Tests\TestMain\TestMain\obj\Debug\netcoreapp3.1\TestMain.genruntimeconfig.cache

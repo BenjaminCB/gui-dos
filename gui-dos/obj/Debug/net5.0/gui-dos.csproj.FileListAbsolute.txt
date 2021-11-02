@@ -1,0 +1,16 @@
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.csproj.AssemblyReference.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.AssemblyInfoInputs.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.AssemblyInfo.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.csproj.CoreCompileInputs.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.RazorComponent.input.cache
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\App.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\Pages\Counter.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\Pages\FetchData.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\Pages\Index.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\Shared\SurveyPrompt.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\_Imports.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\Shared\MainLayout.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\RazorDeclaration\Shared\NavMenu.razor.g.cs
+C:\Users\nikol\OneDrive\Documents\gui-dos\gui-dos\obj\Debug\net5.0\gui-dos.RazorComponent.output.cache
