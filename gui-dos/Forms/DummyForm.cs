@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazorApp.Forms
+namespace gui_dos.Forms
 {
-    public class ProductForm
+    public class DummyForm
     {
         [Required]
         [StringLength(10, ErrorMessage = "Name too long max length is 10")]

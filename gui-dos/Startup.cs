@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using gui_dos.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace gui_dos
 {
@@ -29,6 +30,12 @@ namespace gui_dos
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+
+            var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
+            services.AddDbContextFactory<IsvaerftetDbContext>(opt =>
+                opt.UseSqlite(cs));
+            services.AddDbContext<IsvaerftetDbContext>(opt =>
+                opt.UseSqlite(cs));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

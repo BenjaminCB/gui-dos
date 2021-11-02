@@ -1,0 +1,52 @@
+@page "/dummy-insert"
+@using System.Collections.Generic
+@using gui_dos.Models
+@using gui_dos.Forms
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<h1>Create new dummy data</h1>
+
+<h2>@status</h2>
+
+<EditForm Model="@dummyForm" OnValidSubmit="@InsertProduct">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <InputText @bind-Value=dummyForm.Name />
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <InputTextArea @bind-Value=dummyForm.Description />
+    </div>
+    <div class="form-group">
+        <label for="Image">Image</label>
+        <InputText @bind-Value=dummyForm.Image />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private DummyForm dummyForm = new DummyForm();
+    private string status = "not submitted";
+
+    private async Task InsertProduct()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            ctx.Dummys.Add(new DummyModel()
+                {
+                    Title = dummyForm.Name,
+                    Description = dummyForm.Description,
+                    Images = new List<string>() {dummyForm.Image}
+                });
+            await ctx.SaveChangesAsync();
+        }
+        NavMan.NavigateTo("/dummy-show");
+    }
+}
