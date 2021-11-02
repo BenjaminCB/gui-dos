@@ -1,3 +1,5 @@
-# gui-dos
+# GUI-DOS
+Online Gift-Basket ordering system.
 
-gui-dos
+## Packages
+FsCheck: dotnet add package FsCheck --version 2.16.3
