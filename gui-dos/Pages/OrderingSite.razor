@@ -16,7 +16,42 @@ else
         <li><a href="">4. page</a></li>
     </ul>
 
-    <img src="" alt="Logo" width="0" height="0">
+    <!-- Aner ikke hvordan man laver en slider uden at skulle hente alt muligt gøjl + virker ik  -->
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Range Slider</h1>
+        </div>
+
+        <div data-role="main" class="ui-content">
+            <form method="post" action="/action_page_post.php">
+                <div data-role="rangeslider">
+                    <label for="price-min">Price:</label>
+                    <input type="range" name="price-min" id="price-min" value="200" min="0" max="1000">
+                    <label for="price-max">Price:</label>
+                    <input type="range" name="price-max" id="price-max" value="800" min="0" max="1000">
+                </div>
+                <input type="submit" data-inline="true" value="Submit">
+                <p>The range slider can be useful for allowing users to select a specific price range when browsing products.</p>
+            </form>
+        </div>
+    </div>
+
+    <div class="product-list">
+        <div class="product">
+            <div class="product-img">
+                <a href="https://youtube.com">
+                    <img class ="NAVN" src="Images/Monkey.jpg" alt="Logo" width="400" height="300">
+                </a>
+            </div>
+            <div class="details">
+                <div>
+                    <a>Her er et navn og en pris 200,- kr</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
 }
 
