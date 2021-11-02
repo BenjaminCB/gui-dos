@@ -1,7 +1,7 @@
 ﻿@page "/gavekurv"
 
 @using gui_dos.Data
-@using Syncfusion.Blazor.Inputs
+@using System.Collections
 
 @if (false)
 {
@@ -16,31 +16,20 @@ else
         <li><a href="">4. page</a></li>
     </ul>
 
-    <!-- Aner ikke hvordan man laver en slider uden at skulle hente alt muligt gøjl + virker ik  -->
-    <div data-role="page">
-        <div data-role="header">
-            <h1>Range Slider</h1>
-        </div>
-
-        <div data-role="main" class="ui-content">
-            <form method="post" action="/action_page_post.php">
-                <div data-role="rangeslider">
-                    <label for="price-min">Price:</label>
-                    <input type="range" name="price-min" id="price-min" value="200" min="0" max="1000">
-                    <label for="price-max">Price:</label>
-                    <input type="range" name="price-max" id="price-max" value="800" min="0" max="1000">
-                </div>
-                <input type="submit" data-inline="true" value="Submit">
-                <p>The range slider can be useful for allowing users to select a specific price range when browsing products.</p>
-            </form>
+    <div class="row">
+        <div class="col-xl-6">
+            <a>Pris</a>
+            <RadzenSlider Range="true" @bind-Value=@values TValue="IEnumerable<int>" Change=@(args => OnChange(args, "Range Slider")) />
+            <br /> <br />
         </div>
     </div>
+
 
     <div class="product-list">
         <div class="product">
             <div class="product-img">
                 <a href="https://youtube.com">
-                    <img class ="NAVN" src="Images/Monkey.jpg" alt="Logo" width="400" height="300">
+                    <img class="NAVN" src="Images/Monkey.jpg" alt="Logo" width="400" height="300">
                 </a>
             </div>
             <div class="details">
@@ -55,3 +44,15 @@ else
 
 }
 
+@code {
+    IEnumerable<int> values = new int[] { 14, 78 };
+    IEnumerable<int> negativeValues = new int[] { -100, 100 };
+    int value = 67;
+    int negativeValue = 0;
+    int valueWithStep = 30;
+
+    void OnChange(dynamic value, string name)
+    {
+        var str = value is IEnumerable ? string.Join(", ", value) : value;
+    }
+}
