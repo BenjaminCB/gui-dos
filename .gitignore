@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 playground/BlazorApp/bin/Debug/net5.0/BlazorApp.deps.json
 playground/BlazorApp/bin/Debug/net5.0/BlazorApp.dll
 playground/BlazorApp/bin/Debug/net5.0/BlazorApp.exe
@@ -118,3 +119,7 @@ gui-dos/bin/Debug/net5.0/FSharp.Core.dll
 gui-dos/bin/Debug/net5.0/gui-dos.runtimeconfig.dev.json
 gui-dos/obj/Debug/net5.0/gui-dos.TagHelpers.input.cache
 gui-dos/obj/Debug/net5.0/gui-dos.csproj.AssemblyReference.cache
+=======
+bin/
+obj/
+>>>>>>> b7f214a1a6dab96167cd6646fcbf01788607674c
