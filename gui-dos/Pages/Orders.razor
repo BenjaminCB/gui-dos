@@ -1,0 +1,54 @@
+@page "/orders"
+
+@using System.Collections.Generic
+@using gui_dos.Models
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<h1>Products</h1>
+
+@if (orders == null)
+{
+    <div>
+        Loading...
+    </div>
+}
+
+@if (orders != null && orders.Count == 0)
+{
+    <div>
+        No orders found...
+    </div>
+}
+
+@if (orders != null)
+{
+    @foreach (var order in orders)
+    {
+        <div @key="order">
+            @order.ToString()
+        </div>
+    }
+}
+
+@code
+{
+    private List<Order> orders;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            orders = await ctx.Orders.ToListAsync();
+        }
+    }
+
+    private void NavigateToProductsInsert() =>
+        NavMan.NavigateTo("products-insert");
+
+    private void NavigateToProductsDelete() =>
+        NavMan.NavigateTo("products-delete");
+}

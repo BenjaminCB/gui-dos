@@ -1,0 +1,52 @@
+@page "/dummy-show"
+@using System.Collections.Generic
+@using gui_dos.Models
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<h1>Dummy data</h1>
+
+@if (dummys == null)
+{
+    <div>
+        Loading...
+    </div>
+}
+
+@if (dummys != null && dummys.Count == 0)
+{
+    <div>
+        No dummys found...
+    </div>
+}
+
+@if (dummys != null)
+{
+    @foreach (var dummy in dummys)
+    {
+        <div @key="dummy">
+            <h3>@dummy.Title</h3>
+            <p>@dummy.Description</p>
+            @foreach (string img in dummy.Images)
+            {
+                <img src= "@img">
+            }
+        </div>
+    }
+}
+
+@code
+{
+    private List<DummyModel> dummys;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            dummys = await ctx.Dummys.ToListAsync();
+        }
+    }
+}
