@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\gui-dos\\Tests\\TestMain\\TestMain\\TestMain.csproj": {}
+    "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\test\\TestMain\\TestMain\\TestMain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\gui-dos\\Tests\\TestMain\\TestMain\\TestMain.csproj": {
+    "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\test\\TestMain\\TestMain\\TestMain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\gui-dos\\Tests\\TestMain\\TestMain\\TestMain.csproj",
+        "projectUniqueName": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\test\\TestMain\\TestMain\\TestMain.csproj",
         "projectName": "TestMain",
-        "projectPath": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\gui-dos\\Tests\\TestMain\\TestMain\\TestMain.csproj",
+        "projectPath": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\test\\TestMain\\TestMain\\TestMain.csproj",
         "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\gui-dos\\Tests\\TestMain\\TestMain\\obj\\",
+        "outputPath": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\test\\TestMain\\TestMain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",

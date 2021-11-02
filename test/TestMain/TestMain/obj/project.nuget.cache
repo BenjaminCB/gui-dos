@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IzuI4YC9izjyqYiuyhet+nJWQJB7RAOcKE15Vc7ZJLqM4FxX41ARMNkiPxx2L3ysDJ8M7fBeeEJZBO+4Yiboew==",
+  "dgSpecHash": "RT0d+sgeDYJ5mT8JYQodI6GiC0bk13MiepIesuTjCEXfQ1Z0AcYMa1YJOgHwoK9QcZT+8UA4i2kWORw3Oy3qgg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\gui-dos\\Tests\\TestMain\\TestMain\\TestMain.csproj",
+  "projectFilePath": "C:\\Users\\nikol\\OneDrive\\Documents\\gui-dos\\test\\TestMain\\TestMain\\TestMain.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\nikol\\.nuget\\packages\\fscheck\\2.16.3\\fscheck.2.16.3.nupkg.sha512",
     "C:\\Users\\nikol\\.nuget\\packages\\fsharp.core\\4.2.3\\fsharp.core.4.2.3.nupkg.sha512",
