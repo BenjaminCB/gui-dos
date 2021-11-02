@@ -9,5 +9,4 @@ namespace gui_dos.Models
         Finished,
         Delivered
     }
-
 }

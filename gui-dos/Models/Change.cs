@@ -29,7 +29,7 @@ namespace gui_dos.Models
         ///<summary>Converts the Change object to a string. </summary>
         public override string ToString()
         {
-            return $"{ChangeMade} was changed at {Date} by {Employee.Username}";
+            return $"{ChangeMade} was changed at {Date.ToShortDateString()} by {Employee.Username}";
         }
     }
 }
