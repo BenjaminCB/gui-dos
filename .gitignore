@@ -2,3 +2,4 @@ bin/
 obj/
 Debug/
 net5.0/
+.vs/
