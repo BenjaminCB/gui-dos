@@ -92,3 +92,5 @@
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/Razor/Pages/DummyShow.razor.g.cs
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/RazorDeclaration/Pages/DummyDelete.razor.g.cs
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/Razor/Pages/DummyDelete.razor.g.cs
+/home/bcb/git/gui-dos/gui-dos/bin/Debug/net5.0/FsCheck.dll
+/home/bcb/git/gui-dos/gui-dos/bin/Debug/net5.0/FSharp.Core.dll
