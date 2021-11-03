@@ -1,3 +1,22 @@
-.row[b-md6k7013el] {
-    color: green;
+.filter-row[b-md6k7013el] {
+    width: 18%;
+    float: left;
+    background-color: #309D9B;
+}
+
+.product[b-md6k7013el] {
+    width: 72%;
+    float: right;
+    background-color: #309D9B;
+}
+
+.container[b-md6k7013el]{
+    background-color: #309D9B;
+
+}
+.page[b-md6k7013el]{
+    background-color: #309D9B;
+}
+.product-page-wrapper[b-md6k7013el]{
+    padding-top: 2vh;
 }

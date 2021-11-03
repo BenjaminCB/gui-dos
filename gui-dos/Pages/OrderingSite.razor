@@ -9,36 +9,42 @@
 }
 else
 {
-    <div class="row">
-        <div class="col-xl-6">
-            <a>Pris</a>
-            <RadzenSlider Range="true" @bind-Value=@values TValue="IEnumerable<int>" Change=@(args => OnChange(args, "Range Slider")) />
-            <br /> <a>Her er de valgte vaerdier</a> 
-                   <p> @JoinVal </p>
-            <br />
+<div class="container">
+    <div class="product-page-wrapper">
+
+        <div class="filter-row">
+            <div class="col-xl-6">
+                <a>Pris</a>
+                <RadzenSlider Range="true" @bind-Value=@values TValue="IEnumerable<int>" Change=@(args => OnChange(args, "Range Slider")) />
+                <br /> <a>Her er de valgte vaerdier</a>
+                <p> @JoinVal </p>
+                <br />
+            </div>
+        </div>
+
+
+        <div class="product-list">
+            <div class="product">
+                <div class="product-img">
+                    <a href="https://youtube.com">
+                        <img class="NAVN" src="Images/Monkey.jpg" alt="Logo" width="400" height="300">
+                    </a>
+                </div>
+                <div class="details">
+                    <div class="navn">
+                        <a>Her er et navn og en pris</a>
+                    </div>
+                    <div class="price">
+                        <a>200,- kr</a>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
 
-
-    <div class="product-list">
-        <div class="product">
-            <div class="product-img">
-                <a href="https://youtube.com">
-                    <img class="NAVN" src="Images/Monkey.jpg" alt="Logo" width="400" height="300">
-                </a>
-            </div>
-            <div class="details">
-                <div class="navn">
-                    <a>Her er et navn og en pris</a>
-                </div>
-                <div class="price">
-                    <a>200,- kr</a>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
+</div>
 
 }
 
