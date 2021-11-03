@@ -2,4 +2,7 @@
 Online Gift-Basket ordering system.
 
 ## Packages
-FsCheck: dotnet add package FsCheck --version 2.16.3
+|Package     |.NET CLI.                          |
+|------------|-----------------------------------|
+|FsCheck     |dotnet add FsCheck --version 2.16.3|
+|------------|-----------------------------------|
