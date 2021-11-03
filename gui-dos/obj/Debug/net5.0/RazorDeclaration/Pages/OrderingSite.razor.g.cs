@@ -8,7 +8,6 @@ namespace gui_dos.Pages
 {
     #line hidden
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
@@ -105,7 +104,7 @@ using gui_dos.Data;
 #nullable disable
 #nullable restore
 #line 4 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
-using System.Collections;
+using System.Collections.Generic;
 
 #line default
 #line hidden
@@ -119,24 +118,58 @@ using System.Collections;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 51 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
+#line 37 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
        
-    // https://blazor.radzen.com/slider
+                // https://blazor.radzen.com/slider
+                static int start = 14;
+                static int end = 78;
+                IEnumerable<int> values = new int[] { start, end };
+                IEnumerable<int> negativeValues = new int[] { -100, 100 };
+                //int value = 67;
+                //int negativeValue = 0;
+                //int valueWithStep = 30;
+                string[] Val;
+                string JoinVal = $"Pris mellem {start},- og {end},-";
 
-    IEnumerable<int> values = new int[] { 14, 78 };
-    IEnumerable<int> negativeValues = new int[] { -100, 100 };
-    //int value = 67;
-    //int negativeValue = 0;
-    //int valueWithStep = 30;
-    string[] Val;
-    string JoinVal = $"Pris mellem {14},- og {78},-";
+                void OnChange(dynamic value, string name)
+                {
+                    var str = value is IEnumerable<int> ? string.Join(", ", value) : value;
+                    Val = str.Split(",");
+                    JoinVal = $"Pris mellem {Val[0]},- og {Val[1]},-";
+                }
 
-    void OnChange(dynamic value, string name)
-    {
-        var str = value is IEnumerable ? string.Join(", ", value) : value;
-        Val = str.Split(",");
-        JoinVal = $"Pris mellem {Val[0]},- og {Val[1]},-";
-    }
+    public class Product
+            {
+                public int ProductId { get; set; }
+                public int Price { get; set; }
+                public string Title { get; set; }
+                public string Description { get; set; }
+                public string Image { get; set; }
+
+                public Product(int id, int price, string Title, string D, string I) {
+                    this.ProductId = id;
+                    this.Title = Title;
+                    this.Description = D;
+                    this.Image = I;
+                }
+
+                public Product()
+                {
+                }
+            }
+            public class Content
+            {
+                public string content = "";
+            }
+
+            static Product a = new Product { ProductId = 1, Price = 1, Title = "a", Description = "b", Image = "c" };
+            static Product b = new Product (1, 20, "a", "b", "c");
+            static Product c = new Product (1, 300, "a", "b", "c");
+
+            public static List<Product> Products = new List<Product>{a, b, c };
+            public static List<Content> Conten = new List<Content> {};
+
+            
 
 #line default
 #line hidden
