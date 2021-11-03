@@ -1,6 +1,9 @@
 @import '';
 
 /* _content/gui-dos/Pages/OrderingSite.razor.rz.scp.css */
+.row[b-md6k7013el] {
+    color: green;
+}
 /* _content/gui-dos/Shared/MainLayout.razor.rz.scp.css */
 .page[b-08veovrlca] {
     position: relative;
@@ -23,6 +26,10 @@
     height: 3.5rem;
     display: flex;
     align-items: center;
+}
+
+.left-allign[b-08veovrlca] {
+    flex: 1 1 1px;
 }
 
     .top-row[b-08veovrlca]  a, .top-row .btn-link[b-08veovrlca] {

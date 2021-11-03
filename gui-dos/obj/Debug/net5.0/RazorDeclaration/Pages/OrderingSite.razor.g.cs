@@ -119,17 +119,23 @@ using System.Collections;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 47 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
+#line 45 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
        
+    // https://blazor.radzen.com/slider
+
     IEnumerable<int> values = new int[] { 14, 78 };
     IEnumerable<int> negativeValues = new int[] { -100, 100 };
-    int value = 67;
-    int negativeValue = 0;
-    int valueWithStep = 30;
+    //int value = 67;
+    //int negativeValue = 0;
+    //int valueWithStep = 30;
+    string[] Val;
+    string JoinVal = $"Pris mellem {14},- og {78},-";
 
     void OnChange(dynamic value, string name)
     {
         var str = value is IEnumerable ? string.Join(", ", value) : value;
+        Val = str.Split(",");
+        JoinVal = $"Pris mellem {Val[0]},- og {Val[1]},-";
     }
 
 #line default

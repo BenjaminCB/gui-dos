@@ -21,6 +21,10 @@
     align-items: center;
 }
 
+.left-allign[b-08veovrlca] {
+    flex: 1 1 1px;
+}
+
     .top-row[b-08veovrlca]  a, .top-row .btn-link[b-08veovrlca] {
         white-space: nowrap;
         margin-left: 1.5rem;

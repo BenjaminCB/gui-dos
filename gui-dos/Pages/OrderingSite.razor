@@ -9,18 +9,13 @@
 }
 else
 {
-    <ul>
-        <li><a href="">1. page</a></li>
-        <li><a href="">2. page</a></li>
-        <li><a href="">3. page</a></li>
-        <li><a href="">4. page</a></li>
-    </ul>
-
     <div class="row">
         <div class="col-xl-6">
             <a>Pris</a>
             <RadzenSlider Range="true" @bind-Value=@values TValue="IEnumerable<int>" Change=@(args => OnChange(args, "Range Slider")) />
-            <br /> <br />
+            <br /> <a>Her er de valgte vaerdier</a> 
+                   <p> @JoinVal </p>
+            <br />
         </div>
     </div>
 
@@ -33,8 +28,11 @@ else
                 </a>
             </div>
             <div class="details">
-                <div>
-                    <a>Her er et navn og en pris 200,- kr</a>
+                <div class="navn">
+                    <a>Her er et navn og en pris</a>
+                </div>
+                <div class="price">
+                    <a>200,- kr</a>
                 </div>
 
             </div>
@@ -45,14 +43,20 @@ else
 }
 
 @code {
+    // https://blazor.radzen.com/slider
+
     IEnumerable<int> values = new int[] { 14, 78 };
     IEnumerable<int> negativeValues = new int[] { -100, 100 };
-    int value = 67;
-    int negativeValue = 0;
-    int valueWithStep = 30;
+    //int value = 67;
+    //int negativeValue = 0;
+    //int valueWithStep = 30;
+    string[] Val;
+    string JoinVal = $"Pris mellem {14},- og {78},-";
 
     void OnChange(dynamic value, string name)
     {
         var str = value is IEnumerable ? string.Join(", ", value) : value;
+        Val = str.Split(",");
+        JoinVal = $"Pris mellem {Val[0]},- og {Val[1]},-";
     }
 }
