@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace gui_dos.Models
 {
-    ///<summary>The Change class models a change made to an order or product. </summary>
+    ///<summary>The 'Change' class models a change made to an order or product. </summary>
     [Table("changes")]
     public class Change
     {
@@ -23,13 +23,13 @@ namespace gui_dos.Models
 
         ///<summary>Constructs a Change object.
         ///<param name="changeString"> the string description of the comitted change. </param>
+        ///<param name="employee"> the employee responsible for the change. </param>
         ///</summary>
-        public Change(string changeString)
+        public Change(string changeString, Employee employee)
         {
             Date = DateTime.Now;
             ChangeMade = changeString;
-            //Find ud af om employee skal føres over som parameter,
-            //eller om der er en global variable der holder current employee
+            Employee = employee;
         }
 
         ///<summary>Converts the Change object to a string. </summary>
