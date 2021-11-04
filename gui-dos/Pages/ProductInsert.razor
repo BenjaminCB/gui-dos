@@ -27,6 +27,10 @@
         <InputTextArea @bind-Value=productForm.Description />
     </div>
     <div class="form-group">
+        <label for="Price">Price</label>
+        <InputNumber @bind-Value=productForm.Price />
+    </div>
+    <div class="form-group">
         <label for="Image">Image</label>
         <InputFile OnChange="@fileUpload" />
     </div>
@@ -50,6 +54,7 @@
         {
             ctx.Products.Add(new Product( productForm.Title
                                         , productForm.Description
+                                        , productForm.Price
                                         , productForm.Image ));
             await ctx.SaveChangesAsync();
         }
