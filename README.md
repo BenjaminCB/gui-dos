@@ -27,7 +27,7 @@ Online Gift-Basket ordering system.
         - /login
 
 ## components
-- [ ] Product (how we show product to an employee)
+- [x] Product (how we show product to an employee)
 - [ ] Order
 - [ ] Giftbasket (how we show product to a customer)
 - [ ] changelog
