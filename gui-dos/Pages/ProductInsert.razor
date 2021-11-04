@@ -1,4 +1,4 @@
-@page "/product-insert"
+@page "/product/insert"
 
 @using System
 @using System.IO
@@ -58,6 +58,6 @@
                                         , productForm.Image ));
             await ctx.SaveChangesAsync();
         }
-        NavMan.NavigateTo("/product-show");
+        NavMan.NavigateTo("/product/show");
     }
 }

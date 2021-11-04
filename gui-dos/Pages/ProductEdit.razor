@@ -1,0 +1,71 @@
+@page "/product/edit/{productId}"
+
+@using gui_dos.Data
+@using gui_dos.Forms
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<h1>ProductId is @ProductId</h1>
+
+@if (product == null)
+{
+    <div>
+        Loading...
+    </div>
+}
+else
+{
+    <EditForm Model="@productForm" OnValidSubmit="@editProduct">
+        <DataAnnotationsValidator/>
+        <ValidationSummary/>
+
+        <div class="form-group">
+            <label for="Title">Title</label>
+            <InputText placeholder="@product.Title" @bind-Value=productForm.Title />
+        </div>
+        <div class="form-group">
+            <label for="Description">Description</label>
+            <InputTextArea @bind-Value=productForm.Description />
+        </div>
+        <div class="form-group">
+            <label for="Price">Price</label>
+            <InputNumber @bind-Value=productForm.Price />
+        </div>
+        <div class="form-group">
+            <label for="Image">Image</label>
+            <InputFile OnChange="@fileUpload" />
+        </div>
+        <button type="submit">Submit</button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string ProductId { get; set; }
+
+    private Product product;
+    private ProductForm productForm = new ProductForm();
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            int id = Int32.Parse(ProductId);
+            product = await ctx.Products.SingleAsync(p => p.ProductId == id);
+        }
+    }
+
+    private async Task fileUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        var buffer = new byte[file.Size];
+        await file.OpenReadStream().ReadAsync(buffer);
+        productForm.Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+    }
+
+    private async Task editProduct()
+    {
+    }
+}

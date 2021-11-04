@@ -1,10 +1,11 @@
-@page "/product-show"
+@page "/product/show"
 
 @using System.Collections.Generic
 @using gui_dos.Data
 @using Microsoft.EntityFrameworkCore;
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
 
 <h1>Products</h1>
 <p>
@@ -68,5 +69,6 @@
 
     private async Task productEdit(Product p)
     {
+        NavMan.NavigateTo($"/product/edit/{p.ProductId}");
     }
 }
