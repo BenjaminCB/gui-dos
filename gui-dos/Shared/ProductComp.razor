@@ -1,0 +1,12 @@
+<div>
+    <h3>@Product.Title</h3>
+    <p>
+        @Product.Description
+    </p>
+    <img src="@Product.Image">
+</div>
+
+@code {
+    [Parameter]
+    public Product Product { get; set; }
+}
