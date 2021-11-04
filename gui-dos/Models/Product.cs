@@ -34,6 +34,7 @@ namespace gui_dos.Models
             Title = title;
             Description = description;
             Image = image;
+            Changelog = new List<Change>();
         }
     }
 }

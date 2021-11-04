@@ -1,0 +1,58 @@
+@page "/product-insert"
+
+@using System
+@using System.IO
+@using System.Collections.Generic
+@using gui_dos.Models
+@using gui_dos.Forms
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Forms
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<h1>Create new product</h1>
+
+<EditForm Model="@productForm" OnValidSubmit="@InsertProduct">
+    <DataAnnotationsValidator/>
+    <ValidationSummary/>
+
+    <div class="form-group">
+        <label for="Title">Title</label>
+        <InputText @bind-Value=productForm.Title />
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <InputTextArea @bind-Value=productForm.Description />
+    </div>
+    <div class="form-group">
+        <label for="Image">Image</label>
+        <InputFile OnChange="@fileUpload" />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private ProductForm productForm = new ProductForm();
+
+    private async Task fileUpload(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        var buffer = new byte[file.Size];
+        await file.OpenReadStream().ReadAsync(buffer);
+        productForm.Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
+    }
+
+    private async Task InsertProduct()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            ctx.Products.Add(new Product( productForm.Title
+                                        , productForm.Description
+                                        , productForm.Image ));
+            await ctx.SaveChangesAsync();
+        }
+        NavMan.NavigateTo("/product-show");
+    }
+}

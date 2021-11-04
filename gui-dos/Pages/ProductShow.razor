@@ -1,0 +1,72 @@
+@page "/product-show"
+
+@using System.Collections.Generic
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+
+<h1>Products</h1>
+<p>
+    This is all the products that are currently avaiable for purchase on the site
+</p>
+
+@if (products == null)
+{
+    <div>
+        Loading...
+    </div>
+}
+
+@if (products != null && products.Count == 0)
+{
+    <div>
+        No products found...
+    </div>
+}
+
+@if (products != null)
+{
+    @foreach (var product in products)
+    {
+        <div>
+            <ProductComp Product="@product" />
+
+            <button @onclick="() => productEdit(product)">
+                Edit
+            </button>
+
+            <button @onclick="() => productDelete(product)">
+                Delete
+            </button>
+        </div>
+    }
+}
+
+
+@code
+{
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            products = await ctx.Products.ToListAsync();
+        }
+    }
+
+    private async Task productDelete(Product p)
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            ctx.Products.Remove(p);
+            await ctx.SaveChangesAsync();
+            products = await ctx.Products.ToListAsync();
+        }
+    }
+
+    private async Task productEdit(Product p)
+    {
+    }
+}
