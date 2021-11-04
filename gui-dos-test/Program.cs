@@ -1,5 +1,9 @@
 ﻿using System;
 using FsCheck;
+using FsCheck.Xunit;
+using Xunit;
+using Xunit.Abstractions;
+
 
 namespace gui_dos_test
 {
@@ -7,10 +11,32 @@ namespace gui_dos_test
     {
         public class TestClass
         {
-            public Func<Order, bool> FuncToTest = (xs) => true;
-            public Gen<T> OrderDataGenerator<T>(T[] xs)
+            public Func<int, bool> FuncToTest = (xs) => true;
+
+            private readonly ITestOutputHelper testOutputHelper;
+            public TestClass(ITestOutputHelper testOutput)
             {
-                return from i in Gen.Choose(0, xs.Length - 1) select xs[i];
+                testOutputHelper = testOutput;
+            }
+            [Fact]
+            public void Test1()
+            {
+                Prop.ForAll(FuncToTest).VerboseCheckThrowOnFailure(testOutputHelper);
+            }
+
+
+
+        }
+        public class OutputHelper : ITestOutputHelper
+        {
+            public void WriteLine(string message)
+            {
+                Console.WriteLine(message);
+            }
+
+            public void WriteLine(string format, params object[] args)
+            {
+                throw new NotImplementedException();
             }
         }
         public class Order
@@ -18,17 +44,17 @@ namespace gui_dos_test
             public string name;
             string id;
         }
-        class Program
-        {
+        //class Program
+        //{
 
-            static void Main(string[] args)
-            {
+        //    static void Main(string[] args)
+        //    {
+        //        ITestOutputHelper helper = new OutputHelper();
 
-                TestClass testclass = new TestClass();
-                Prop.ForAll(testclass.FuncToTest).QuickCheck();
-
-            }
-        }
+        //        TestClass testClass = new TestClass(helper);
+        //        testClass.Test1();
+        //    }
+        //}
     }
 
 }
