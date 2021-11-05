@@ -29,7 +29,6 @@ namespace gui_dos
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
 
             var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
             services.AddDbContextFactory<IsvaerftetDbContext>(opt =>
