@@ -7,13 +7,21 @@
 <body>
     <section id="product-page-wrapper">
 
-        <section id="filter-row">
-            <div class="col-xl-6">
-                <a>Pris</a>
+        <section id="filter">
+            <h2 class="title_Header">Filter</h2>
+            <h3 class="sub_Header">Pris</h3>
+            <div class="Price_Range">
                 <RadzenSlider Range="true" @bind-Value=@values TValue="IEnumerable<int>" Change=@(args => OnChange(args, "Range Slider")) />
-                <br /> <a>Her er de valgte vaerdier</a>
-                <p> @JoinVal </p>
-                <br />
+                <p class="price_One"> @JoinVal1 </p>
+                <p class="price_Two"> @JoinVal2</p>
+            </div>
+            <br />
+            <h3 class="sub_Header">Præferencer</h3>
+            <div class="Preferences">
+                <form>
+                    <input type="checkbox" id="checkbox1"/>
+                    <label for="checkbox1">Sæson-</label>
+                </form>
             </div>
         </section>
 
