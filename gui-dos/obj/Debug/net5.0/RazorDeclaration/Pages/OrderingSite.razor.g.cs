@@ -118,58 +118,72 @@ using System.Collections.Generic;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 37 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
+#line 54 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
        
-                // https://blazor.radzen.com/slider
-                static int start = 14;
-                static int end = 78;
-                IEnumerable<int> values = new int[] { start, end };
-                IEnumerable<int> negativeValues = new int[] { -100, 100 };
-                //int value = 67;
-                //int negativeValue = 0;
-                //int valueWithStep = 30;
-                string[] Val;
-                string JoinVal = $"Pris mellem {start},- og {end},-";
+    // https://blazor.radzen.com/slider
+    static int start = 14;
+    static int end = 78;
+    IEnumerable<int> values = new int[] { start, end };
+    IEnumerable<int> negativeValues = new int[] { -100, 100 };
+    //int value = 67;
+    //int negativeValue = 0;
+    //int valueWithStep = 30;
+    string[] Val;
+    string JoinVal1 = $"{start},-";
+    string JoinVal2 = $"{end},-";
+    static int i = 0;
+    public static object AddOne()
+    {
+        i++;
+        return null;
+    }
 
-                void OnChange(dynamic value, string name)
-                {
-                    var str = value is IEnumerable<int> ? string.Join(", ", value) : value;
-                    Val = str.Split(",");
-                    JoinVal = $"Pris mellem {Val[0]},- og {Val[1]},-";
-                }
+    void OnChange(dynamic value, string name)
+    {
+        var str = value is IEnumerable<int> ? string.Join(", ", value) : value;
+        Val = str.Split(",");
+        JoinVal1 = $"{Val[0]},-";
+        JoinVal2 = $"{Val[1]},-";
+    }
 
     public class Product
-            {
-                public int ProductId { get; set; }
-                public int Price { get; set; }
-                public string Title { get; set; }
-                public string Description { get; set; }
-                public string Image { get; set; }
+    {
+        public int ProductId { get; set; }
+        public int Price { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
 
-                public Product(int id, int price, string Title, string D, string I) {
-                    this.ProductId = id;
-                    this.Title = Title;
-                    this.Description = D;
-                    this.Image = I;
-                }
+        public Product(int id, int price, string Title, string D, string I) {
+            this.ProductId = id;
+            this.Title = Title;
+            this.Description = D;
+            this.Image = I;
+        }
 
-                public Product()
-                {
-                }
-            }
-            public class Content
-            {
-                public string content = "";
-            }
+        public Product()
+        {
+        }
+    }
+    public class Content
+    {
+        public string content = "";
+    }
 
-            static Product a = new Product { ProductId = 1, Price = 1, Title = "a", Description = "b", Image = "c" };
-            static Product b = new Product (1, 20, "a", "b", "c");
-            static Product c = new Product (1, 300, "a", "b", "c");
+    static Product a = new Product { ProductId = 1, Price = 1, Title = "a", Description = "b", Image = "c" };
+    static Product b = new Product (1, 20, "b", "b", "c");
+    static Product c = new Product (2, 300, "c", "b", "c");
+    static Product d = new Product { ProductId = 1, Price = 1, Title = "aa", Description = "b", Image = "c" };
+    static Product e = new Product(1, 20, "bb", "b", "c");
+    static Product f = new Product(2, 300, "cc", "b", "c");
+    static Product g = new Product { ProductId = 1, Price = 1, Title = "aaa", Description = "b", Image = "c" };
+    static Product h = new Product(1, 20, "bbb", "b", "c");
+    static Product j = new Product(1, 300, "ccc", "b", "c");
 
-            public static List<Product> Products = new List<Product>{a, b, c };
-            public static List<Content> Conten = new List<Content> {};
+    public static List<Product> Products = new List<Product>{a, b, c, d, e, f, g, h, j };
+    public static List<Content> Conten = new List<Content> {};
 
-            
+
 
 #line default
 #line hidden
