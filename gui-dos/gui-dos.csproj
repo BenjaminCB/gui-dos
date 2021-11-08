@@ -5,6 +5,7 @@
     <RootNamespace>gui_dos</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'BlazorApp' " />
   <ItemGroup>
     <PackageReference Include="Radzen.Blazor" Version="3.11.11" />
   </ItemGroup>

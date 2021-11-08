@@ -1,60 +1,63 @@
-body[b-md6k7013el]{
+body[b-cgqux6sexy]{
     background-color: #309D9B;
     margin: 0;
     padding: 0;
     height: 94.45vh;
     background-size: 100%;
+    overflow: hidden;
 }
 
-#filter[b-md6k7013el] {
+#product-list[b-cgqux6sexy] {
+    width: 82%;
+    float: right;
+    height: 90vh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+#filter[b-cgqux6sexy] {
     width: 18%;
     float: left;
     border-style: ridge;
     height: 90vh;
 }
 
-.title_Header[b-md6k7013el] {
+.title_Header[b-cgqux6sexy] {
     text-align: center;
     padding-top: 0.5vh;
 }
 
-.sub_Header[b-md6k7013el] {
+.sub_Header[b-cgqux6sexy] {
     padding-left: 1vw;
 }
 
-.Price_Range[b-md6k7013el] {
+.Price_Range[b-cgqux6sexy] {
     display: inline-block;
     width: 100%;
     padding-left: 10%;
     padding-right: 10%;
 }
 
-.price_One[b-md6k7013el] {
+.price_One[b-cgqux6sexy] {
     float: left;
 }
 
-.price_Two[b-md6k7013el] {
+.price_Two[b-cgqux6sexy] {
     float: right;
 }
 
-/*#product-list {
-    width: 82%;
-    float: right;
-    height: 90vh;
-    padding: le
-}*/
 
-.container[b-md6k7013el] {
+.container[b-cgqux6sexy] {
     
     flex-wrap: wrap;
 }
 
-.wrap[b-md6k7013el] {
+.wrap[b-cgqux6sexy] {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }  
 
-.flex-container[b-md6k7013el] {
+.flex-container[b-cgqux6sexy] {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -71,8 +74,7 @@ body[b-md6k7013el]{
     justify-content: space-evenly;
 }
 
-.flex-item[b-md6k7013el] {
-    background: tomato;
+.flex-item[b-cgqux6sexy] {
     padding: 5px;
     width: 330px;
     height: 360px;
@@ -85,6 +87,6 @@ body[b-md6k7013el]{
     background-image: url("https://i.insider.com/59ca65fefca6e427008b4776?width=700");
 }
 
-.flex-container li:last-of-type[b-md6k7013el] {
+.flex-container li:last-of-type[b-cgqux6sexy] {
 
 }

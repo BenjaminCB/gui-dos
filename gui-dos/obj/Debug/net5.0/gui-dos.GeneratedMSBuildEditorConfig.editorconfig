@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = gui_dos
-build_property.ProjectDir = C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\
+build_property.ProjectDir = /Users/daniel/Documents/GitHub/gui-dos/gui-dos/

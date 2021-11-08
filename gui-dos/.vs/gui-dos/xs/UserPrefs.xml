@@ -1,0 +1,28 @@
+﻿<Properties StartupConfiguration="{1338615B-647E-479E-A239-0DEF5D082989}|BlazorApp">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pages/OrderingSite.razor">
+    <Files>
+      <File FileName="Pages/OrderingSite.razor" Line="1" Column="1" />
+      <File FileName="Pages/OrderingSite.razor.css" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="gui-dos" expanded="True">
+            <Node name="gui-dos" expanded="True">
+              <Node name="Pages" expanded="True">
+                <Node name="OrderingSite.razor" expanded="True" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.gui-dos PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
