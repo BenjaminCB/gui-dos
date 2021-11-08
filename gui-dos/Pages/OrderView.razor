@@ -1,0 +1,58 @@
+@page "/order-show"
+
+@using System.Collections.Generic
+@using gui_dos.Data
+@using gui_dos.Models
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+
+@if (orders != null && orders.Count == 0)
+{
+    <div>
+        No products found...
+    </div>
+}
+
+@if (orders != null)
+{
+    @foreach (var order in orders)
+    {
+        <div>
+            <OrderComp Order="@order" />
+
+            <button @onclick="() => productEdit(product)">
+                Edit
+            </button>
+
+            <button @onclick="() => productDelete(product)">
+                Delete
+            </button>
+        </div>
+    }
+}
+@code
+{
+    private List<Order> orders;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            orders = await ctx.Orders.ToListAsync();
+        }
+    }
+    private async Task OrderChangeStatus(Order o, OrderStatus s)
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            ctx.Orders.Remove(o);
+            o.Status = s;
+            ctx.Orders.Add(o);
+            await ctx.SaveChangesAsync();
+            orders = await ctx.Orders.ToListAsync();
+            
+        }
+    }
+    
+}
