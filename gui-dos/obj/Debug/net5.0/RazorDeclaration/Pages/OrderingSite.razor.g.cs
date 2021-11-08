@@ -12,98 +12,98 @@ namespace gui_dos.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 1 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 2 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 3 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 4 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 5 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 6 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 7 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 8 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 9 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using gui_dos;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 10 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using gui_dos.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 11 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Radzen;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 12 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+#line 12 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\_Imports.razor"
 using Radzen.Blazor;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 3 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
 using gui_dos.Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 4 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
 using System.Collections.Generic;
 
 #line default
@@ -118,25 +118,16 @@ using System.Collections.Generic;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 53 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 56 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
        
     // https://blazor.radzen.com/slider
     static int start = 14;
     static int end = 78;
     IEnumerable<int> values = new int[] { start, end };
     IEnumerable<int> negativeValues = new int[] { -100, 100 };
-    //int value = 67;
-    //int negativeValue = 0;
-    //int valueWithStep = 30;
     string[] Val;
     string JoinVal1 = $"{start},-";
     string JoinVal2 = $"{end},-";
-    static int i = 0;
-    public static object AddOne()
-    {
-        i++;
-        return null;
-    }
 
     void OnChange(dynamic value, string name)
     {
@@ -146,6 +137,7 @@ using System.Collections.Generic;
         JoinVal2 = $"{Val[1]},-";
     }
 
+    // Delete when linked to Database
     public class Product
     {
         public int ProductId { get; set; }

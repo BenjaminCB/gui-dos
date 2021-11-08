@@ -73,19 +73,31 @@ body{
     justify-content: space-evenly;
 }
 
-.flex-item {
-    padding: 5px;
-    width: 330px;
-    height: 360px;
+.flex-body{
+    height: 370px;
+    width: 390px;
+    background-color: white;
+    padding-bottom: 1vh;
     margin: 10px;
+}
+
+.flex-img {
+    height: 320px;
+    width: 390px;
+    /* width * hight */
+    background-size: 390px 320px;
     line-height: 100px;
-    color: white;
-    font-weight: bold;
-    font-size: 2em;
-    text-align: center;
     background-image: url("https://i.insider.com/59ca65fefca6e427008b4776?width=700");
 }
 
-.flex-container li:last-of-type {
+.flex-text{
 
+}
+
+.flex-title{
+    float: left;
+}
+
+.flex-price{
+    float: right;
 }

@@ -1,25 +1,33 @@
 {
   "format": 1,
   "restore": {
-    "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj": {}
+    "C:\\Users\\peter\\OneDrive - Aalborg Universitet\\3.semester\\gui-dos\\gui-dos\\gui-dos.csproj": {}
   },
   "projects": {
-    "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj": {
+    "C:\\Users\\peter\\OneDrive - Aalborg Universitet\\3.semester\\gui-dos\\gui-dos\\gui-dos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj",
+        "projectUniqueName": "C:\\Users\\peter\\OneDrive - Aalborg Universitet\\3.semester\\gui-dos\\gui-dos\\gui-dos.csproj",
         "projectName": "gui-dos",
-        "projectPath": "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj",
-        "packagesPath": "/Users/daniel/.nuget/packages/",
-        "outputPath": "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/",
+        "projectPath": "C:\\Users\\peter\\OneDrive - Aalborg Universitet\\3.semester\\gui-dos\\gui-dos\\gui-dos.csproj",
+        "packagesPath": "C:\\Users\\peter\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\peter\\OneDrive - Aalborg Universitet\\3.semester\\gui-dos\\gui-dos\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "/Users/daniel/.config/NuGet/NuGet.Config"
+          "C:\\Users\\peter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -61,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

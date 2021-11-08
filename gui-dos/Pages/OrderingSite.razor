@@ -7,6 +7,7 @@
 <body>
     <section id="product-page-wrapper">
 
+        <!--Filter section-->
         <section id="filter">
             <h2 class="title_Header">Filter</h2>
             <h3 class="sub_Header">Pris</h3>
@@ -25,23 +26,25 @@
             </div>
         </section>
 
-
+        <!--Product section-->
+        <!--TODO: Link to Database-->
         <section id="product-list">
             <h1 class="title_Header">Produkter</h1>
             <ul class="flex-container wrap">
                 @foreach (var item in Products)
                 {
                     @if (item.ProductId == 1)
-                {
+                    {
                         <li>
-                            <div class="flex-item">
-                                <div class="flex-body">
-                                    <h5 class="flex-body-title">@item.Title</h5>
-                                    <h5 class="flex-body-price">@item.Price</h5>
-                                </div>
+                             <div class="flex-body">
+                                 <div class="flex-img"></div>
+                                 <div class="flex-text">
+                                      <h5 class="flex-title">@item.Title</h5>
+                                      <h5 class="flex-price">@item.Price</h5>
+                                 </div>
                             </div>
                         </li>
-                }
+                    }
                 }
             </ul>
         </section>
@@ -56,18 +59,9 @@
     static int end = 78;
     IEnumerable<int> values = new int[] { start, end };
     IEnumerable<int> negativeValues = new int[] { -100, 100 };
-    //int value = 67;
-    //int negativeValue = 0;
-    //int valueWithStep = 30;
     string[] Val;
     string JoinVal1 = $"{start},-";
     string JoinVal2 = $"{end},-";
-    static int i = 0;
-    public static object AddOne()
-    {
-        i++;
-        return null;
-    }
 
     void OnChange(dynamic value, string name)
     {
@@ -77,6 +71,7 @@
         JoinVal2 = $"{Val[1]},-";
     }
 
+    // Delete when linked to Database
     public class Product
     {
         public int ProductId { get; set; }

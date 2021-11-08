@@ -1,13 +1,12 @@
-body[b-cgqux6sexy]{
+body[b-md6k7013el]{
     background-color: #309D9B;
     margin: 0;
     padding: 0;
     height: 94.45vh;
     background-size: 100%;
-    overflow: hidden;
 }
 
-#product-list[b-cgqux6sexy] {
+#product-list[b-md6k7013el] {
     width: 82%;
     float: right;
     height: 90vh;
@@ -15,49 +14,49 @@ body[b-cgqux6sexy]{
     overflow-y: auto;
 }
 
-#filter[b-cgqux6sexy] {
+#filter[b-md6k7013el] {
     width: 18%;
     float: left;
     border-style: ridge;
     height: 90vh;
 }
 
-.title_Header[b-cgqux6sexy] {
+.title_Header[b-md6k7013el] {
     text-align: center;
     padding-top: 0.5vh;
 }
 
-.sub_Header[b-cgqux6sexy] {
+.sub_Header[b-md6k7013el] {
     padding-left: 1vw;
 }
 
-.Price_Range[b-cgqux6sexy] {
+.Price_Range[b-md6k7013el] {
     display: inline-block;
     width: 100%;
     padding-left: 10%;
     padding-right: 10%;
 }
 
-.price_One[b-cgqux6sexy] {
+.price_One[b-md6k7013el] {
     float: left;
 }
 
-.price_Two[b-cgqux6sexy] {
+.price_Two[b-md6k7013el] {
     float: right;
 }
 
 
-.container[b-cgqux6sexy] {
+.container[b-md6k7013el] {
     
     flex-wrap: wrap;
 }
 
-.wrap[b-cgqux6sexy] {
+.wrap[b-md6k7013el] {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }  
 
-.flex-container[b-cgqux6sexy] {
+.flex-container[b-md6k7013el] {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -74,19 +73,30 @@ body[b-cgqux6sexy]{
     justify-content: space-evenly;
 }
 
-.flex-item[b-cgqux6sexy] {
-    padding: 5px;
-    width: 330px;
-    height: 360px;
+.flex-body[b-md6k7013el]{
+    height: 370px;
+    width: 390px;
+    background-color: white;
+    padding-bottom: 1vh;
     margin: 10px;
+}
+
+.flex-img[b-md6k7013el] {
+    height: 320px;
+    width: 390px;
+    background-size: 390px 320px;
     line-height: 100px;
-    color: white;
-    font-weight: bold;
-    font-size: 2em;
-    text-align: center;
     background-image: url("https://i.insider.com/59ca65fefca6e427008b4776?width=700");
 }
 
-.flex-container li:last-of-type[b-cgqux6sexy] {
+.flex-text[b-md6k7013el]{
 
+}
+
+.flex-title[b-md6k7013el]{
+    float: left;
+}
+
+.flex-price[b-md6k7013el]{
+    float: right;
 }
