@@ -29,6 +29,7 @@ namespace gui_dos
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddScoped<Data.ShoppingCart>();
 
             var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
             services.AddDbContextFactory<IsvaerftetDbContext>(opt =>
