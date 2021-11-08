@@ -53,5 +53,14 @@ namespace gui_dos.Models
             Changelog = new List<Change>();
             Status = OrderStatus.Pending;
         }
+
+        public void StripInformation() 
+        {
+            FirstName = "";
+            LastName = "";
+            Email = "";
+            PhoneNumber = ""; 
+        }
+              
     }
 }
