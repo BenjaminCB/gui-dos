@@ -55,7 +55,6 @@ namespace gui_dos.Models
             Status = OrderStatus.Pending;
         }
 
-<<<<<<< HEAD
         public void StripInformation() 
         {
             FirstName = "";
@@ -64,7 +63,6 @@ namespace gui_dos.Models
             PhoneNumber = ""; 
         }
               
-=======
         public void FillInformation(OrderForm orderDetails) {
             FirstName = orderDetails.FirstName;
             LastName = orderDetails.LastName;
@@ -77,6 +75,5 @@ namespace gui_dos.Models
         {
             return $"Order #{OrderId} - Name: {FirstName} {LastName} - Email: {Email} - Phone: {PhoneNumber}";
         }
->>>>>>> 5d0f5c91e08755aadd8ce15d527340ce8876123a
     }
 }
