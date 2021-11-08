@@ -1,0 +1,49 @@
+@page "/order-fill"
+@using gui_dos.Forms
+@using gui_dos.Models
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject Data.ShoppingCart ShoppingCart
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+
+
+<h2>Udfyld ordre detaljer.</h2>
+
+<EditForm Model="@orderForm" OnValidSubmit="@OrderOrder">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="Fornavn">Fornavn</label>
+        <InputText @bind-Value=orderForm.FirstName />
+    </div>
+    <div class="form-group">
+        <label for="Efternavn">Efternavn</label>
+        <InputTextArea @bind-Value=orderForm.LastName />
+    </div>
+        <div class="form-group">
+        <label for="Email">Email</label>
+        <InputTextArea @bind-Value=orderForm.Email />
+    </div>
+        <div class="form-group">
+        <label for="Telefon">Telefon</label>
+        <InputTextArea @bind-Value=orderForm.PhoneNumber />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code 
+{
+    private OrderForm orderForm = new OrderForm();
+
+    private async Task OrderOrder() 
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            Order order = new Order();
+            ctx.Orders.Add(order);
+            await ctx.SaveChangesAsync();
+        }
+    }
+}
