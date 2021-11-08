@@ -5,6 +5,7 @@ Online Gift-Basket ordering system.
 |Package     |.NET CLI.                          |
 |------------|-----------------------------------|
 |FsCheck     |dotnet add package FsCheck --version 2.16.3|
+|FsCheck.Xunit|dotnet add package FsCheck.Xunit --version 2.16.3      |
 |MailKit     |dotnet add package MailKit --version 2.15.0|
 
 ## endpoints
