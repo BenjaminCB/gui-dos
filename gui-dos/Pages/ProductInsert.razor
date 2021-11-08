@@ -15,8 +15,8 @@
 <h1>Create new product</h1>
 
 <EditForm Model="@productForm" OnValidSubmit="@InsertProduct">
-    <DataAnnotationsValidator/>
-    <ValidationSummary/>
+    <DataAnnotationsValidator />
+    <ValidationSummary />
 
     <div class="form-group">
         <label for="Title">Title</label>
@@ -34,13 +34,14 @@
 </EditForm>
 
 @code {
+    private long maxImageFileSize = 4096000;
     private ProductForm productForm = new ProductForm();
 
     private async Task fileUpload(InputFileChangeEventArgs e)
     {
         var file = e.File;
         var buffer = new byte[file.Size];
-        await file.OpenReadStream().ReadAsync(buffer);
+        await file.OpenReadStream(maxImageFileSize).ReadAsync(buffer);
         productForm.Image = $"data:image/png;base64,{Convert.ToBase64String(buffer)}";
     }
 
@@ -50,7 +51,7 @@
         {
             ctx.Products.Add(new Product( productForm.Title
                                         , productForm.Description
-                                        , productForm.Image ));
+                                        , productForm.Image));
             await ctx.SaveChangesAsync();
         }
         NavMan.NavigateTo("/product-show");
