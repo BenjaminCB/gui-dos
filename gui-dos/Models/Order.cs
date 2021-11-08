@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using gui_dos.Forms;
 
 namespace gui_dos.Models
 {
@@ -45,15 +46,16 @@ namespace gui_dos.Models
         ///<summary>Gets or set the list of changes made to the order. </summary>
         public List<Change> Changelog { get; set; }
 
-        ///<summary>Constructs an order object.
+        ///<summary>Constructs an order object with the specified giftbaskets.
         ///</summary>
-        public Order()
+        public Order(List<GiftBasket> giftBaskets)
         {
-            GiftBaskets = new List<GiftBasket>();
+            GiftBaskets = giftBaskets;
             Changelog = new List<Change>();
             Status = OrderStatus.Pending;
         }
 
+<<<<<<< HEAD
         public void StripInformation() 
         {
             FirstName = "";
@@ -62,5 +64,19 @@ namespace gui_dos.Models
             PhoneNumber = ""; 
         }
               
+=======
+        public void FillInformation(OrderForm orderDetails) {
+            FirstName = orderDetails.FirstName;
+            LastName = orderDetails.LastName;
+            Email = orderDetails.Email;
+            PhoneNumber = orderDetails.PhoneNumber;
+            Comment = orderDetails.Comment;
+        }
+
+        public override string ToString()
+        {
+            return $"Order #{OrderId} - Name: {FirstName} {LastName} - Email: {Email} - Phone: {PhoneNumber}";
+        }
+>>>>>>> 5d0f5c91e08755aadd8ce15d527340ce8876123a
     }
 }
