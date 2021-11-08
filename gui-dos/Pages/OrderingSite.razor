@@ -25,17 +25,14 @@
             </div>
         </section>
         <center>
-            <h1 style="color: green;">PlsWork</h1>
+            <h1 class="title_Header">Produkter</h1>
             <ul class="flex-container wrap">
                 @foreach (var item in Products)
                 {
-                    @if (item.Price > 10)
+                    @if (item.ProductId == 1)
                 {
-                        <!-- Sum of SM col exceeds 12 so if the screen
-            is small (less than 576px) the last column
-            will Automatically get aligned in the next row -->
                         <li>
-                            <div class="flex-item" style="background-image: url('https://i.insider.com/59ca65fefca6e427008b4776?width=700'); width: 100px; height:100px;">
+                            <div class="flex-item">
                                 <div class="flex-body">
                                     <h5 class="flex-body-title">@item.Title</h5>
                                     <h5 class="flex-body-price">@item.Price</h5>

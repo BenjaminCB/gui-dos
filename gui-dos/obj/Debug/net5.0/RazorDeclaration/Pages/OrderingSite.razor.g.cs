@@ -118,7 +118,7 @@ using System.Collections.Generic;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 54 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
+#line 51 "C:\Users\peter\OneDrive - Aalborg Universitet\3.semester\gui-dos\gui-dos\Pages\OrderingSite.razor"
        
     // https://blazor.radzen.com/slider
     static int start = 14;
