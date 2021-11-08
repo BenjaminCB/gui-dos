@@ -18,6 +18,9 @@ namespace gui_dos.Models
         ///<summary>Gets or sets the description of the product. </summary>
         public string Description { get; set; }
 
+        ///<summary>Gets or sets the price of the product. </summary>
+        public double Price { get; set; }
+
         ///<summary>Gets or sets the image of the product. </summary>
         public string Image { get; set; }
 
@@ -29,10 +32,11 @@ namespace gui_dos.Models
         ///<param name="description"> the description of the product. </param>
         ///<param name="image"> the image of the product. </param>
         ///</summary>
-        public Product(string title, string description, string image)
+        public Product(string title, string description, double price, string image)
         {
             Title = title;
             Description = description;
+            Price = price;
             Image = image;
             Changelog = new List<Change>();
         }
