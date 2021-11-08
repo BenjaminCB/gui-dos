@@ -55,7 +55,7 @@ namespace gui_dos.Models
             Status = OrderStatus.Pending;
         }
 
-        public void StripInformation() 
+        public void StripInformation()
         {
             FirstName = "";
             LastName = "";

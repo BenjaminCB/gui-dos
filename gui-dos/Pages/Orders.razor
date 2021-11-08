@@ -31,8 +31,16 @@
         <div @key="order">
             @order.ToString()
         </div>
+
     }
 }
+<div>
+    <p>Last week: @(DateTime.Now + TimeSpan.FromDays(500))</p>
+    <button @onclick="() => SearchStrip()">
+        Delete Expired Information
+    </button>
+</div>
+
 
 @code
 {
@@ -51,4 +59,17 @@
 
     private void NavigateToProductsDelete() =>
         NavMan.NavigateTo("products-delete");
+
+    private void SearchStrip()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            var old = ctx.Orders;
+            //.Where(d => d.DateOrdered > DateTime.Today();
+            //.OrderBy(b => b.Url);
+            //.ToList();
+        }
+        //TimeSpan.FromDays(7)
+        //return FoundOrders
+    }
 }
