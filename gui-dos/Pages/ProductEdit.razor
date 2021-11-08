@@ -23,7 +23,7 @@ else
 
         <div class="form-group">
             <label for="Title">Title</label>
-            <InputText placeholder="@product.Title" @bind-Value=productForm.Title />
+            <InputText @bind-Value=productForm.Title />
         </div>
         <div class="form-group">
             <label for="Description">Description</label>
@@ -55,6 +55,11 @@ else
             int id = Int32.Parse(ProductId);
             product = await ctx.Products.SingleAsync(p => p.ProductId == id);
         }
+
+        productForm.Title = product.Title;
+        productForm.Description = product.Description;
+        productForm.Price = product.Price;
+        productForm.Image = product.Image;
     }
 
     private async Task fileUpload(InputFileChangeEventArgs e)
@@ -67,5 +72,15 @@ else
 
     private async Task editProduct()
     {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            ctx.Products.Remove(product);
+            ctx.Products.Add(new Product( productForm.Title
+                                        , productForm.Description
+                                        , productForm.Price
+                                        , productForm.Image ));
+            await ctx.SaveChangesAsync();
+        }
+        NavMan.NavigateTo("/product/show");
     }
 }
