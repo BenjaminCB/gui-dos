@@ -1,0 +1,75 @@
+@page "/product/show"
+
+@using System.Collections.Generic
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<h1>Orders</h1>
+<p>
+    This is all the old orders that have been completed.
+</p>
+
+@if (oldOrders == null)
+{
+    <div>
+        Loading...
+    </div>
+}
+
+@if (oldOrders != null && oldOrders.Count == 0)
+{
+    <div>
+        No orders found...
+    </div>
+}
+
+@if (oldOrders != null)
+{
+    @foreach (var order in oldOrders)
+    {
+        <div>
+            <ProductComp Order="@order" />
+
+            <button @onclick="() => showOrder(order)">
+                Show
+            </button>
+
+            <button @onclick="() => hideOrder(order)">
+                Hide
+            </button>
+        </div>
+    }
+}
+
+
+@code
+{
+    private List<Product> products;
+
+    private List<Order> oldOrders;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            oldOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).ToListAsync();
+        }
+    }
+
+    
+
+    private async Task showOrder(Order o)
+    {
+        
+    }
+
+    private async Task hideOrder(Order o)
+        {
+
+        }
+
+}
