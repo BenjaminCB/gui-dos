@@ -8,7 +8,7 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-<h1>Products</h1>
+<h2>Orders</h2>
 
 @if (orders == null)
 {
@@ -34,13 +34,6 @@
 
     }
 }
-<div>
-    <p>Last week: </p>
-    <button @onclick="() => SearchStrip()">
-        Delete Expired Information
-    </button>
-</div>
-
 
 @code
 {
@@ -59,17 +52,5 @@
 
     private void NavigateToProductsDelete() =>
         NavMan.NavigateTo("products-delete");
-
-    private void SearchStrip()
-    {
-        using (var ctx = DbContextFactory.CreateDbContext())
-        {
-            DateTime now = DateTime.Now;
-            var old = ctx.Orders.Where(d => d.DateOrdered.AddDays(500) > now)
-                .OrderBy(d => d.DateOrdered)
-                .ToList();
-
-            //var t = DateTime.ToString("dd/MM/yyyy");
-        }
-    }
 }
+

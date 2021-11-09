@@ -53,6 +53,7 @@ namespace gui_dos.Models
             GiftBaskets = giftBaskets;
             Changelog = new List<Change>();
             Status = OrderStatus.Pending;
+
         }
 
         public void StripInformation()
@@ -69,11 +70,12 @@ namespace gui_dos.Models
             Email = orderDetails.Email;
             PhoneNumber = orderDetails.PhoneNumber;
             Comment = orderDetails.Comment;
+            DateOrdered = DateTime.Now;
         }
 
         public override string ToString()
         {
-            return $"Order #{OrderId} - Name: {FirstName} {LastName} - Email: {Email} - Phone: {PhoneNumber}";
+            return $"Order #{OrderId} - Name: {FirstName} {LastName} - Email: {Email} - Phone: {PhoneNumber} - Date Ordered: {DateOrdered.ToString("dd/MM/yyyy")}";
         }
     }
 }
