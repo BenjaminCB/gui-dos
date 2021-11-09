@@ -31,9 +31,21 @@
     @foreach (Order order in oldOrders)
     {
         <div>
+            <p>
+                Date ordered: @order.DateOrdered.ToString()
+                Deadline: @order.DateDeadline.ToString()
+                Name: @order.FirstName @order.LastName
+                Price: @order.Price
+            </p>
+
             
             @if (orderIsShown && orderToShow.Equals(order))
             {
+                <p>
+                    Mail: @order.Email
+                    Tlf. nr: @order.PhoneNumber
+                    Comment: @order.Comment
+                </p>
                 <div>
                     @foreach (GiftBasket giftBasket in order.GiftBaskets)
                     {
