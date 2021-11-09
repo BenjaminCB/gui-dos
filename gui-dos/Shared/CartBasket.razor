@@ -1,0 +1,21 @@
+@inject ShoppingCart ShoppingCart
+
+<div>
+    <strong>
+        Title: @GiftBasket.Title
+    </strong>
+    <br>
+    <strong>
+        Comment: @GiftBasket.Comment
+    </strong>
+    <br>
+    <strong>
+        Price: @((double) GiftBasket.Price / 100)
+    </strong>
+    <br>
+</div>
+
+@code {
+    [Parameter]
+    public GiftBasket GiftBasket { get; set; }
+}
