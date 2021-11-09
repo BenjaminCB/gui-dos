@@ -88,7 +88,7 @@
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            oldOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).ToListAsync();
+            oldOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).OrderBy(t=>t.DateOrdered).ToListAsync();
         }
     }
 
