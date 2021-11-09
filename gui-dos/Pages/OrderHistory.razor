@@ -84,18 +84,13 @@
 
     private void showOrder(Order o)
     {
-        if (orderIsShown)
-        {
-            orderToShow = o;
-        }
-
-
-
+        orderToShow = o;
+        orderIsShown = true;
     }
 
     private void hideOrder(Order o)
     {
-
+        orderIsShown = false;
     }
 
 }
