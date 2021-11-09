@@ -11,7 +11,6 @@ namespace gui_dos.Forms
         [Required]
         public string LastName { get; set; }
 
-        public string Comment { get; set; }
 
         [Required]
         [EmailAddress]
@@ -20,5 +19,10 @@ namespace gui_dos.Forms
         [Required]
         [Phone]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; } = DateTime.Now;
+
+        public string Comment { get; set; }
     }
 }
