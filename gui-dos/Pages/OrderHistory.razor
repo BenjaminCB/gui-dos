@@ -1,4 +1,4 @@
-@page "/product/show"
+@page "/orderhistory"
 
 @using System.Collections.Generic
 @using gui_dos.Data
@@ -28,29 +28,49 @@
 
 @if (oldOrders != null)
 {
-    @foreach (var order in oldOrders)
+    @foreach (Order order in oldOrders)
     {
         <div>
-            <ProductComp Order="@order" />
+            
+            @if (orderIsShown && orderToShow.Equals(order))
+            {
+                <div>
+                    @foreach (GiftBasket giftBasket in order.GiftBaskets)
+                    {
+                        <div>
+                            <p>
+                                Giftbasket: Det er i benjamins kode, implementer senerer.
+                                Comment: @giftBasket.Comment
+                                Price: @giftBasket.Price
+                            </p>
+                        </div>
+                    }
+                </div>
+    }
+    @if (!orderIsShown || !orderToShow.Equals(order))
+    {
+        <button @onclick="() => showOrder(order)">
+            Show order
+        </button>
+    }
+    else
+    {
+        <button @onclick="() => hideOrder(order)">
+            Hide order
+        </button>
+    }
 
-            <button @onclick="() => showOrder(order)">
-                Show
-            </button>
 
-            <button @onclick="() => hideOrder(order)">
-                Hide
-            </button>
-        </div>
+</div>
     }
 }
 
 
 @code
 {
-    private List<Product> products;
-
     private List<Order> oldOrders;
-
+    private bool orderIsShown = false;
+    private Order orderToShow;
 
     protected override async Task OnInitializedAsync()
     {
@@ -60,16 +80,22 @@
         }
     }
 
-    
 
-    private async Task showOrder(Order o)
+
+    private void showOrder(Order o)
     {
-        
+        if (orderIsShown)
+        {
+            orderToShow = o;
+        }
+
+
+
     }
 
-    private async Task hideOrder(Order o)
-        {
+    private void hideOrder(Order o)
+    {
 
-        }
+    }
 
 }
