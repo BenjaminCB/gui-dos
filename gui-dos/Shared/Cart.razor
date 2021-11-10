@@ -1,0 +1,57 @@
+@page "/cart"
+
+@using System.Collections.Generic
+
+@inject ShoppingCart ShoppingCart
+@inject NavigationManager NavMan
+
+
+@if (ShoppingCart.GiftBaskets.Count == 0)
+{
+    <strong>
+        Your cart is empty
+    </strong>
+}
+else
+{
+    @foreach (GiftBasket gb in ShoppingCart.GiftBaskets)
+    {
+        <div>
+            <CartBasket GiftBasket="@gb" />
+            <button @onclick="() => remove(gb)">
+                Remove
+            </button>
+        </div>
+    }
+}
+
+<div>
+    <strong>
+        Total: @((double) total / 100)
+    </strong>
+</div>
+
+<button @onclick="goToOrder">
+    Order
+</button>
+
+@code
+{
+    private int total;
+
+    private void goToOrder()
+    {
+        NavMan.NavigateTo("/order-fill");
+    }
+
+    private void remove(GiftBasket gb)
+    {
+        total -= gb.Price;
+        ShoppingCart.GiftBaskets.Remove(gb);
+    }
+
+    protected override void OnInitialized()
+    {
+        total = ShoppingCart.GiftBaskets.Aggregate(0, (acc, gb) => acc + gb.Price);
+    }
+}
