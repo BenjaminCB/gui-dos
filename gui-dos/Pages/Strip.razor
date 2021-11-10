@@ -37,7 +37,7 @@
         {
             DateTime now = DateTime.Now;
             oldOrders = await ctx.Orders
-                .Where(d => d.DateOrdered.AddDays(500) < now)
+                .Where(d => d.DateOrdered.AddDays(500) > now)
                 .ToListAsync();  
         }
     }
@@ -53,12 +53,11 @@
             foreach (Order expired in oldOrders)
             {
                 expOrder = await ctx.Orders.SingleAsync(p => p.OrderId == expired.OrderId);
-                ctx.Orders.Remove(expOrder);
-                expired.StripInformation();
-                await ctx.Orders.AddAsync(expired);
+                Order dbExpOrder = ctx.Orders.Update(expOrder).Entity;
+                dbExpOrder.StripInformation();
+                await ctx.SaveChangesAsync();
 
             }
-            await ctx.SaveChangesAsync();
         }
     }
 }
