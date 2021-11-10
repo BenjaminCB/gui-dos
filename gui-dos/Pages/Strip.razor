@@ -10,12 +10,6 @@
 
 <h1>Strip Information from Expired Orders</h1>
 
-<div>
-    <button @onclick="() => SearchStrip(oldOrders)">
-        Delete Expired Information
-    </button>
-</div>
-
 @if (oldOrders != null)
 {
     @foreach (var expired in oldOrders)
@@ -23,40 +17,28 @@
         <div @key="expired">
             @expired.ToString()
         </div>
-
     }
 }
 
 @code
 {
     private List<Order> oldOrders;
-
+    private Order expOrder;
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             DateTime now = DateTime.Now;
             oldOrders = await ctx.Orders
-                .Where(d => d.DateOrdered.AddDays(500) > now)
-                .ToListAsync();  
-        }
-    }
-}
+                .Where(d => d.DateOrdered.AddDays(1825) < now)
+                .ToListAsync();
 
-@code
-{   
-    private Order expOrder;
-    private async Task SearchStrip(List<Order> oldOrders)
-    {
-        using (var ctx = DbContextFactory.CreateDbContext())
-        {
             foreach (Order expired in oldOrders)
             {
                 expOrder = await ctx.Orders.SingleAsync(p => p.OrderId == expired.OrderId);
                 Order dbExpOrder = ctx.Orders.Update(expOrder).Entity;
                 dbExpOrder.StripInformation();
                 await ctx.SaveChangesAsync();
-
             }
         }
     }
