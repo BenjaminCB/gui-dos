@@ -1,20 +1,13 @@
 ﻿<Properties StartupConfiguration="{1338615B-647E-479E-A239-0DEF5D082989}|BlazorApp">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pages/OrderingSite.razor">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pages/OrderingSite.razor.css">
     <Files>
-      <File FileName="Pages/OrderingSite.razor" Line="14" Column="38" />
-      <File FileName="Pages/OrderingSite.razor.css" Line="139" Column="1" />
+      <File FileName="Pages/OrderingSite.razor" Line="44" Column="56" />
+      <File FileName="Pages/OrderingSite.razor.css" Line="126" Column="16" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="gui-dos" expanded="True">
-            <Node name="gui-dos" expanded="True">
-              <Node name="Dependencies" expanded="True" />
-              <Node name="Pages" expanded="True">
-                <Node name="OrderingSite.razor" expanded="True" selected="True" />
-              </Node>
-            </Node>
-          </Node>
+          <Node name="gui-dos" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
