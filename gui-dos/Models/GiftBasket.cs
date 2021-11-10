@@ -12,6 +12,8 @@ namespace gui_dos.Models
         [Key]
         public int GiftBasketId { get; set; }
 
+        public string Title { get; set; }
+
         ///<summary>Gets or sets the status of the gift-basket. </summary>
         public GiftBasketStatus Status { get; set; }
 
@@ -25,8 +27,9 @@ namespace gui_dos.Models
         ///<param name="comment"> the comment for the particular gift-basket. </param>
         ///<param name="price"> the price of the gift basket in danske oere. </param>
         ///</summary>
-        public GiftBasket(string comment, int price)
+        public GiftBasket(string title, string comment, int price)
         {
+            Title = title;
             Comment = comment;
             Price = price;
             Status = GiftBasketStatus.Pending;

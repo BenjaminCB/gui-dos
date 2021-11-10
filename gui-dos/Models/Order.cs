@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using MailKit.Net.Smtp;
 using MimeKit;
+using gui_dos.Forms;
 
 namespace gui_dos.Models
 {
@@ -70,12 +71,36 @@ namespace gui_dos.Models
         }
 
         ///<summary>Constructs an order object.
+        ///<summary>Constructs an order object with the specified giftbaskets.
         ///</summary>
-        public Order()
+        public Order(List<GiftBasket> giftBaskets)
         {
-            GiftBaskets = new List<GiftBasket>();
+            GiftBaskets = giftBaskets;
             Changelog = new List<Change>();
             Status = OrderStatus.Pending;
+
+        }
+
+        public void StripInformation()
+        {
+            FirstName = "";
+            LastName = "";
+            Email = "";
+            PhoneNumber = ""; 
+        }
+              
+        public void FillInformation(OrderForm orderDetails) {
+            FirstName = orderDetails.FirstName;
+            LastName = orderDetails.LastName;
+            Email = orderDetails.Email;
+            PhoneNumber = orderDetails.PhoneNumber;
+            Comment = orderDetails.Comment;
+            DateOrdered = DateTime.Now;
+        }
+
+        public override string ToString()
+        {
+            return $"Order #{OrderId} - Name: {FirstName} {LastName} - Email: {Email} - Phone: {PhoneNumber} - Date Ordered: {DateOrdered.ToString("dd/MM/yyyy")}";
         }
     }
 }
