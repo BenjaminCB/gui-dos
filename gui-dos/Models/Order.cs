@@ -53,11 +53,11 @@ namespace gui_dos.Models
         {
             var mailMessage = new MimeMessage();
             mailMessage.From.Add(new MailboxAddress("Isvaerftet", "noreply@Isvaerftet.dk"));
-            mailMessage.To.Add(new MailboxAddress(Name, Email));
+            mailMessage.To.Add(new MailboxAddress(FirstName + " " + LastName, Email));
             mailMessage.Subject = "Din odre er nu " + Status;
             mailMessage.Body = new TextPart("plain")
             {
-                Text = $"Hej, {Name} din odre er nu {Status}"
+                Text = $"Hej, {FirstName} din odre er nu {Status}"
             };
 
             using (var smtpClient = new SmtpClient())

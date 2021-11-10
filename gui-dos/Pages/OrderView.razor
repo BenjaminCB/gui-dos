@@ -7,6 +7,7 @@
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 
+
 @if (orders != null && orders.Count == 0)
 {
     <div>
@@ -18,23 +19,24 @@
 {
     @foreach (var order in orders)
     {
+        
         <div>
-            <OrderComp Order="@order" />
-
-            <button @onclick="() => productEdit(product)">
-                Edit
-            </button>
-
-            <button @onclick="() => productDelete(product)">
-                Delete
-            </button>
+            <div>
+                
+            </div>
+            <div>
+                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
+                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
+                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finnished</button>
+                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
+            </div>
         </div>
     }
 }
 @code
 {
     private List<Order> orders;
-    
+
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
@@ -42,17 +44,15 @@
             orders = await ctx.Orders.ToListAsync();
         }
     }
+
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            ctx.Orders.Remove(o);
-            o.Status = s;
-            ctx.Orders.Add(o);
+            Order thisOrder = ctx.Update(o).Entity;
+            thisOrder.Status = s;
             await ctx.SaveChangesAsync();
             orders = await ctx.Orders.ToListAsync();
-            
         }
     }
-    
 }
