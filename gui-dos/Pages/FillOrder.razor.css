@@ -1,0 +1,16 @@
+.left{
+    width: 65%;
+    float: left;
+}
+.right{
+    width: 35%;
+    float: right;
+}
+.rightCenter {
+    margin: auto;
+    width: 80%;
+}
+
+#infoBox{
+    
+}

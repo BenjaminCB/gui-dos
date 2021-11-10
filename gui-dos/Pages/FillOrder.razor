@@ -8,40 +8,127 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-<h2>Udfyld ordre detaljer.</h2>
+<div class="left">
+    <h3>Udfyld personlige ordre detaljer.</h3>
 
-<EditForm Model="@orderForm" OnValidSubmit="@OrderOrder">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+    <EditForm Model="@orderForm" OnValidSubmit="@OrderOrder">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <!-- https://getbootstrap.com/docs/4.3/components/forms/#validation  Skal bruge JS hvis det skal se meget pænt ud, men kan ikke finde ud af det-->
+        <!-- Hver row's col-md-TAL skal pr. row gå op i 12 for at fylde 100% -->
+        <form class="needs-validation" novalidate>
 
-    <div class="form-group">
-        <label for="Fornavn">Fornavn</label>
-        <InputText @bind-Value=orderForm.FirstName />
-    </div>
-    <div class="form-group">
-        <label for="Efternavn">Efternavn</label>
-        <InputTextArea @bind-Value=orderForm.LastName />
-    </div>
-    <div class="form-group">
-        <label for="Email">Email</label>
-        <InputTextArea @bind-Value=orderForm.Email />
-    </div>
-    <div class="form-group">
-        <label for="Telefon">Telefon</label>
-        <InputTextArea @bind-Value=orderForm.PhoneNumber />
-    </div>
-    <div class="form-group">
-        <label for="Kommentar">Kommentar</label>
-        <InputTextArea @bind-Value=orderForm.Comment />
-    </div>
-    <button type="submit">Bestil Ordre</button>
-</EditForm>
+            <div class="row content">
+                <div class="col-md-2">
+                    <label for="Fornavn" class="formlabel">Navn</label>
+                </div>
+                <div class="col-md-5">
+                    <InputText class="form-control" id="fornavn" @bind-Value=orderForm.FirstName placeholder="Fornavn" />
+                    <div class="invalid-feedback">Must be</div>
+                </div>
 
-@code 
+                <div class="col-md-5">
+                    <InputText class="form-control" id="efternavn" @bind-Value=orderForm.LastName placeholder="Efternavn" />
+                </div>
+            </div>
+
+
+            <div class="row content">
+                <div class="col-md-2">
+                    <label for="Email" class="formlabel">Email</label>
+                </div>
+                <div class="col-md-10 mb-3">
+                    <!-- TODO Make the mail require .com -->
+                    <InputText class="form-control" id="email" @bind-Value=orderForm.Email placeholder="eksempel@mail.dk" />
+                    <div class="invalid-feedback">
+                        Skriv en gyldig email
+                    </div>
+                </div>
+            </div>
+
+            <div class="row content">
+                <div class="col-md-2">
+                    <label for="Telefon" class="formlabel">Telefon</label>
+                </div>
+                <div class="col-md-10">
+                    <!-- TODO Make it only accept a +45 12 12 12 12 number -->
+                    <InputText class="form-control" id="telefon" @bind-Value=orderForm.PhoneNumber />
+                    <small id="telefonHelp" class="form-text text-muted">Skal skrives med bindestrej pAA fx 12-12-12-19</small>
+                </div>
+            </div>
+
+
+            <div class="row content">
+                <div class="col-md-2">
+                    <label for="Dato" class="formlabel">Dato</label>
+                </div>
+                <div class="col-md-6">
+                    <InputDate class="form-control" @bind-Value=orderForm.Date min="@StartDate.ToString("yyyy-MM-dd")" max="@EndDate.ToString("yyyy-MM-dd")" />
+                    <small id="datoHelp" class="form-text text-muted">Den OEnskede dato for afhentning</small>
+                </div>
+                <div class="col-md-4">
+                    <!--TODO If we want to, set this to "As soon as possible"-->
+                    <input type="Checkbox" class="form-check-input" id="123">
+                    <label class="form-check-label" for="123">
+                        Hurtigst muligt
+                    </label>
+                </div>
+            </div>
+
+            <div class="row content">
+                <div class="col-md-2">
+                    <label for="Kommentar" class="formlabel">Kommentar</label>
+                </div>
+                <div class="col-10">
+                    <InputTextArea class="form-control" @bind-Value=orderForm.Comment rows="5" placeholder="Her kan du tilfOEre en kommentar til fx. ordens udsegene" />
+                </div>
+            </div>
+
+            <br />
+
+            <!-- Knappen længest til højrer skal skubbes til højre først-->
+            <button type="button" class="btn btn-outline-secondary float-right">Cancel</button>
+            <button type="submit" class="btn btn-outline-primary float-right">Bestil Ordre</button>
+        </form>
+    </EditForm>
+</div>
+
+<!-- Mangler padding og/eller margin og Google-maps er der men er jo ikke interet perfektv-->
+<div class="right">
+    <div class="rightCenter">
+        <br />
+        <br />
+        <div class="border border-primary rounded-sm" id="infoBox">
+            <p>
+                Kommentar fra IsVærftet <br />
+                Det skal forventes at at tage 2-3 dage for acceptering af ordre <br />
+                Ønskes der yderligere information eller rettelse i ordren kontakt 10 10 10 10. <br />
+                Din ordre vil stå klar til dig i op til 3 dage fra den ønskede leverings dag. <br />
+                OSV.
+            </p>
+        </div>
+            <br />
+        <!--TODO Interger ordenligt eller 'always match Parent box'-->
+        <div class="border border-primary">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d683.6006303688246!2d9.937502585171574!3d57.04800395879132!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4649331f49ed035d%3A0x8769f002b43138cf!2sIsV%C3%A6rftet!5e0!3m2!1sda!2sdk!4v1636475308092!5m2!1sda!2sdk" width="350" height="320" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="border border-primary">
+            <p>Afhentning: Stjernepladsen 43, 9000 Aalborg</p>
+        </div>
+        <br />
+        <br />
+    </div>
+</div>
+
+@code
 {
+
+    public static DateTime StartDate { get; set; } = DateTime.Now;
+    //Der kan her ændres hvor langt ud i fremtiden man skal have den færtig til
+    public static DateTime EndDate { get; set; } = StartDate.AddMonths(3);
     private OrderForm orderForm = new OrderForm();
 
-    private async Task OrderOrder() 
+    private async Task OrderOrder()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
