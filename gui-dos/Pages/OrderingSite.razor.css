@@ -1,4 +1,4 @@
-body{
+body {
     background-color: #309D9B;
     margin: 0;
     padding: 0;
@@ -47,20 +47,19 @@ body{
 
 
 .container {
-    
     flex-wrap: wrap;
 }
 
 .wrap {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-}  
+}
 
 .flex-container {
     padding: 0;
     margin: 0;
     list-style: none;
-    border: 1px solid silver;
+    /*border: 1px solid silver;*/
     -ms-box-orient: horizontal;
     display: -webkit-box;
     display: -moz-box;
@@ -73,31 +72,67 @@ body{
     justify-content: space-evenly;
 }
 
-.flex-body{
-    height: 370px;
-    width: 390px;
+.flex-body {
+    height: 360px;
+    width: 400px;
     background-color: white;
     padding-bottom: 1vh;
     margin: 10px;
+    border: solid;
+    border-width: thin;
+    position: relative;
+    transition: box-shadow 1s;
+    transition: height 0.5s;
 }
+
+    .flex-body:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        height: 380px;
+        z-index: 1;
+    }
 
 .flex-img {
     height: 320px;
-    width: 390px;
-    /* width * hight */
-    background-size: 390px 320px;
+    width: 100%;
+    background-size: 100% 320px;
     line-height: 100px;
     background-image: url("https://i.insider.com/59ca65fefca6e427008b4776?width=700");
 }
 
-.flex-text{
-
+.flex-text {
+    padding-top: 5px;
 }
 
-.flex-title{
+.flex-title {
     float: left;
+    padding-left: 1vw;
+    font-size: large;
 }
 
-.flex-price{
+.flex-price {
     float: right;
+    padding-right: 1vw;
+    font-size: large;
+}
+
+.see-more {
+    text-align: left;
+    position: absolute;
+    bottom: 0.5vh;
+    left: 1vw;
+    visibility: hidden;
+    border: none;
+    background: none;
+    padding: 0;
+}
+
+.flex-body:hover .see-more {
+    visibility: visible;
+}
+
+.description {
+    z-index: 101;
+    background-color: white;
+    height: fit-content;
+    margin: 10px;
 }
