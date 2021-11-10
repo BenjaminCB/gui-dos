@@ -37,7 +37,7 @@
         {
             DateTime now = DateTime.Now;
             oldOrders = await ctx.Orders
-                .Where(d => d.DateOrdered.AddDays(500) > now)
+                .Where(d => d.DateOrdered.AddDays(500) < now)
                 .ToListAsync();  
         }
     }
