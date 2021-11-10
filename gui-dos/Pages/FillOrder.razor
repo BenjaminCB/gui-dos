@@ -125,7 +125,7 @@
 
     public static DateTime StartDate { get; set; } = DateTime.Now;
     //Der kan her ændres hvor langt ud i fremtiden man skal have den færtig til
-    public static DateTime EndDate { get; set; } = StartDate.AddDays(15.0);
+    public static DateTime EndDate { get; set; } = StartDate.AddMonths(3);
     private OrderForm orderForm = new OrderForm();
 
     private async Task OrderOrder()
