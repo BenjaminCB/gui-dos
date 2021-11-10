@@ -83,20 +83,6 @@ using gui_dos.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
-using Radzen;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
-using Radzen.Blazor;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 3 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/FetchData.razor"
 using gui_dos.Data;
 

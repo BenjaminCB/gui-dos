@@ -37,6 +37,41 @@ body[b-cgqux6sexy] {
     padding-right: 10%;
 }
 
+.slider[b-cgqux6sexy] {
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 10px; /* Specified height */
+    border-radius: 5px;
+    background: white; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.slider:hover[b-cgqux6sexy] {
+    opacity: 1;
+}
+
+.slider[b-cgqux6sexy]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
+.slider[b-cgqux6sexy]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
 .price_One[b-cgqux6sexy] {
     float: left;
 }
@@ -124,6 +159,7 @@ body[b-cgqux6sexy] {
     border: none;
     background: none;
     padding: 0;
+    height: fit-content;
 }
 
 .flex-body:hover .see-more[b-cgqux6sexy] {

@@ -82,20 +82,6 @@ using gui_dos.Shared;
 #line default
 #line hidden
 #nullable disable
-#nullable restore
-#line 11 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
-using Radzen;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
-using Radzen.Blazor;
-
-#line default
-#line hidden
-#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/counter")]
     public partial class Counter : Microsoft.AspNetCore.Components.ComponentBase
     {

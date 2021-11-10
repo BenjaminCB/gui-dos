@@ -37,6 +37,41 @@ body {
     padding-right: 10%;
 }
 
+.slider {
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 10px; /* Specified height */
+    border-radius: 5px;
+    background: white; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
 .price_One {
     float: left;
 }
@@ -85,11 +120,11 @@ body {
     transition: height 0.5s;
 }
 
-    .flex-body:hover {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        height: 380px;
-        z-index: 1;
-    }
+.flex-body:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 380px;
+    z-index: 1;
+}
 
 .flex-img {
     height: 320px;
@@ -124,6 +159,7 @@ body {
     border: none;
     background: none;
     padding: 0;
+    height: fit-content;
 }
 
 .flex-body:hover .see-more {

@@ -7,7 +7,6 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'BlazorApp' " />
   <ItemGroup>
-    <PackageReference Include="Radzen.Blazor" Version="3.11.11" />
+    <None Remove="Syncfusion.Blazor.Calendars" />
   </ItemGroup>
-
 </Project>

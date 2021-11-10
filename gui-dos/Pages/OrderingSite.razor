@@ -12,11 +12,9 @@
             <h2 class="title_Header">Filter</h2>
             <h3 class="sub_Header">Pris</h3>
             <div class="Price_Range">
-                <RadzenSlider Range="true" @bind-Value=@values TValue="IEnumerable<int>" Change=@(args => OnChange(args, "Range Slider")) />
-                <p class="price_One"> @JoinVal1,- </p>
-                <p class="price_Two"> @JoinVal2,-</p>
+                <input type="range" min="0" max="1000" class="slider" step="1" @bind="SetNumber" @bind:event="oninput"/>
+                <p>Maks pris: @SetNumber,-</p>
             </div>
-            <br />
             <h3 class="sub_Header">Præferencer</h3>
             <div class="Preferences">
                 <form>
@@ -33,7 +31,7 @@
             <ul class="flex-container wrap">
                 @foreach (var item in Products)
                 {
-                    @if (item.Price >= @start && item.Price <= @end)
+                    @if (item.Price <= SetNumber)
                     {
                         <li>
                             <div class="flex-body">
@@ -42,11 +40,10 @@
                                     <h4 class="flex-title">@item.Title</h4>
                                     <h4 class="flex-price">@item.Price,- kr</h4>
                                 </div>
-                                <button class="see-more" @onclick="ShowDescription">Se mere</button>
-                                <br>
-                                <div class="description" hidden="@isShown">
-                                    <p>@item.Description</p>
+                                <div>
+                                    <p class="see-more">@item.Description</p>
                                 </div>
+
                             </div>
                         </li>
                     }
@@ -59,22 +56,6 @@
 </body>
 
 @code {
-    // https://blazor.radzen.com/slider
-    static int start = 1;
-    static int end = 100;
-    IEnumerable<int> values = new int[] { start, end };
-    IEnumerable<int> negativeValues = new int[] { -100, 100 };
-    string[] Val;
-    string JoinVal1 = $"{start}";
-    string JoinVal2 = $"{end}";
-
-    void OnChange(dynamic value, string name)
-    {
-        var str = value is IEnumerable<int> ? string.Join(", ", value) : value;
-        Val = str.Split(",");
-        JoinVal1 = $"{Val[0]}";
-        JoinVal2 = $"{Val[1]}";
-    }
 
     // Delete when linked to Database
     public class Product
@@ -116,6 +97,7 @@
     public static List<Content> Conten = new List<Content> { };
 
 
+    private int SetNumber { get; set; } = 1000;
 
     private bool isShown { get; set; } = true;
     private void ShowDescription()

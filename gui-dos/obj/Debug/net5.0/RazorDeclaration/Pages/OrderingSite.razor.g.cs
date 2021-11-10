@@ -82,20 +82,6 @@ using gui_dos.Shared;
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
-using Radzen;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 12 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
-using Radzen.Blazor;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
 #line 3 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
 using gui_dos.Data;
 
@@ -118,24 +104,8 @@ using System.Collections.Generic;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 61 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 58 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
        
-    // https://blazor.radzen.com/slider
-    static int start = 1;
-    static int end = 100;
-    IEnumerable<int> values = new int[] { start, end };
-    IEnumerable<int> negativeValues = new int[] { -100, 100 };
-    string[] Val;
-    string JoinVal1 = $"{start}";
-    string JoinVal2 = $"{end}";
-
-    void OnChange(dynamic value, string name)
-    {
-        var str = value is IEnumerable<int> ? string.Join(", ", value) : value;
-        Val = str.Split(",");
-        JoinVal1 = $"{Val[0]}";
-        JoinVal2 = $"{Val[1]}";
-    }
 
     // Delete when linked to Database
     public class Product
@@ -177,6 +147,7 @@ using System.Collections.Generic;
     public static List<Content> Conten = new List<Content> { };
 
 
+    private int SetNumber { get; set; } = 1000;
 
     private bool isShown { get; set; } = true;
     private void ShowDescription()
