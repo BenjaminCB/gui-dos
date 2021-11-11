@@ -1,0 +1,174 @@
+body[b-cgqux6sexy] {
+    background-color: #309D9B;
+    margin: 0;
+    padding: 0;
+    height: 94.45vh;
+    background-size: 100%;
+}
+
+#product-list[b-cgqux6sexy] {
+    width: 82%;
+    float: right;
+    height: 90vh;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+#filter[b-cgqux6sexy] {
+    width: 18%;
+    float: left;
+    border-style: ridge;
+    height: 90vh;
+}
+
+.title_Header[b-cgqux6sexy] {
+    text-align: center;
+    padding-top: 0.5vh;
+}
+
+.sub_Header[b-cgqux6sexy] {
+    padding-left: 1vw;
+}
+
+.Price_Range[b-cgqux6sexy] {
+    display: inline-block;
+    width: 100%;
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+.slider[b-cgqux6sexy] {
+    -webkit-appearance: none; /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 10px; /* Specified height */
+    border-radius: 5px;
+    background: white; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.slider:hover[b-cgqux6sexy] {
+    opacity: 1;
+}
+
+.slider[b-cgqux6sexy]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
+.slider[b-cgqux6sexy]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: black;
+    cursor: pointer;
+}
+
+.price_One[b-cgqux6sexy] {
+    float: left;
+}
+
+.price_Two[b-cgqux6sexy] {
+    float: right;
+}
+
+
+.container[b-cgqux6sexy] {
+    flex-wrap: wrap;
+}
+
+.wrap[b-cgqux6sexy] {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.flex-container[b-cgqux6sexy] {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    /*border: 1px solid silver;*/
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+    position: relative;
+    align-items: start;
+    justify-content: space-evenly;
+}
+
+.flex-body[b-cgqux6sexy] {
+    height: 360px;
+    width: 400px;
+    background-color: white;
+    padding-bottom: 1vh;
+    margin: 10px;
+    border: solid;
+    border-width: thin;
+    position: relative;
+    transition: box-shadow 1s;
+    transition: height 0.5s;
+}
+
+.flex-body:hover[b-cgqux6sexy] {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 380px;
+    z-index: 1;
+}
+
+.flex-img[b-cgqux6sexy] {
+    height: 320px;
+    width: 100%;
+    background-size: 100% 320px;
+    line-height: 100px;
+    /* background-image: url("https://i.insider.com/59ca65fefca6e427008b4776?width=700"); */
+}
+
+.flex-text[b-cgqux6sexy] {
+    padding-top: 5px;
+}
+
+.flex-title[b-cgqux6sexy] {
+    float: left;
+    padding-left: 1vw;
+    font-size: large;
+}
+
+.flex-price[b-cgqux6sexy] {
+    float: right;
+    padding-right: 1vw;
+    font-size: large;
+}
+
+.see-more[b-cgqux6sexy] {
+    text-align: left;
+    position: absolute;
+    bottom: 0.5vh;
+    left: 1vw;
+    visibility: hidden;
+    border: none;
+    background: none;
+    padding: 0;
+    height: fit-content;
+}
+
+.flex-body:hover .see-more[b-cgqux6sexy] {
+    visibility: visible;
+}
+
+.description[b-cgqux6sexy] {
+    z-index: 101;
+    background-color: white;
+    height: fit-content;
+    margin: 10px;
+}

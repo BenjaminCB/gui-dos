@@ -1,0 +1,103 @@
+﻿@page "/shop"
+
+@using gui_dos.Data
+@using System.Collections.Generic
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject ShoppingCart ShoppingCart
+@inject NavigationManager NavMan
+
+
+<body>
+    <section id="product-page-wrapper">
+
+        <!--Filter section-->
+        <section id="filter">
+            <h2 class="title_Header">Filter</h2>
+            <h3 class="sub_Header">Pris</h3>
+            <div class="Price_Range">
+                <input type="range" min="0" max="100000" class="slider" step="1" @bind="SetNumber" @bind:event="oninput"/>
+                <p>Maks pris: @SetNumber,-</p>
+            </div>
+            <h3 class="sub_Header">Præferencer</h3>
+            <div class="Preferences">
+                <form>
+                    <input type="checkbox" id="checkbox1" />
+                    <label for="checkbox1">Sæson-</label>
+                </form>
+            </div>
+        </section>
+
+        <!--Product section-->
+        <!--TODO: Link to Database-->
+        <section id="product-list">
+            <h1 class="title_Header">Produkter</h1>
+            <ul class="flex-container wrap">
+                @foreach (var item in products)
+                {
+                    @if (item.Price <= SetNumber)
+                    {
+                        <li>
+                            <div class="flex-body">
+                                <div class="flex-img">
+                                    <img src="@item.Image" height="320" width="320">
+                                </div>
+                                <div class="flex-text">
+                                    <h4 class="flex-title">@item.Title</h4>
+                                    <h4 class="flex-price">@item.Price,- kr</h4>
+                                </div>
+                                <div>
+                                    <p class="see-more">@item.Description</p>
+                                </div>
+                                <button @onclick="() => addToCart(item)">
+                                    Add to cart
+                                </button>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </section>
+
+        <!-- should show cart and not go to cart endpoint -->
+        <button @onclick="goToCart">
+            Show cart
+        </button>
+
+    </section>
+
+</body>
+
+@code {
+    /* private List<Content> content = new List<Content>(); */
+
+    private List<Product> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            products = await ctx.Products.ToListAsync();
+        }
+    }
+
+    // TODO add comment functionality
+    private void addToCart(Product p)
+    {
+        ShoppingCart.GiftBaskets.Add(new GiftBasket(p.Title, "", (int) p.Price));
+    }
+
+    private void goToCart()
+    {
+        NavMan.NavigateTo("/cart");
+    }
+
+    private int SetNumber { get; set; } = 1000;
+
+    private bool isShown { get; set; } = true;
+    private void ShowDescription()
+    {
+        isShown = !isShown;
+    }
+}
