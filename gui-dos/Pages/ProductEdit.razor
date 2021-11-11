@@ -7,7 +7,7 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-<h1>ProductId is @ProductId</h1>
+<h1 class="header">Produkt-Id er @ProductId</h1>
 
 @if (product == null)
 {
@@ -17,28 +17,34 @@
 }
 else
 {
-    <EditForm Model="@productForm" OnValidSubmit="@editProduct">
-        <DataAnnotationsValidator/>
-        <ValidationSummary/>
+<body>
 
-        <div class="form-group">
-            <label for="Title">Title</label>
+    <EditForm Model="@productForm" OnValidSubmit="@editProduct">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="form-group product-title">
+            <label for="Title" class="title">Titel</label>
             <InputText @bind-Value=productForm.Title />
         </div>
-        <div class="form-group">
-            <label for="Description">Description</label>
-            <InputTextArea @bind-Value=productForm.Description />
+        <div class="form-group product-description">
+            <label for="Description" class="title">Beskrivelse</label>
+            <div class="description-box">
+                <InputTextArea @bind-Value=productForm.Description />
+            </div>
         </div>
-        <div class="form-group">
-            <label for="Price">Price</label>
-            <InputNumber @bind-Value=productForm.Price />
-        </div>
-        <div class="form-group">
-            <label for="Image">Image</label>
+            <div class="form-group product-price">
+                <label for="Price" class="title">Pris</label>
+                <InputNumber @bind-Value=productForm.Price />
+            </div>
+         <div class="form-group product-image">
+            <label for="Image" class="title">Billede(r)</label>
             <InputFile OnChange="@fileUpload" />
-        </div>
-        <button type="submit">Submit</button>
-    </EditForm>
+         </div>
+         <button type="submit">Submit</button>
+</EditForm>
+
+</body>
 }
 
 @code {
