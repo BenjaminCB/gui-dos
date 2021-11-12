@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using gui_dos.Data;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
 
 namespace gui_dos
 {
@@ -28,6 +29,7 @@ namespace gui_dos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddMudServices();
             services.AddServerSideBlazor();
             services.AddScoped<Data.ShoppingCart>();
 

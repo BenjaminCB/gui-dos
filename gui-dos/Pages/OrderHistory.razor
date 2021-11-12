@@ -26,54 +26,140 @@
     </div>
 }
 
+<!-- TODO Lav "Table with related data" MudBlazor istedet -->
 @if (oldOrders != null)
 {
-    @foreach (Order order in oldOrders)
-    {
-        <div>
-            <p>
-                Date ordered: @order.DateOrdered.ToString()
-                Deadline: @order.DateDeadline.ToString()
-                Name: @order.FirstName @order.LastName
-                Price: @order.Price
-            </p>
-
-            
-            @if (orderIsShown && orderToShow.Equals(order))
+    
+    <MudTable Items="@oldOrders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true">
+        <ColGroup>
+            <col style="width:20%" />
+            <col style="width:20%;" />
+            <col style="width:20%;" />
+            <col style="width:10%;" />
+            <col />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh></MudTh>
+            <MudTh>Oprettet</MudTh>
+            <MudTh>Afsluttet</MudTh>
+            <MudTh>Navn</MudTh>
+            <MudTh>Pris</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
+                    @((context.ShowDetails == true)? "Fjern" : "Vis") mere info
+                </MudButton>
+            </MudTd>
+            <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
+            <MudTd DataLabel="Afsluttet">@context.DateDeadline</MudTd>
+            <MudTd DataLabel="Navn">@context.FirstName</MudTd>
+            <MudTd DataLabel="Pris">@context.Price</MudTd>
+            <!-- https://mudblazor.com/components/table#table-with-related-data Vil lave dether, da ChildRowContent kan være hvadsomhelst, Tænker man kan lave flere af dem-->
+        </RowTemplate>
+        <ChildRowContent>
+            @if (context.ShowDetails)
             {
+                <MudTr>
+                    <td colspan="4">
+                        <MudCard Elevation="0">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong></MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent Class="pa-0">
+                                <MudTable Items="@oldOrders" Context="Child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                        <ColGroup>
+                                            <col />
+                                            <col />
+                                            <col style="width:10%;" />
+                                        </ColGroup>
+                                        <HeaderContent>
+                                            <MudTh>Email</MudTh>
+                                            <MudTh>Telnr</MudTh>
+                                            <MudTh>Kommentar</MudTh>
+                                        </HeaderContent>
+                                        <RowTemplate>
+                                    @if (context.OrderId == Child.OrderId) 
+                                    {
+                                            <MudTd DataLabel="Email">@Child.Email</MudTd>
+                                            <MudTd DataLabel="Telnr">@Child.PhoneNumber</MudTd>
+                                            <MudTd DataLabel="Kommentar">@Child.Comment</MudTd>
+                                    }
+                                        </RowTemplate>
+                                </MudTable>
+                            </MudCardContent>
+                        </MudCard>
+                    </td>
+                </MudTr>
+            }
+            </ChildRowContent>
+    </MudTable>
+
+        @foreach (Order order in oldOrders)
+    {
+        <div class="border border-dark">
+            <div style="margin-bottom: 10px; margin-left: 6px;">
                 <p>
-                    Mail: @order.Email
-                    Tlf. nr: @order.PhoneNumber
-                    Comment: @order.Comment
+                    Oprettet: @order.DateOrdered.ToString()      <br />
+                    Afsluttet: @order.DateDeadline.ToString()    <br />
+                    Navn: @order.FirstName @order.LastName      <br />
+                    Pris: @order.Price,-
                 </p>
-                <div>
-                    @foreach (GiftBasket giftBasket in order.GiftBaskets)
-                    {
-                        <div>
-                            <p>
-                                Giftbasket: Det er i benjamins kode, implementer senerer.
-                                Comment: @giftBasket.Comment
-                                Price: @giftBasket.Price
-                            </p>
-                        </div>
-                    }
-                </div>
-    }
-    @if (!orderIsShown || !orderToShow.Equals(order))
-    {
-        <button @onclick="() => showOrder(order)">
-            Show order
-        </button>
-    }
-    else
-    {
-        <button @onclick="() => hideOrder(order)">
-            Hide order
-        </button>
-    }
 
+                @if (!orderIsShown || !orderToShow.Equals(order))
+                {
+                    <button @onclick="() => showOrder(order)">
+                        Show order
+                    </button>
+                }
+                else
+                {
+                    <button @onclick="() => hideOrder(order)">
+                        Hide order
+                    </button>
+                }
 
-</div>
+                @if (orderIsShown && orderToShow.Equals(order))
+                {
+                    <div class="border border-primary" style="margin-left: 10px; width: 70%">
+                        <p>
+                            Mail: @order.Email                      <br />
+                            Tlf. nr: @order.PhoneNumber             <br />
+                            Ordre-Kommentar:
+                            @if (order.Comment != null)
+                            {
+                                <div class="border border-primary" style="margin-left: 10px; width: 70%">
+                                    @order.Comment
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="border border-primary" style="margin-left: 10px; width: 70%">
+                                    <p class="text-muted" style="pointer-events: none;">Der var ingen kommentar på ordren</p>
+                                </div>
+                            }
+                        </p>
+                    </div>
+                    <div>
+                        @foreach (GiftBasket giftBasket in order.GiftBaskets)
+                        {
+                            <div>
+                                <p>
+                                    Giftbasket: Det er i benjamins kode, implementer senerer.
+                                    Comment: @giftBasket.Comment
+                                    Price: @giftBasket.Price
+                                </p>
+                            </div>
+                        }
+                    </div>
+                }
+
+            </div>
+        </div>
+        <br />
+      //HVIS DER IKKE ØNSKES MELLEMRUM MELLEM ORDERNE SKAL DENNE SLETTES
     }
 }
 
@@ -88,7 +174,8 @@
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            oldOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).OrderBy(t=>t.DateOrdered).ToListAsync();
+            oldOrders = await ctx.Orders.OrderBy(t => t.DateOrdered).ToListAsync();
+            // ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).OrderBy(t=>t.DateOrdered).ToListAsync();
         }
     }
 
@@ -104,5 +191,11 @@
     {
         orderIsShown = false;
     }
-
+    
+    private void ShowBtnPress(int nr)
+    {
+        Order tmpPerson = oldOrders.First(f => f.OrderId == nr);
+        tmpPerson.ShowDetails = !tmpPerson.ShowDetails;
+    }
+    
 }

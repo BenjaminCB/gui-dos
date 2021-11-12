@@ -46,6 +46,8 @@ namespace gui_dos.Models
         ///<summary>Gets or set the list of changes made to the order. </summary>
         public List<Change> Changelog { get; set; }
 
+        public bool ShowDetails { get; set; } = false;
+
         ///<summary>Constructs an order object with the specified giftbaskets.
         ///</summary>
         public Order(List<GiftBasket> giftBaskets)
