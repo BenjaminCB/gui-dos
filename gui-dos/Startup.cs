@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using gui_dos.Data;
 using Microsoft.EntityFrameworkCore;
+using Blazored.Modal;
 
 namespace gui_dos
 {
@@ -30,6 +31,7 @@ namespace gui_dos
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<Data.ShoppingCart>();
+            services.AddBlazoredModal();
 
             var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
             services.AddDbContextFactory<IsvaerftetDbContext>(opt =>

@@ -7,35 +7,90 @@
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 
-
 @if (orders != null && orders.Count == 0)
 {
     <div>
         No products found...
     </div>
 }
-
+<style>
+    .ButtonActive{
+    background-color: #1c7430;
+    }
+</style>
 @if (orders != null)
 {
+    <button class="@(pending?"ButtonActive":"Button")" @onclick="() => ChangeSearchTerms(OrderStatus.Pending)">Pending</button>
+    <button class="@(accepted?"ButtonActive":"Button")" @onclick="() => ChangeSearchTerms(OrderStatus.Accepted)">Accepted</button>
+    <button class="@(finished?"ButtonActive":"Button")" @onclick="() => ChangeSearchTerms(OrderStatus.Finished)">Finished</button>
     @foreach (var order in orders)
     {
         
         <div>
             <div>
+                <div>
+                    <p>
+                        Date ordered: @order.DateOrdered.ToString()
+                        Deadline: @order.DateDeadline.ToString()
+                        Name: @order.FirstName @order.LastName
+                        Price: @order.Price
+                    </p>
                 
-            </div>
+                            
+                    @if (orderIsShown && orderToShow.Equals(order))
+                    {
+                        <p>
+                            Mail: @order.Email
+                            Tlf. nr: @order.PhoneNumber
+                            Comment: @order.Comment
+                        </p>
+                        <div>
+                            @foreach (GiftBasket giftBasket in order.GiftBaskets)
+                            {
+                                <div>
+                                    <p>
+                                        Giftbasket: Det er i benjamins kode, implementer senerer.
+                                        Comment: @giftBasket.Comment
+                                        Price: @giftBasket.Price
+                                    </p>
+                                </div>
+                            }
+                        </div>
+                    }
+                    @if (!orderIsShown || !orderToShow.Equals(order))
+                    {
+                        <button @onclick="() => showOrder(order)">
+                            Show order
+                        </button>
+                    }
+                    else
+                    {
+                        <button @onclick="() => hideOrder(order)">
+                            Hide order
+                        </button>
+                    }
+                
+                
+                </div>
+                </div>
+
+
             <div>
-                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
-                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
-                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finnished</button>
-                <button @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
+                <button class="@((order.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
+                <button class="@((order.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
+                <button class="@((order.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finished</button>
+                <button class="@((order.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
             </div>
         </div>
     }
 }
 @code
 {
-    private List<Order> orders;
+    private bool orderIsShown = false;
+    private Order orderToShow;
+    private bool pending = true, accepted = true, finished = true;
+    private List<Order> orders, pendingOrders, acceptedOrders, finisedOrders;
+    [CascadingParameter] public IModalService Modal { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -43,16 +98,87 @@
         {
             orders = await ctx.Orders.ToListAsync();
         }
+        OrderByDate();
     }
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
-        using (var ctx = DbContextFactory.CreateDbContext())
+        var ConfModal = Modal.Show<ConfComp>("Are you sure?");
+        var result = await ConfModal.Result;
+
+        if (!result.Cancelled)
         {
-            Order thisOrder = ctx.Update(o).Entity;
-            thisOrder.Status = s;
-            await ctx.SaveChangesAsync();
-            orders = await ctx.Orders.ToListAsync();
+            using (var ctx = DbContextFactory.CreateDbContext())
+            {
+                Order thisOrder = ctx.Update(o).Entity;
+                thisOrder.Status = s;
+                await ctx.SaveChangesAsync();
+                orders = await ctx.Orders.ToListAsync();
+                OrderByDate();
+            }
         }
+    }
+
+    private void OrderByDate()
+    {
+        IEnumerable<Order> query = orders.OrderBy(order => order.DateDeadline);
+    }
+
+    private async void ChangeSearchTerms(OrderStatus o)
+    {
+        switch (o)
+        {
+            case OrderStatus.Pending:
+                pending = !pending;
+                break;
+            case OrderStatus.Accepted:
+                accepted = !accepted;
+                break;
+            case OrderStatus.Finished:
+                    finished = !finished;
+                break;
+        }
+        await using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            if (pending)
+            {
+                pendingOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Pending).ToListAsync();
+            }
+            else
+            {
+                pendingOrders = new List<Order>();
+            }
+            if (accepted)
+            {
+                acceptedOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Accepted).ToListAsync();
+            }
+            else
+            {
+                acceptedOrders = new List<Order>();
+            }
+            if (finished)
+            {
+                finisedOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Finished).ToListAsync();
+            }
+            else
+            {
+                finisedOrders = new List<Order>();
+            }
+            
+        }
+        pendingOrders.AddRange(acceptedOrders);
+        pendingOrders.AddRange(finisedOrders);
+        orders = pendingOrders;
+    }
+
+    private void showOrder(Order o)
+    {
+        orderToShow = o;
+        orderIsShown = true;
+    }
+
+    private void hideOrder(Order o)
+    {
+        orderIsShown = false;
     }
 }

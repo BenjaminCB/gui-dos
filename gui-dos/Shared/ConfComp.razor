@@ -1,0 +1,11 @@
+<div>
+    <button @onclick="ModalInstance.CancelAsync">No</button>
+    <button @onclick="Yes">yes</button>
+    
+</div>
+@code{
+    [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }
+    void Yes(){
+    ModalInstance.CloseAsync(ModalResult.Ok($"We good"));
+    }
+}
