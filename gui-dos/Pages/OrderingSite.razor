@@ -3,6 +3,7 @@
 @using gui_dos.Data
 @using System.Collections.Generic
 @using Microsoft.EntityFrameworkCore;
+@using System.Linq
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject ShoppingCart ShoppingCart
@@ -17,7 +18,7 @@
             <h2 class="title_Header">Filter</h2>
             <h3 class="sub_Header">Pris</h3>
             <div class="Price_Range">
-                <input type="range" min="0" max="100000" class="slider" step="1" @bind="SetNumber" @bind:event="oninput"/>
+                <input type="range" min="@_MinPrice" max="@_MaxPrice" class="slider" step="1" @bind="SetNumber" @bind:event="oninput"/>
                 <p>Maks pris: @SetNumber,-</p>
             </div>
             <h3 class="sub_Header">Præferencer</h3>
@@ -80,6 +81,9 @@
     private List<Product> products;
     private bool showCart = false;
     private Cart _Cart;
+    private int _MaxPrice;
+    private int _MinPrice;
+    private int SetNumber { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -87,6 +91,10 @@
         {
             products = await ctx.Products.ToListAsync();
         }
+
+        _MaxPrice = products.Select(p => (int) p.Price + 1).Max();
+        _MinPrice = products.Select(p => (int) p.Price + 1).Min();
+        SetNumber = _MaxPrice;
     }
 
     // TODO add comment functionality
@@ -96,7 +104,6 @@
         _Cart.Refresh();
     }
 
-    private int SetNumber { get; set; } = 1000;
 
     private bool isShown { get; set; } = true;
     private void ShowDescription()

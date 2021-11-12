@@ -8,7 +8,6 @@ namespace gui_dos.Pages
 {
     #line hidden
     using System;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
@@ -116,6 +115,13 @@ using Microsoft.EntityFrameworkCore;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 6 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+using System.Linq;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/shop")]
     public partial class OrderingSite : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -125,13 +131,16 @@ using Microsoft.EntityFrameworkCore;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 77 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 78 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
        
     /* private List<Content> content = new List<Content>(); */
 
     private List<Product> products;
     private bool showCart = false;
     private Cart _Cart;
+    private int _MaxPrice;
+    private int _MinPrice;
+    private int SetNumber { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -139,6 +148,10 @@ using Microsoft.EntityFrameworkCore;
         {
             products = await ctx.Products.ToListAsync();
         }
+
+        _MaxPrice = products.Select(p => (int) p.Price + 1).Max();
+        _MinPrice = products.Select(p => (int) p.Price + 1).Min();
+        SetNumber = _MaxPrice;
     }
 
     // TODO add comment functionality
@@ -148,7 +161,6 @@ using Microsoft.EntityFrameworkCore;
         _Cart.Refresh();
     }
 
-    private int SetNumber { get; set; } = 1000;
 
     private bool isShown { get; set; } = true;
     private void ShowDescription()
