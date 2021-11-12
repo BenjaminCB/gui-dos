@@ -125,11 +125,13 @@ using Microsoft.EntityFrameworkCore;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 72 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 77 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
        
     /* private List<Content> content = new List<Content>(); */
 
     private List<Product> products;
+    private bool showCart = false;
+    private Cart _Cart;
 
     protected override async Task OnInitializedAsync()
     {
@@ -143,11 +145,7 @@ using Microsoft.EntityFrameworkCore;
     private void addToCart(Product p)
     {
         ShoppingCart.GiftBaskets.Add(new GiftBasket(p.Title, "", (int) p.Price));
-    }
-
-    private void goToCart()
-    {
-        NavMan.NavigateTo("/cart");
+        _Cart.Refresh();
     }
 
     private int SetNumber { get; set; } = 1000;

@@ -243,7 +243,6 @@ C:/Users/peter/OneDrive - Aalborg Universitet/3.semester/gui-dos/gui-dos/obj/Deb
 /home/bcb/git/gui-dos/gui-dos/bin/Debug/net5.0/runtimes/win-arm64/native/e_sqlite3.dll
 /home/bcb/git/gui-dos/gui-dos/bin/Debug/net5.0/runtimes/win-x64/native/e_sqlite3.dll
 /home/bcb/git/gui-dos/gui-dos/bin/Debug/net5.0/runtimes/win-x86/native/e_sqlite3.dll
-/home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.csproj.AssemblyReference.cache
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.GeneratedMSBuildEditorConfig.editorconfig
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.csproj.CoreCompileInputs.cache
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.MvcApplicationPartsAssemblyInfo.cs
@@ -321,3 +320,4 @@ C:/Users/peter/OneDrive - Aalborg Universitet/3.semester/gui-dos/gui-dos/obj/Deb
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/ref/gui-dos.dll
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.pdb
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.genruntimeconfig.cache
+/home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.csprojAssemblyReference.cache
