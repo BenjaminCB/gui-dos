@@ -7,6 +7,7 @@ Online Gift-Basket ordering system.
 |FsCheck     |dotnet add package FsCheck --version 2.16.3|
 |FsCheck.Xunit|dotnet add package FsCheck.Xunit --version 2.16.3      |
 |MailKit     |dotnet add package MailKit --version 2.15.0|
+|Blazored Modal|dotnet add package Blazored.Modal|
 
 ## endpoints
 - /shop
