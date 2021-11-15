@@ -26,7 +26,9 @@
     @* Shopping cart drawer *@
     <MudDrawer @bind-Open="@_cartOpen" Anchor="Anchor.Right" 
      Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always">
-        @* Shopping cart here *@
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Indkøbskurv</MudText>
+        </MudDrawerHeader>
     </MudDrawer>
 
     @* Page content is displayed in here *@
