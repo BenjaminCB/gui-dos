@@ -13,6 +13,7 @@ using gui_dos.Data;
 using Microsoft.EntityFrameworkCore;
 using gui_dos.Areas.Identity;
 using Microsoft.AspNetCore.Identity;
+using Blazored.Modal;
 
 namespace gui_dos
 {
@@ -33,6 +34,7 @@ namespace gui_dos
             services.AddServerSideBlazor();
             services.AddScoped<Data.ShoppingCart>();
             services.AddScoped<TokenProvider>();
+            services.AddBlazoredModal();
 
             var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
             services.AddDbContextFactory<IsvaerftetDbContext>(opt =>
