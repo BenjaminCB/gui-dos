@@ -13,7 +13,7 @@ namespace gui_dos.Forms
         public string Description { get; set; }
 
         [Required]
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         [Required]
         public string Image { get; set; }

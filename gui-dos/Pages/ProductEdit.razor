@@ -74,10 +74,11 @@ else
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
+            // TODO update this to simpler syntax
             ctx.Products.Remove(product);
             ctx.Products.Add(new Product( productForm.Title
                                         , productForm.Description
-                                        , productForm.Price
+                                        , (int) (productForm.Price * 100)
                                         , productForm.Image ));
             await ctx.SaveChangesAsync();
         }
