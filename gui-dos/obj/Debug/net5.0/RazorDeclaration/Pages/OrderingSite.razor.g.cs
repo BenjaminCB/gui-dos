@@ -68,27 +68,41 @@ using Microsoft.JSInterop;
 #nullable disable
 #nullable restore
 #line 9 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos;
+using MudBlazor;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 10 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Shared;
+using gui_dos;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Models;
+using gui_dos.Shared;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 12 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+using gui_dos.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+using gui_dos.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
 using gui_dos.Areas.Identity;
 
 #line default

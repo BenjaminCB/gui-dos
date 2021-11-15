@@ -67,34 +67,48 @@ using Microsoft.JSInterop;
 #nullable disable
 #nullable restore
 #line 9 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos;
+using MudBlazor;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 10 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Shared;
+using gui_dos;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Models;
+using gui_dos.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Data;
+using gui_dos.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+using gui_dos.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+using gui_dos.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
 using gui_dos.Areas.Identity;
 
 #line default
@@ -117,7 +131,7 @@ using gui_dos.Areas.Identity;
 #line hidden
 #nullable disable
                 ));
-                __builder2.AddAttribute(4, "PreferExactMatches", 
+                __builder2.AddAttribute(4, "PreferExactMatches", Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<System.Boolean>(
 #nullable restore
 #line 4 "/home/bcb/git/gui-dos/gui-dos/App.razor"
                                                                          true
@@ -125,7 +139,7 @@ using gui_dos.Areas.Identity;
 #line default
 #line hidden
 #nullable disable
-                );
+                ));
                 __builder2.AddAttribute(5, "Found", (Microsoft.AspNetCore.Components.RenderFragment<Microsoft.AspNetCore.Components.RouteData>)((routeData) => (__builder3) => {
                     __builder3.OpenComponent<Microsoft.AspNetCore.Components.Authorization.AuthorizeRouteView>(6);
                     __builder3.AddAttribute(7, "RouteData", Microsoft.AspNetCore.Components.CompilerServices.RuntimeHelpers.TypeCheck<Microsoft.AspNetCore.Components.RouteData>(

@@ -70,34 +70,48 @@ using Microsoft.JSInterop;
 #nullable disable
 #nullable restore
 #line 9 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos;
+using MudBlazor;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 10 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Shared;
+using gui_dos;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 11 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Models;
+using gui_dos.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
-using gui_dos.Data;
+using gui_dos.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 13 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+using gui_dos.Models;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 14 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+using gui_dos.Data;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 15 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
 using gui_dos.Areas.Identity;
 
 #line default
@@ -110,6 +124,26 @@ using gui_dos.Areas.Identity;
         {
         }
         #pragma warning restore 1998
+#nullable restore
+#line 20 "/home/bcb/git/gui-dos/gui-dos/Shared/MainLayout.razor"
+ 
+    MudTheme BrandTheme = new MudTheme()
+    {
+        Palette = new Palette()
+        {
+            Primary = "rgb(48, 157, 155)",
+            Secondary = "rgb(149, 224, 229)",
+            Tertiary = "rgb(255, 255, 255)",
+        },
+        LayoutProperties = new LayoutProperties()
+        {
+            AppbarHeight = "2cm"
+        }
+    };
+
+#line default
+#line hidden
+#nullable disable
     }
 }
 #pragma warning restore 1591
