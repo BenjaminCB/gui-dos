@@ -4,8 +4,14 @@
     flex-direction: column;
 }
 
+.content px-4{
+}
+
 .main {
     flex: 1;
+    background-color: #309D9B;
+    width: 100%;
+    height: auto;
 }
 
 .sidebar {
@@ -19,6 +25,10 @@
     height: 3.5rem;
     display: flex;
     align-items: center;
+}
+
+.left-allign {
+    flex: 1 1 1px;
 }
 
     .top-row ::deep a, .top-row .btn-link {

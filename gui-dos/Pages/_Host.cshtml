@@ -1,8 +1,13 @@
 ﻿@page "/"
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @namespace gui_dos.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
+    var tokens = new TokenProvider
+    {
+        XsrfToken = Xsrf.GetAndStoreTokens(HttpContext).RequestToken
+    };
 }
 
 <!DOCTYPE html>
@@ -10,7 +15,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gui-dos</title>
+    <title>IsVaerftet</title>
     <base href="~/" />
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
@@ -20,7 +25,7 @@
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
 </head>
 <body>
-    <component type="typeof(App)" render-mode="ServerPrerendered" />
+    <component type="typeof(App)" param-IntialState="tokens" render-mode="ServerPrerendered" />
 
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
