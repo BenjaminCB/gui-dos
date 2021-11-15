@@ -4,8 +4,19 @@
         @Product.Description
     </p>
     <p>
-        Price: @Product.Price
+        Price: @((double) Product.Price / 100)
     </p>
+    <ul>
+        @foreach (string tag in Product.Tags.Split(' '))
+        {
+            @if (tag != "")
+            {
+                <li>
+                    @tag
+                </li>
+            }
+        }
+    </ul>
     <img src="@Product.Image">
 </div>
 

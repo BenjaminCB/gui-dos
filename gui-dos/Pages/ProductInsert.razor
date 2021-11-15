@@ -41,12 +41,28 @@
             <button type="submit">Submit</button>
         </EditForm>
     </div>
-
-</body>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <InputTextArea @bind-Value=productForm.Description />
+    </div>
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <InputNumber @bind-Value=productForm.Price />
+    </div>
+    <div class="form-group">
+        <label for="Tags">Tags</label>
+        <InputText @bind-Value=productForm.Tags />
+    </div>
+    <div class="form-group">
+        <label for="Image">Image</label>
+        <InputFile OnChange="@fileUpload" />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
 
 @code {
     private long maxImageFileSize = 4096000;
-    private ProductForm productForm = new ProductForm();
+    private ProductForm productForm = new ProductForm() {Tags = ""};
 
     private async Task fileUpload(InputFileChangeEventArgs e)
     {
@@ -62,8 +78,9 @@
         {
             ctx.Products.Add(new Product( productForm.Title
                                         , productForm.Description
-                                        , productForm.Price
-                                        , productForm.Image ));
+                                        , (int) (productForm.Price * 100)
+                                        , productForm.Image
+                                        , productForm.Tags ));
             await ctx.SaveChangesAsync();
         }
         NavMan.NavigateTo("/product/show");

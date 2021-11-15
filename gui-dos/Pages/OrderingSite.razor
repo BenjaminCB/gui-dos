@@ -1,0 +1,144 @@
+﻿@page "/shop"
+
+@using gui_dos.Data
+@using System.Collections.Generic
+@using Microsoft.EntityFrameworkCore
+@using System.Linq
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject ShoppingCart ShoppingCart
+@inject NavigationManager NavMan
+
+
+<body>
+    <section id="product-page-wrapper">
+
+        <!--Filter section-->
+        <section id="filter">
+            <h2 class="title_Header">Filter</h2>
+            <h3 class="sub_Header">Pris</h3>
+            <div class="Price_Range">
+                <input type="range" min="@_MinPrice" max="@_MaxPrice" class="slider" step="1" @bind="_SetNumber" @bind:event="oninput"/>
+                <p>Maks pris: @_SetNumber,-</p>
+            </div>
+            <h3 class="sub_Header">Præferencer</h3>
+            <div class="Preferences">
+                @foreach (string tag in _Tags)
+                {
+                    <label>
+                        @tag
+                        <input type="checkbox" @onchange="@(() => _Toggle(tag))" />
+                    </label>
+                }
+            </div>
+        </section>
+
+        <!--Product section-->
+        <!--TODO: Link to Database-->
+        <section id="product-list">
+            <h1 class="title_Header">Produkter</h1>
+            <ul class="flex-container wrap">
+                @foreach (var item in products)
+                {
+                    @if (_Filter(item))
+                    {
+                        <li>
+                            <div class="flex-body">
+                                <div class="flex-img">
+                                    <img src="@item.Image" height="320" width="320">
+                                </div>
+                                <div class="flex-text">
+                                    <h4 class="flex-title">@item.Title</h4>
+                                    <h4 class="flex-price">@item.Price,- kr</h4>
+                                </div>
+                                <div>
+                                    <p class="see-more">@item.Description</p>
+                                </div>
+                                <button @onclick="() => addToCart(item)">
+                                    Add to cart
+                                </button>
+                            </div>
+                        </li>
+                    }
+                }
+            </ul>
+        </section>
+
+        <!-- should show cart and not go to cart endpoint -->
+        <button @onclick="() => showCart = !showCart">
+            Show cart
+        </button>
+
+        @if (showCart)
+        {
+            <Cart @ref="_Cart"/>
+        }
+
+    </section>
+
+</body>
+
+@code {
+    /* private List<Content> content = new List<Content>(); */
+
+    private List<Product> products;
+    private bool showCart = false;
+    private Cart _Cart;
+    private int _MaxPrice;
+    private int _MinPrice;
+    private int _SetNumber { get; set; }
+    private List<String> _PredicateTags;
+    private List<String> _Tags;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            products = await ctx.Products.ToListAsync();
+        }
+
+        _MaxPrice = products.Select(p => (int) p.Price + 1).Max();
+        _MinPrice = products.Select(p => (int) p.Price + 1).Min();
+        _SetNumber = _MaxPrice;
+
+        _PredicateTags = new List<String>();
+        _Tags = new List<String>();
+        foreach (Product p in products)
+        {
+            _Tags.AddRange(p.Tags.Split(' ').Where(t => t != ""));
+        }
+    }
+
+    private void _Toggle(string tag)
+    {
+        if (_PredicateTags.Contains(tag))
+        {
+            _PredicateTags.Remove(tag);
+        }
+        else
+        {
+            _PredicateTags.Add(tag);
+        }
+    }
+
+    private bool _Filter(Product p)
+    {
+        if (p.Price > _SetNumber) return false;
+        if (_PredicateTags.Count == 0) return true;
+        else return p.Tags.Split(' ').Aggregate(false, (res, tag) => res || _PredicateTags.Contains(tag));
+    }
+
+    // TODO add comment functionality
+    private void addToCart(Product p)
+    {
+        ShoppingCart.GiftBaskets.Add(new GiftBasket(p.Title, "", (int) p.Price));
+        _Cart.Refresh();
+    }
+
+
+    private bool isShown { get; set; } = true;
+    private void ShowDescription()
+    {
+        isShown = !isShown;
+    }
+}
