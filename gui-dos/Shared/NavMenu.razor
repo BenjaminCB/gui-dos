@@ -1,4 +1,5 @@
-﻿<MudPaper Class="mud-primary ma-2">
+﻿@* Visible navigation buttons for all users *@
+<MudPaper Class="mud-primary ma-2">
     <MudNavLink Match="NavLinkMatch.All" Icon="@Icons.Outlined.Home" IconColor="Color.Tertiary" Href="">
         <MudText Color="Color.Tertiary">Forside</MudText>
     </MudNavLink>
@@ -8,3 +9,10 @@
         <MudText Color="Color.Tertiary">Webshop</MudText>
     </MudNavLink>
 </MudPaper>
+
+@* Visible navigation buttons for authorized users *@
+<AuthorizeView>
+    <Authorized>
+        
+    </Authorized>
+</AuthorizeView>
