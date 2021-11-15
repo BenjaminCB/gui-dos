@@ -7,17 +7,24 @@
         <BrandLogoButton/>
         <MudSpacer/>
         <NavMenu/>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Outlined.ShoppingCart" Color="Color.Tertiary" OnClick="ToggleCart"/>
     </MudAppBar>
+    <MudDrawer @bind-Open="@_cartOpen" Anchor="Anchor.Right" ClipMode="DrawerClipMode.Docked">
+    </MudDrawer>
     <MudMainContent>
         @Body
     </MudMainContent>
-    <MudScrollToTop>
-        <MudFab Color="Color.Primary" Icon="@Icons.Filled.ArrowCircleUp" />
-    </MudScrollToTop>
 </MudLayout>
 
 @code 
 {
+    bool _cartOpen = false;
+    void ToggleCart() {
+        _cartOpen = !_cartOpen;
+    }
+
+    // MudBlazor theme customizations
     MudTheme BrandTheme = new MudTheme() 
     {
         Palette = new Palette() 
