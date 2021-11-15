@@ -320,4 +320,4 @@ C:/Users/peter/OneDrive - Aalborg Universitet/3.semester/gui-dos/gui-dos/obj/Deb
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/ref/gui-dos.dll
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.pdb
 /home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.genruntimeconfig.cache
-/home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.csprojAssemblyReference.cache
+/home/bcb/git/gui-dos/gui-dos/obj/Debug/net5.0/gui-dos.csproj.AssemblyReference.cache

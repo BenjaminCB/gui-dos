@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "UpoJK+lB0sU0Em2hMC2a4WL+7UeRBjxQVL96zQTI7j1LyS8Dsq9WQa8zSgdyVouzUVtVBZQbE428iUB7Fd80jw==",
+  "dgSpecHash": "HepyvXIrF56JpgXu0tD7V6R8cVJUyU44qiDKK1qtrCunhT0h7ZKUHLrKzs1nQwfB3Hg+DAINLwNVJo3Rg2MmUQ==",
   "success": true,
   "projectFilePath": "/home/bcb/git/gui-dos/gui-dos/gui-dos.csproj",
   "expectedPackageFiles": [
@@ -151,8 +151,7 @@
     "/home/bcb/.nuget/packages/system.threading.threadpool/4.0.10/system.threading.threadpool.4.0.10.nupkg.sha512",
     "/home/bcb/.nuget/packages/system.threading.timer/4.3.0/system.threading.timer.4.3.0.nupkg.sha512",
     "/home/bcb/.nuget/packages/system.xml.readerwriter/4.3.0/system.xml.readerwriter.4.3.0.nupkg.sha512",
-    "/home/bcb/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512",
-    "/home/bcb/.nuget/packages/microsoft.aspnetcore.app.ref/5.0.0/microsoft.aspnetcore.app.ref.5.0.0.nupkg.sha512"
+    "/home/bcb/.nuget/packages/system.xml.xdocument/4.3.0/system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
   "logs": []
 }
