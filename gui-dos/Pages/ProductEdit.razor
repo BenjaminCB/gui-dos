@@ -60,6 +60,7 @@ else
         productForm.Description = product.Description;
         productForm.Price = product.Price;
         productForm.Image = product.Image;
+        productForm.Tags = product.Tags;
     }
 
     private async Task fileUpload(InputFileChangeEventArgs e)
@@ -79,7 +80,8 @@ else
             ctx.Products.Add(new Product( productForm.Title
                                         , productForm.Description
                                         , (int) (productForm.Price * 100)
-                                        , productForm.Image ));
+                                        , productForm.Image
+                                        , productForm.Tags ));
             await ctx.SaveChangesAsync();
         }
         NavMan.NavigateTo("/product/show");
