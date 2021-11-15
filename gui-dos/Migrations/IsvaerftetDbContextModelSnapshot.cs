@@ -95,8 +95,11 @@ namespace gui_dos.Migrations
                     b.Property<string>("Image")
                         .HasColumnType("TEXT");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("REAL");
+                    b.Property<int>("Price")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Tags")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .HasColumnType("TEXT");
