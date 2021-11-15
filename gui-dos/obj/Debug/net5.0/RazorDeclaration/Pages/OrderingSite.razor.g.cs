@@ -131,7 +131,7 @@ using System.Linq;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 78 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 81 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
        
     /* private List<Content> content = new List<Content>(); */
 
@@ -140,7 +140,9 @@ using System.Linq;
     private Cart _Cart;
     private int _MaxPrice;
     private int _MinPrice;
-    private int SetNumber { get; set; }
+    private int _SetNumber { get; set; }
+    private List<String> _PredicateTags;
+    private List<String> _Tags;
 
     protected override async Task OnInitializedAsync()
     {
@@ -151,7 +153,33 @@ using System.Linq;
 
         _MaxPrice = products.Select(p => (int) p.Price + 1).Max();
         _MinPrice = products.Select(p => (int) p.Price + 1).Min();
-        SetNumber = _MaxPrice;
+        _SetNumber = _MaxPrice;
+
+        _PredicateTags = new List<String>();
+        _Tags = new List<String>();
+        foreach (Product p in products)
+        {
+            _Tags.AddRange(p.Tags.Split(' ').Where(t => t != ""));
+        }
+    }
+
+    private void _Toggle(string tag)
+    {
+        if (_PredicateTags.Contains(tag))
+        {
+            _PredicateTags.Remove(tag);
+        }
+        else
+        {
+            _PredicateTags.Add(tag);
+        }
+    }
+
+    private bool _Filter(Product p)
+    {
+        if (p.Price > _SetNumber) return false;
+        if (_PredicateTags.Count == 0) return true;
+        else return p.Tags.Split(' ').Aggregate(false, (res, tag) => res || _PredicateTags.Contains(tag));
     }
 
     // TODO add comment functionality
