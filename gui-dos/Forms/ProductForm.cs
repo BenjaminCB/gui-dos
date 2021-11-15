@@ -15,6 +15,8 @@ namespace gui_dos.Forms
         [Required]
         public double Price { get; set; }
 
+        public string Tags { get; set; }
+
         [Required]
         public string Image { get; set; }
     }

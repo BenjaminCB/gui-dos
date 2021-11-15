@@ -60,6 +60,7 @@ else
         productForm.Description = product.Description;
         productForm.Price = product.Price;
         productForm.Image = product.Image;
+        productForm.Tags = product.Tags;
     }
 
     private async Task fileUpload(InputFileChangeEventArgs e)
@@ -74,11 +75,13 @@ else
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
+            // TODO update this to simpler syntax
             ctx.Products.Remove(product);
             ctx.Products.Add(new Product( productForm.Title
                                         , productForm.Description
-                                        , productForm.Price
-                                        , productForm.Image ));
+                                        , (int) (productForm.Price * 100)
+                                        , productForm.Image
+                                        , productForm.Tags ));
             await ctx.SaveChangesAsync();
         }
         NavMan.NavigateTo("/product/show");
