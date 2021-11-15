@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using gui_dos.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using gui_dos.Areas.Identity;
+using gui_dos.Data;
+using MudBlazor.Services;
 
 namespace gui_dos
 {
@@ -29,13 +32,25 @@ namespace gui_dos
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.AddMudServices();
             services.AddScoped<Data.ShoppingCart>();
+            services.AddScoped<TokenProvider>();
 
             var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
             services.AddDbContextFactory<IsvaerftetDbContext>(opt =>
                 opt.UseSqlite(cs));
             services.AddDbContext<IsvaerftetDbContext>(opt =>
                 opt.UseSqlite(cs));
+
+            services.Configure<IdentityOptions>(opt =>
+            {
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireLowercase = false;
+                opt.Password.RequireUppercase = false;
+                opt.Password.RequireNonAlphanumeric = false;
+                opt.Password.RequiredLength = 4;
+                opt.Password.RequiredUniqueChars = 2;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,9 +71,12 @@ namespace gui_dos
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapRazorPages();
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });

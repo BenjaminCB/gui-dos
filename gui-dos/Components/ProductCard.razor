@@ -1,0 +1,113 @@
+<MudPaper Height="@cardSize" Width="@cardSize" Style="position: relative;"
+ Elevation="@elevation" Class="mud-primary pa-4 ma-2" 
+ @onmouseenter="Elevate" @onmouseleave="DeElevate">
+    <MudCarousel Class="rounded" TData="object" 
+     AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
+     ShowArrows="arrow" NavigationButtonsClass="white-text" 
+     ShowDelimiters="delim" DelimitersClass="white-text"
+     Style="height:250px;max-width:350px;"> 
+        @* foreach over flere billeder *@
+        <MudCarouselItem Transition="Transition.Fade" Class="rounded" 
+            Style="height:inherit;max-width:350px;">
+            <img src="@product.Image" class="rounded" style="width:100%;height:100%;"/>
+        </MudCarouselItem>
+    </MudCarousel>
+    <div class="d-flex justify-space-between">
+        <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
+            @product.Title
+        </MudText>
+        <div>
+            <MudText Typo="Typo.caption" Color="Color.Tertiary" Inline="true">
+                Fra:
+            </MudText>
+            <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
+                @product.Price,-
+            </MudText>
+        </div> 
+    </div>
+    <div class="d-flex justify-space-between">
+        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" 
+            OnClick="ToggleOverlay" Class="rounded-pill">
+            Se mere
+        </MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary"
+            Class="rounded-pill">
+            Bestil
+        </MudButton>
+    </div>
+    <MudOverlay @bind-Visible="overlayVisible" Absolute="true"
+     AutoClose="true" DarkBackground="true" @onmouseover="Elevate" @onmouseleave="ToggleOverlay">
+        <MudPaper Class="mud-primary" Height="@cardSize" Width="@cardSize">
+            <div class="d-flex justify-space-between pa-4">
+                <MudText Typo="Typo.h6" Color="Color.Tertiary">
+                    @product.Title
+                </MudText>
+                <div>
+                    <MudText Typo="Typo.caption" Color="Color.Tertiary" Inline="true">
+                        Fra:
+                    </MudText>
+                    <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
+                        @product.Price,-
+                    </MudText>
+                </div> 
+            </div>
+            <MudText Typo="Typo.body1" Color="Color.Tertiary" Class="pa-4">
+                @product.Description
+            </MudText>
+        </MudPaper>
+    </MudOverlay>
+</MudPaper>
+
+@code{
+    
+    [Parameter]
+    public Product product { get; set;}
+
+    private static string cardSize = "350px";
+
+    private bool overlayVisible = false;
+
+    //Sets the base and highlight elevation values of the product card 
+    private static readonly int baseElevation = 4;
+    private static readonly int highlightElevation = 24;
+
+    //'elevation' sets the elevation of the product card
+    private int elevation = baseElevation;
+
+    //'cycle' determines if images should auto-cycle on carousel
+    private bool cycle = false;
+    private int cycleIndex = 0;
+
+    //'arrow' determines if arrows should be shown on carousel
+    private bool arrow = false;
+
+    //'delim' determines if delimitors should be shown on carousel
+    private bool delim = false;
+
+    //'cycleTime' sets the cycling time for images on carousel
+    private TimeSpan cycleTime = TimeSpan.FromSeconds(3);
+
+    //Switches the elevation of the product card when mouse enters and leaves the card
+    private void Elevate() {
+        cycle = true;
+        elevation = highlightElevation;
+    }
+
+    private void DeElevate() {
+        cycle = false;
+        cycleIndex = 0;
+        elevation = baseElevation;
+    }
+
+    private void ToggleOverlay() {
+        overlayVisible = !overlayVisible;
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        //if (product.Images.Count > 1) {
+        //    arrow = delim = true;
+        //}
+        return base.OnInitializedAsync();
+    }
+}

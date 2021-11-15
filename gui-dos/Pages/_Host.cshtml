@@ -1,8 +1,13 @@
 ﻿@page "/"
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
 @namespace gui_dos.Pages
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @{
     Layout = null;
+    var tokens = new TokenProvider
+    {
+        XsrfToken = Xsrf.GetAndStoreTokens(HttpContext).RequestToken
+    };
 }
 
 <!DOCTYPE html>
@@ -15,10 +20,12 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     <link href="gui-dos.styles.css" rel="stylesheet" />
-
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" rel="stylesheet">
 </head>
 <body>
-    <component type="typeof(App)" render-mode="ServerPrerendered" />
+    <component type="typeof(App)" param-IntialState="tokens" render-mode="ServerPrerendered" />
 
     <div id="blazor-error-ui">
         <environment include="Staging,Production">
@@ -32,6 +39,7 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
-
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    
 </body>
 </html>
