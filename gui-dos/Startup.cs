@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using gui_dos.Data;
 using Microsoft.EntityFrameworkCore;
-using MudBlazor.Services;
-using gui_dos.Areas.Identity;
 using Microsoft.AspNetCore.Identity;
+using gui_dos.Areas.Identity;
+using gui_dos.Data;
+using MudBlazor.Services;
 
 namespace gui_dos
 {
@@ -31,8 +31,8 @@ namespace gui_dos
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
-            services.AddMudServices();
             services.AddServerSideBlazor();
+            services.AddMudServices();
             services.AddScoped<Data.ShoppingCart>();
             services.AddScoped<TokenProvider>();
 

@@ -1,0 +1,12 @@
+.brand-link{
+    height:inherit;
+}
+
+.brand-logo{
+    padding: 10px;
+    height: inherit;
+}
+
+.brand-logo:hover{
+    opacity: 0.75;
+}
