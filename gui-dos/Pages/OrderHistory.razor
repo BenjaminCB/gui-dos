@@ -26,10 +26,8 @@
     </div>
 }
 
-<!-- TODO Lav "Table with related data" MudBlazor istedet -->
 @if (oldOrders != null)
 {
-    
     <MudTable Items="@oldOrders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true">
         <ColGroup>
             <col style="width:20%" />
@@ -65,38 +63,63 @@
                         <MudCard Elevation="0">
                             <MudCardHeader>
                                 <CardHeaderContent>
-                                    <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong></MudText>
+                                    <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
                                 </CardHeaderContent>
                             </MudCardHeader>
                             <MudCardContent Class="pa-0">
                                 <MudTable Items="@oldOrders" Context="Child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
-                                        <ColGroup>
-                                            <col />
-                                            <col />
-                                            <col style="width:10%;" />
-                                        </ColGroup>
-                                        <HeaderContent>
-                                            <MudTh>Email</MudTh>
-                                            <MudTh>Telnr</MudTh>
-                                            <MudTh>Kommentar</MudTh>
-                                        </HeaderContent>
-                                        <RowTemplate>
-                                    @if (context.OrderId == Child.OrderId) 
-                                    {
+                                    <ColGroup>
+                                        <col />
+                                        <col />
+                                        <col style="width:10%;" />
+                                        <col style="width:10%;" />
+                                    </ColGroup>
+                                    <HeaderContent>
+                                        <MudTh>Email</MudTh>
+                                        <MudTh>Telnr</MudTh>
+                                        <MudTh>Kommentar</MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                        @if (context.OrderId == Child.OrderId)
+                                            {
                                             <MudTd DataLabel="Email">@Child.Email</MudTd>
                                             <MudTd DataLabel="Telnr">@Child.PhoneNumber</MudTd>
                                             <MudTd DataLabel="Kommentar">@Child.Comment</MudTd>
-                                    }
-                                        </RowTemplate>
+                                            }
+                                    </RowTemplate>
+                                </MudTable>
+                                <br />
+                                <MudTable Items="@oldOrders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                    <ColGroup>
+                                        <col />
+                                        <col />
+                                        <col style="width:10%;" />
+                                    </ColGroup>
+                                    <HeaderContent>
+                                        <MudTh>ID</MudTh>
+                                        <MudTh>Pris</MudTh>
+                                        <MudTh>Kommentar</MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                       @if (context.OrderId == content.OrderId)
+                                       {
+                                           for (int i = 0; i < content.GiftBaskets.Count; i++)
+                                           {
+                                            <MudTd DataLabel="Email">@content.GiftBaskets[i].GiftBasketId</MudTd>
+                                            <MudTd DataLabel="Telnr">@content.GiftBaskets[i].Price</MudTd>
+                                            <MudTd DataLabel="Kommentar">@content.GiftBaskets[i].Comment</MudTd>
+                                           }
+                                        }
+                                    </RowTemplate>
                                 </MudTable>
                             </MudCardContent>
                         </MudCard>
                     </td>
                 </MudTr>
             }
+        <br />
             </ChildRowContent>
     </MudTable>
-
         @foreach (Order order in oldOrders)
     {
         <div class="border border-dark">
@@ -159,7 +182,6 @@
             </div>
         </div>
         <br />
-      //HVIS DER IKKE ØNSKES MELLEMRUM MELLEM ORDERNE SKAL DENNE SLETTES
     }
 }
 
