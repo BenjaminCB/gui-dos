@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using gui_dos.Data;
 
 namespace gui_dos.Migrations
 {
     [DbContext(typeof(IsvaerftetDbContext))]
-    partial class IsvaerftetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211116111456_RemoveDummyModel")]
+    partial class RemoveDummyModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
