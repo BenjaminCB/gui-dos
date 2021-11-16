@@ -1,4 +1,6 @@
 @inherits LayoutComponentBase
+@inject NavigationManager NavMan
+@inject ShoppingCart ShoppingCart
 
 <MudThemeProvider Theme="BrandTheme"/>
 
@@ -18,8 +20,8 @@
     </MudAppBar>
 
     @* Navigation drawer for small viewports *@
-    <MudDrawer @bind-Open="@_navOpen" Anchor="Anchor.Left"
-     Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always">
+    <MudDrawer @bind-Open="@_navOpen" Anchor="Anchor.Top"
+     Variant="DrawerVariant.Temporary" >
         <MudDrawerHeader>
             <MudText Typo="Typo.h6"> Isværftet </MudText>
         </MudDrawerHeader>
@@ -34,10 +36,17 @@
         </MudDrawerHeader>
     </MudDrawer>
 
-    @* Page content is displayed in here *@
-    <MudMainContent>
+    @* Page content *@
+    <MudMainContent Style="min-height:100vh;">
         @Body
     </MudMainContent>
+
+    @* Page footer *@
+    <MudPaper Class="mud-primary justify-space-around d-flex" Elevation="4" Square="true">
+        <MudText Typo="Typo.h6" Color="Color.Tertiary">
+            Testing <br/>
+        </MudText>
+    </MudPaper>
 </MudLayout>
 
 @code
@@ -45,7 +54,7 @@
     bool _navOpen = false;
 
     bool _cartOpen = false;
-    
+
     void ToggleCart() {
         _cartOpen = !_cartOpen;
     }
