@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/bcb/git/gui-dos/gui-dos/gui-dos.csproj": {}
+    "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj": {}
   },
   "projects": {
-    "/home/bcb/git/gui-dos/gui-dos/gui-dos.csproj": {
+    "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/bcb/git/gui-dos/gui-dos/gui-dos.csproj",
+        "projectUniqueName": "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj",
         "projectName": "gui-dos",
-        "projectPath": "/home/bcb/git/gui-dos/gui-dos/gui-dos.csproj",
-        "packagesPath": "/home/bcb/.nuget/packages/",
-        "outputPath": "/home/bcb/git/gui-dos/gui-dos/obj/",
+        "projectPath": "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/gui-dos.csproj",
+        "packagesPath": "/Users/daniel/.nuget/packages/",
+        "outputPath": "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/bcb/.nuget/NuGet/NuGet.Config"
+          "/Users/daniel/.config/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -93,7 +93,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/bcb/dotnet/sdk/5.0.302/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
         }
       }
     }

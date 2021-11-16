@@ -205,6 +205,28 @@ body[b-cgqux6sexy] {
     height: fit-content;
     margin: 10px;
 }
+/* _content/gui-dos/Pages/ProductShow.razor.rz.scp.css */
+h1[b-71zgm2vbc4] {
+    margin: 25px 50px 25px 50px;
+}
+
+.flex-container[b-71zgm2vbc4] {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.flex-child[b-71zgm2vbc4] {
+    float: left;
+    margin: 25px 50px 25px 50px;
+}
+
+.buttons[b-71zgm2vbc4] {
+    margin-right: 15px;
+}
+
+    .buttons:hover[b-71zgm2vbc4] {
+        color: red;
+    }
 /* _content/gui-dos/Shared/MainLayout.razor.rz.scp.css */
 .page[b-v13z4v6ffs] {
     position: relative;

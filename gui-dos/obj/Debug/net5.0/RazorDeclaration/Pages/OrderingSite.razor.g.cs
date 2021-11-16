@@ -11,126 +11,126 @@ namespace gui_dos.Pages
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
 #nullable restore
-#line 1 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 1 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using System.Net.Http;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 2 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 2 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using Microsoft.AspNetCore.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 3 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using Microsoft.AspNetCore.Components.Authorization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 4 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using Microsoft.AspNetCore.Components.Forms;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 5 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using Microsoft.AspNetCore.Components.Routing;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 6 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using Microsoft.AspNetCore.Components.Web;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 7 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 7 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using Microsoft.AspNetCore.Components.Web.Virtualization;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 8 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 8 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using Microsoft.JSInterop;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 9 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 9 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using MudBlazor;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 10 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 10 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using gui_dos;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 11 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 11 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using gui_dos.Shared;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 12 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 12 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using gui_dos.Components;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 13 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 13 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using gui_dos.Models;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 15 "/home/bcb/git/gui-dos/gui-dos/_Imports.razor"
+#line 15 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
 using gui_dos.Areas.Identity;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 3 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 3 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
 using gui_dos.Data;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 4 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 4 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
 using System.Collections.Generic;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 5 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 5 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
 using Microsoft.EntityFrameworkCore;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
-#line 6 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 6 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
 using System.Linq;
 
 #line default
@@ -145,7 +145,7 @@ using System.Linq;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 81 "/home/bcb/git/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 81 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
        
     /* private List<Content> content = new List<Content>(); */
 

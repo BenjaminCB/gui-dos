@@ -8,9 +8,9 @@
 @inject NavigationManager NavMan
 
 <h1>Products</h1>
-<p>
+<!--<p>
     This is all the products that are currently avaiable for purchase on the site
-</p>
+</p>-->
 
 @if (products == null)
 {
@@ -28,20 +28,22 @@
 
 @if (products != null)
 {
-    @foreach (var product in products)
-    {
-        <div>
-            <ProductComp Product="@product" />
+    <div class="flex-container">
+        @foreach (var product in products)
+        {
+            <div class="flex-child">
+                <ProductComp Product="@product" />
 
-            <button @onclick="() => productEdit(product)">
-                Edit
-            </button>
+                <button @onclick="() => productEdit(product)" class="buttons">
+                    Edit
+                </button>
 
-            <button @onclick="() => productDelete(product)">
-                Delete
-            </button>
-        </div>
-    }
+                <button @onclick="() => productDelete(product)" class="buttons">
+                    Delete
+                </button>
+            </div>
+        }
+    </div>
 }
 
 

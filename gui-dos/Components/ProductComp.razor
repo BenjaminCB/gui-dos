@@ -1,26 +1,45 @@
-<div>
-    <h3>@Product.Title</h3>
-    <p>
-        @Product.Description
-    </p>
-    <p>
-        Price: @((double) Product.Price / 100)
-    </p>
-    <ul>
-        @foreach (string tag in Product.Tags.Split(' '))
-        {
-            @if (tag != "")
-            {
-                <li>
-                    @tag
-                </li>
-            }
-        }
-    </ul>
-    <img src="@Product.Image">
-</div>
+<MudPaper Height="fit" Width="@cardSize" Style="position: relative;">
+    <MudCarousel Class="rounded" TData="object"
+                 AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
+                 ShowArrows="arrow" NavigationButtonsClass="white-text"
+                 ShowDelimiters="delim" DelimitersClass="white-text"
+                 Style="height:250px;max-width:350px;">
+        @* foreach over flere billeder *@
+        <MudCarouselItem Transition="Transition.Fade" Class="rounded"
+                         Style="height:inherit;max-width:350px;">
+            <img src="@Product.Image" class="rounded" style="width:100%;height:100%;" />
+        </MudCarouselItem>
+    </MudCarousel>
+    <MudPaper Class="mud-primary">
+        <MudText Typo="Typo.h3" Color="Color.Tertiary">@Product.Title</MudText>
+        <div>
+            <MudText Color="Color.Tertiary" Style="font-weight: bold;" Inline="true">Pris:</MudText> <MudText Color="Color.Tertiary" Inline="true">@Product.Price kr.</MudText>
+        </div>
+        <div>
+            <MudText Color="Color.Tertiary" Style="font-weight: bold;" Inline="true">Beskrivelse:</MudText> <MudText Color="Color.Tertiary" Inline="true">@Product.Description</MudText>
+        </div>
+        <div>
+            <MudText Color="Color.Tertiary" Style="font-weight: bold;" Inline="true">Tags:</MudText> <MudText Color="Color.Tertiary" Inline="true">@Product.Tags</MudText>
+        </div>
+    </MudPaper>
+</MudPaper>
 
 @code {
     [Parameter]
     public Product Product { get; set; }
+
+    private static string cardSize = "350px";
+
+    //'cycle' determines if images should auto-cycle on carousel
+    private bool cycle = false;
+    private int cycleIndex = 0;
+
+    //'arrow' determines if arrows should be shown on carousel
+    private bool arrow = false;
+
+    //'delim' determines if delimitors should be shown on carousel
+    private bool delim = false;
+
+    //'cycleTime' sets the cycling time for images on carousel
+    private TimeSpan cycleTime = TimeSpan.FromSeconds(3);
 }
