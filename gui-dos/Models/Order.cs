@@ -50,6 +50,8 @@ namespace gui_dos.Models
         ///<summary>Gets or set the list of changes made to the order. </summary>
         public List<Change> Changelog { get; set; }
 
+        public bool ShowDetails { get; set; } = false;
+
         public void SendStatusMail()
         {
             var mailMessage = new MimeMessage();

@@ -14,8 +14,9 @@
     <EditForm Model="@orderForm" OnValidSubmit="@OrderOrder">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <!-- https://getbootstrap.com/docs/4.3/components/forms/#validation  Skal bruge JS hvis det skal se meget pænt ud, men kan ikke finde ud af det-->
-        <!-- Hver row's col-md-TAL skal pr. row gå op i 12 for at fylde 100% -->
+        <!-- https://getbootstrap.com/docs/4.3/components/forms/#validation  Skal bruge JS hvis det skal se meget pï¿½nt ud, men kan ikke finde ud af det-->
+        <!-- Hver row's col-md-TAL skal pr. row gï¿½ op i 12 for at fylde 100% -->
+        <div class="needs-validation" novalidate>
             <div class="row content">
                 <div class="col-md-2">
                     <label for="Fornavn" class="formlabel">Navn</label>
@@ -84,9 +85,10 @@
 
             <br />
 
-            <!-- Knappen længest til højrer skal skubbes til højre først-->
+            <!-- Knappen lï¿½ngest til hï¿½jrer skal skubbes til hï¿½jre fï¿½rst-->
             <button type="button" class="btn btn-outline-secondary float-right">Cancel</button>
             <button type="submit" class="btn btn-outline-primary float-right">Bestil Ordre</button>
+        </div>
     </EditForm>
 </div>
 
@@ -97,10 +99,10 @@
         <br />
         <div class="border border-primary rounded-sm" id="infoBox">
             <p>
-                Kommentar fra IsVærftet <br />
+                Kommentar fra IsVï¿½rftet <br />
                 Det skal forventes at at tage 2-3 dage for acceptering af ordre <br />
-                Ønskes der yderligere information eller rettelse i ordren kontakt 10 10 10 10. <br />
-                Din ordre vil stå klar til dig i op til 3 dage fra den ønskede leverings dag. <br />
+                ï¿½nskes der yderligere information eller rettelse i ordren kontakt 10 10 10 10. <br />
+                Din ordre vil stï¿½ klar til dig i op til 3 dage fra den ï¿½nskede leverings dag. <br />
                 OSV.
             </p>
         </div>
@@ -121,7 +123,7 @@
 {
 
     public static DateTime StartDate { get; set; } = DateTime.Now;
-    //Der kan her ændres hvor langt ud i fremtiden man skal have den færtig til
+    //Der kan her ï¿½ndres hvor langt ud i fremtiden man skal have den fï¿½rtig til
     public static DateTime EndDate { get; set; } = StartDate.AddMonths(3);
     private OrderForm orderForm = new OrderForm();
 

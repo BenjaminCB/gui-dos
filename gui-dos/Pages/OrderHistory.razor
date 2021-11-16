@@ -7,10 +7,7 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-<h1>Orders</h1>
-<p>
-    This is all the old orders that have been completed.
-</p>
+<h1>Ordrer Historik</h1>
 
 @if (oldOrders == null)
 {
@@ -29,52 +26,97 @@
 
 @if (oldOrders != null)
 {
-    @foreach (Order order in oldOrders)
-    {
-        <div>
-            <p>
-                Date ordered: @order.DateOrdered.ToString()
-                Deadline: @order.DateDeadline.ToString()
-                Name: @order.FirstName @order.LastName
-                Price: @order.Price
-            </p>
-
-            
-            @if (orderIsShown && orderToShow.Equals(order))
+    <MudTable Items="@oldOrders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true">
+        <ColGroup>
+            <col style="width:20%" />
+            <col style="width:20%;" />
+            <col style="width:20%;" />
+            <col style="width:20%;" />
+            <col />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh></MudTh>
+            <MudTh>Oprettet</MudTh>
+            <MudTh>Afsluttet</MudTh>
+            <MudTh>Navn</MudTh>
+            <MudTh>Pris</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd>
+                <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
+                    @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
+                </MudButton>
+            </MudTd>
+            <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
+            <MudTd DataLabel="Afsluttet">@context.DateDeadline</MudTd>
+            <MudTd DataLabel="Navn">@context.FirstName</MudTd>
+            <MudTd DataLabel="Pris">@context.Price</MudTd>
+            <!-- https://mudblazor.com/components/table#table-with-related-data Vil lave dether, da ChildRowContent kan være hvadsomhelst, Tænker man kan lave flere af dem-->
+        </RowTemplate>
+        <ChildRowContent>
+            @if (context.ShowDetails)
             {
-                <p>
-                    Mail: @order.Email
-                    Tlf. nr: @order.PhoneNumber
-                    Comment: @order.Comment
-                </p>
-                <div>
-                    @foreach (GiftBasket giftBasket in order.GiftBaskets)
-                    {
-                        <div>
-                            <p>
-                                Giftbasket: Det er i benjamins kode, implementer senerer.
-                                Comment: @giftBasket.Comment
-                                Price: @giftBasket.Price
-                            </p>
-                        </div>
-                    }
-                </div>
-    }
-    @if (!orderIsShown || !orderToShow.Equals(order))
-    {
-        <button @onclick="() => showOrder(order)">
-            Show order
-        </button>
-    }
-    else
-    {
-        <button @onclick="() => hideOrder(order)">
-            Hide order
-        </button>
-    }
-
-
-</div>
+                <MudTr>
+                    <td colspan="4">
+                        <MudCard Elevation="0">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
+                                </CardHeaderContent>
+                            </MudCardHeader>
+                            <MudCardContent Class="pa-0">
+                                <MudTable Items="@oldOrders" Context="Child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                    <ColGroup>
+                                        <col style="width:25%;"/>
+                                        <col style="width:15%;" />
+                                        <col style="width:15%;" />
+                                    </ColGroup>
+                                    <HeaderContent>
+                                        <MudTh>Email</MudTh>
+                                        <MudTh>Telnr</MudTh>
+                                        <MudTh>Kommentar</MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                        @if (context.OrderId == Child.OrderId)
+                                            {
+                                            <MudTd DataLabel="Email">@Child.Email</MudTd>
+                                            <MudTd DataLabel="Telnr">@Child.PhoneNumber</MudTd>
+                                            <MudTd DataLabel="Kommentar">@Child.Comment</MudTd>
+                                            }
+                                    </RowTemplate>
+                                </MudTable>
+                                <br />
+                                <MudTable Items="@oldOrders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                    <ColGroup>
+                                        <col style="width:10%;"/>
+                                        <col style="width:10%;"/>
+                                        <col style="width:30%;" />
+                                    </ColGroup>
+                                    <HeaderContent>
+                                        <MudTh>ID</MudTh>
+                                        <MudTh>Pris</MudTh>
+                                        <MudTh>Kommentar</MudTh>
+                                    </HeaderContent>
+                                    <RowTemplate>
+                                       @if (context.OrderId == content.OrderId)
+                                       {
+                                           for (int i = 0; i < content.GiftBaskets.Count; i++)
+                                           {
+                                            <MudTd DataLabel="Email">@content.GiftBaskets[i].GiftBasketId</MudTd>
+                                            <MudTd DataLabel="Telnr">@content.GiftBaskets[i].Price</MudTd>
+                                            <MudTd DataLabel="Kommentar">@content.GiftBaskets[i].Comment</MudTd>
+                                           }
+                                        }
+                                    </RowTemplate>
+                                </MudTable>
+                            </MudCardContent>
+                        </MudCard>
+                    </td>
+                </MudTr>
+            }
+            <br />
+            </ChildRowContent>
+    </MudTable>
     }
 }
 
@@ -82,28 +124,20 @@
 @code
 {
     private List<Order> oldOrders;
-    private bool orderIsShown = false;
-    private Order orderToShow;
 
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            oldOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).OrderBy(t=>t.DateOrdered).ToListAsync();
+            oldOrders = await ctx.Orders.OrderBy(t => t.DateOrdered).ToListAsync();
+            // ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).OrderBy(t=>t.DateOrdered).ToListAsync();
         }
     }
-
-
-
-    private void showOrder(Order o)
+    
+    private void ShowBtnPress(int nr)
     {
-        orderToShow = o;
-        orderIsShown = true;
+        Order tmpPerson = oldOrders.First(f => f.OrderId == nr);
+        tmpPerson.ShowDetails = !tmpPerson.ShowDetails;
     }
-
-    private void hideOrder(Order o)
-    {
-        orderIsShown = false;
-    }
-
+    
 }

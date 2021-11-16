@@ -1,8 +1,9 @@
 .left{
-    width: 65%;
+    width: 60%;
     float: left;
+    margin-left: 20px;
 }
-.right{
+.right {
     width: 35%;
     float: right;
 }

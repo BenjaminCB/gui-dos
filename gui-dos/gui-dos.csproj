@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FsCheck" Version="2.16.3" />
+    <PackageReference Include="MudBlazor" Version="5.2.0" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'BlazorApp' " />
   <ItemGroup>
