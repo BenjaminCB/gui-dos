@@ -9,8 +9,11 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using gui_dos.Data;
 using Microsoft.EntityFrameworkCore;
+using gui_dos.Areas.Identity;
 using Microsoft.AspNetCore.Identity;
+using Blazored.Modal;
 using gui_dos.Areas.Identity;
 using gui_dos.Data;
 using MudBlazor.Services;
@@ -35,6 +38,7 @@ namespace gui_dos
             services.AddMudServices();
             services.AddScoped<Data.ShoppingCart>();
             services.AddScoped<TokenProvider>();
+            services.AddBlazoredModal();
 
             var cs = $"Data Source={nameof(IsvaerftetDbContext.IsvaerftetDb)}.db";
             services.AddDbContextFactory<IsvaerftetDbContext>(opt =>

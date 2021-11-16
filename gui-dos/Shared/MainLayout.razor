@@ -3,22 +3,59 @@
 <MudThemeProvider Theme="BrandTheme"/>
 
 <MudLayout>
+    @* Navigation menu in the top of every page*@
     <MudAppBar Class="mud-primary">
         <BrandLogoButton/>
         <MudSpacer/>
-        <NavMenu/>
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <NavMenu/>
+        </MudHidden>
+        <MudHidden Breakpoint="Breakpoint.SmAndUp">
+            <MudIconButton Icon="@Icons.Outlined.Menu" Color="Color.Tertiary" OnClick="ToggleNav"/>
+        </MudHidden>
+        <MudSpacer/>
+        <MudIconButton Icon="@Icons.Outlined.ShoppingCart" Color="Color.Tertiary" OnClick="ToggleCart"/>
     </MudAppBar>
+
+    @* Navigation drawer for small viewports *@
+    <MudDrawer @bind-Open="@_navOpen" Anchor="Anchor.Left"
+     Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6"> Isværftet </MudText>
+        </MudDrawerHeader>
+        <NavMenu/>
+    </MudDrawer>
+
+    @* Shopping cart drawer *@
+    <MudDrawer @bind-Open="@_cartOpen" Anchor="Anchor.Right" 
+     Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Indkøbskurv</MudText>
+        </MudDrawerHeader>
+    </MudDrawer>
+
+    @* Page content is displayed in here *@
     <MudMainContent>
         @Body
     </MudMainContent>
-    <MudScrollToTop>
-        <MudFab Color="Color.Primary" Icon="@Icons.Filled.ArrowCircleUp" />
-    </MudScrollToTop>
 </MudLayout>
 
 @code
 {
-    MudTheme BrandTheme = new MudTheme()
+    bool _navOpen = false;
+
+    bool _cartOpen = false;
+    
+    void ToggleCart() {
+        _cartOpen = !_cartOpen;
+    }
+
+    void ToggleNav() {
+        _navOpen = !_navOpen;
+    }
+
+    // MudBlazor theme customizations
+    MudTheme BrandTheme = new MudTheme() 
     {
         Palette = new Palette()
         {

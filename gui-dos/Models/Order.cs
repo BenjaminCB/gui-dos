@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
+using System;
+using MailKit.Net.Smtp;
+using MimeKit;
 using gui_dos.Forms;
 
 namespace gui_dos.Models
@@ -48,6 +52,27 @@ namespace gui_dos.Models
 
         public bool ShowDetails { get; set; } = false;
 
+        public void SendStatusMail()
+        {
+            var mailMessage = new MimeMessage();
+            mailMessage.From.Add(new MailboxAddress("Isvaerftet", "noreply@Isvaerftet.dk"));
+            mailMessage.To.Add(new MailboxAddress(FirstName + " " + LastName, Email));
+            mailMessage.Subject = "Din odre er nu " + Status;
+            mailMessage.Body = new TextPart("plain")
+            {
+                Text = $"Hej, {FirstName} din odre er nu {Status}"
+            };
+
+            using (var smtpClient = new SmtpClient())
+            {
+                smtpClient.Connect ("smtp.gmail.com", 465, true);
+                smtpClient.Authenticate("Username", "Password");
+                smtpClient.Send(mailMessage);
+                smtpClient.Disconnect(true);
+            }
+        }
+
+        ///<summary>Constructs an order object.
         ///<summary>Constructs an order object with the specified giftbaskets.
         ///</summary>
         public Order(List<GiftBasket> giftBaskets)
