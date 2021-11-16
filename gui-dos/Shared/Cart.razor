@@ -1,5 +1,3 @@
-@page "/cart"
-
 @using System.Collections.Generic
 
 @inject ShoppingCart ShoppingCart
@@ -50,8 +48,19 @@ else
         ShoppingCart.GiftBaskets.Remove(gb);
     }
 
-    protected override void OnInitialized()
+    public void Refresh()
+    {
+        StateHasChanged();
+        updateTotal();
+    }
+
+    private void updateTotal()
     {
         total = ShoppingCart.GiftBaskets.Aggregate(0, (acc, gb) => acc + gb.Price);
+    }
+
+    protected override void OnInitialized()
+    {
+        updateTotal();
     }
 }
