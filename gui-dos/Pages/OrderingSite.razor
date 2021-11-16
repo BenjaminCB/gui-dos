@@ -103,9 +103,12 @@
 
         _PredicateTags = new List<String>();
         _Tags = new List<String>();
-        foreach (Product p in products)
+        if(products[0].Tags != null)
         {
-            _Tags.AddRange(p.Tags.Split(' ').Where(t => t != ""));
+            foreach (Product p in products)
+            {
+                _Tags.AddRange(p.Tags.Split(' ').Where(t => t != ""));
+            }
         }
     }
 
