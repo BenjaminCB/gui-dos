@@ -109,6 +109,20 @@ using gui_dos.Areas.Identity;
 #line hidden
 #nullable disable
 #nullable restore
+#line 16 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+using Blazored.Modal;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+using Blazored.Modal.Services;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 3 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
 using gui_dos.Data;
 
@@ -136,7 +150,7 @@ using System.Linq;
 #line default
 #line hidden
 #nullable disable
-    [Microsoft.AspNetCore.Components.RouteAttribute("/shop")]
+    [Microsoft.AspNetCore.Components.RouteAttribute("/webshop")]
     public partial class OrderingSite : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -145,7 +159,7 @@ using System.Linq;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 81 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
+#line 71 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/Pages/OrderingSite.razor"
        
     /* private List<Content> content = new List<Content>(); */
 

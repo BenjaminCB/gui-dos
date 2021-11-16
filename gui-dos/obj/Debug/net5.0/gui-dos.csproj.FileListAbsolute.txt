@@ -480,3 +480,14 @@ C:/Users/peter/OneDrive - Aalborg Universitet/3.semester/gui-dos/gui-dos/obj/Deb
 /Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Pages/ProductShow.razor.rz.scp.css
 /Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Pages/ProductEdit.razor.rz.scp.css
 /Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Pages/ProductInsert.razor.rz.scp.css
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/bin/Debug/net5.0/Blazored.Modal.dll
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/bin/Debug/net5.0/MailKit.dll
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/bin/Debug/net5.0/Microsoft.JSInterop.WebAssembly.dll
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/bin/Debug/net5.0/MimeKit.dll
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/bin/Debug/net5.0/BouncyCastle.Crypto.dll
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/RazorDeclaration/Pages/OrderView.razor.g.cs
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/RazorDeclaration/Shared/ConfComp.razor.g.cs
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/RazorDeclaration/Shared/OrderComp.razor.g.cs
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/Razor/Pages/OrderView.razor.g.cs
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/Razor/Shared/ConfComp.razor.g.cs
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/Razor/Shared/OrderComp.razor.g.cs

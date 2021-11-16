@@ -114,6 +114,20 @@ using gui_dos.Areas.Identity;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 16 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+using Blazored.Modal;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+using Blazored.Modal.Services;
+
+#line default
+#line hidden
+#nullable disable
     public partial class NavMenu : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998

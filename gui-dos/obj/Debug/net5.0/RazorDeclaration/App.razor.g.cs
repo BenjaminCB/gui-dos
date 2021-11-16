@@ -117,6 +117,20 @@ using gui_dos.Areas.Identity;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 16 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+using Blazored.Modal;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 17 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/_Imports.razor"
+using Blazored.Modal.Services;
+
+#line default
+#line hidden
+#nullable disable
     public partial class App : Microsoft.AspNetCore.Components.ComponentBase
     {
         #pragma warning disable 1998
@@ -125,7 +139,7 @@ using gui_dos.Areas.Identity;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 16 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/App.razor"
+#line 17 "/Users/daniel/Documents/GitHub/gui-dos/gui-dos/App.razor"
        
     [Parameter]
     public TokenProvider IntialState { get; set; }
