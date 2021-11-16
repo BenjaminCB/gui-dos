@@ -478,3 +478,5 @@ C:/Users/peter/OneDrive - Aalborg Universitet/3.semester/gui-dos/gui-dos/obj/Deb
 /Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Components/BrandLogoButton.razor.rz.scp.css
 /Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Pages/FillOrder.razor.rz.scp.css
 /Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Pages/ProductShow.razor.rz.scp.css
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Pages/ProductEdit.razor.rz.scp.css
+/Users/daniel/Documents/GitHub/gui-dos/gui-dos/obj/Debug/net5.0/scopedcss/Pages/ProductInsert.razor.rz.scp.css
