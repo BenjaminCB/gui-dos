@@ -10,7 +10,7 @@
         <BrandLogoButton/>
         <MudSpacer/>
         <MudHidden Breakpoint="Breakpoint.Xs">
-            <NavMenu/>
+            <MainLayoutNavMenu/>
         </MudHidden>
         <MudHidden Breakpoint="Breakpoint.SmAndUp">
             <MudIconButton Icon="@Icons.Outlined.Menu" Color="Color.Tertiary" OnClick="ToggleNav"/>
@@ -25,7 +25,7 @@
         <MudDrawerHeader>
             <MudText Typo="Typo.h6"> Isværftet </MudText>
         </MudDrawerHeader>
-        <NavMenu/>
+        <MainLayoutNavMenu/>
     </MudDrawer>
 
     @* Shopping cart drawer *@
@@ -42,11 +42,7 @@
     </MudMainContent>
 
     @* Page footer *@
-    <MudPaper Class="mud-primary justify-space-around d-flex" Elevation="4" Square="true">
-        <MudText Typo="Typo.h6" Color="Color.Tertiary">
-            Testing <br/>
-        </MudText>
-    </MudPaper>
+    <MainLayoutFooter/>
 </MudLayout>
 
 @code
