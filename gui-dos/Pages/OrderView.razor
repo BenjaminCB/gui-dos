@@ -20,69 +20,86 @@
 </style>
 @if (orders != null)
 {
-    <button class="@(pending?"ButtonActive":"Button")" @onclick="() => ChangeSearchTerms(OrderStatus.Pending)">Pending</button>
-    <button class="@(accepted?"ButtonActive":"Button")" @onclick="() => ChangeSearchTerms(OrderStatus.Accepted)">Accepted</button>
-    <button class="@(finished?"ButtonActive":"Button")" @onclick="() => ChangeSearchTerms(OrderStatus.Finished)">Finished</button>
+    <section>
+        <div>
+            <label>
+                Pending
+                <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Pending))"/>
+            </label>
+            <label>
+                Accepted
+                <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Accepted))"/>
+            </label>
+            <label>
+                Finished
+                <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Finished))"/>
+            </label>
+        </div>
+    </section>
+    
     @foreach (var order in orders)
     {
-        
-        <div>
+        @if (_Filter(order))
+        {
             <div>
                 <div>
-                    <p>
-                        Date ordered: @order.DateOrdered.ToString()
-                        Deadline: @order.DateDeadline.ToString()
-                        Name: @order.FirstName @order.LastName
-                        Price: @order.Price
-                    </p>
-                
-                            
-                    @if (orderIsShown && orderToShow.Equals(order))
-                    {
+                    <div>
                         <p>
-                            Mail: @order.Email
-                            Tlf. nr: @order.PhoneNumber
-                            Comment: @order.Comment
+                            Date ordered: @order.DateOrdered.ToString()
+                            Deadline: @order.DateDeadline.ToString()
+                            Name: @order.FirstName @order.LastName
+                            Price: @order.Price
                         </p>
-                        <div>
-                            @foreach (GiftBasket giftBasket in order.GiftBaskets)
-                            {
-                                <div>
-                                    <p>
-                                        Giftbasket: Det er i benjamins kode, implementer senerer.
-                                        Comment: @giftBasket.Comment
-                                        Price: @giftBasket.Price
-                                    </p>
-                                </div>
-                            }
-                        </div>
-                    }
-                    @if (!orderIsShown || !orderToShow.Equals(order))
-                    {
-                        <button @onclick="() => showOrder(order)">
-                            Show order
-                        </button>
-                    }
-                    else
-                    {
-                        <button @onclick="() => hideOrder(order)">
-                            Hide order
-                        </button>
-                    }
-                
-                
-                </div>
+
+
+                        @if (orderIsShown && orderToShow.Equals(order))
+                        {
+                            <p>
+                                Mail: @order.Email
+                                Tlf. nr: @order.PhoneNumber
+                                Comment: @order.Comment
+                            </p>
+                            <div>
+                                @foreach (GiftBasket giftBasket in order.GiftBaskets)
+                                {
+                                    <div>
+                                        <p>
+                                            Giftbasket: Det er i benjamins kode, implementer senerer.
+                                            Comment: @giftBasket.Comment
+                                            Price: @giftBasket.Price
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        @if (!orderIsShown || !orderToShow.Equals(order))
+                        {
+                            <button @onclick="() => showOrder(order)">
+                                Show order
+                            </button>
+                        }
+                        else
+                        {
+                            <button @onclick="() => hideOrder(order)">
+                                Hide order
+                            </button>
+                        }
+
+
+                    </div>
                 </div>
 
 
-            <div>
-                <button class="@((order.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
-                <button class="@((order.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
-                <button class="@((order.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finished</button>
-                <button class="@((order.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
+                <div>
+                    <button class="@((order.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
+                    <button class="@((order.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
+                    <button class="@((order.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finished</button>
+                    <button class="@((order.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
+                </div>
             </div>
-        </div>
+        }
     }
+}
 }
 @code
 {
@@ -90,6 +107,8 @@
     private Order orderToShow;
     private bool pending = true, accepted = true, finished = true;
     private List<Order> orders, pendingOrders, acceptedOrders, finisedOrders;
+    private List<OrderStatus> _PredicateStatuses = new List<OrderStatus>();
+    private List<OrderStatus> _Statuses = new List<OrderStatus>();
     [CascadingParameter] public IModalService Modal { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -99,6 +118,23 @@
             orders = await ctx.Orders.ToListAsync();
         }
         OrderByDate();
+    }
+    
+    private void _Toggle(OrderStatus order)
+    {
+        if (_PredicateStatuses.Contains(order))
+        {
+            _PredicateStatuses.Remove(order);
+        }
+        else
+        {
+            _PredicateStatuses.Add(order);
+        }
+    }
+    private bool _Filter(Order o)
+    {
+        if (_PredicateStatuses.Count == 0) return true;
+        else return _PredicateStatuses.Contains(o.Status);
     }
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
