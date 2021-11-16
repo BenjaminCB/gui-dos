@@ -10,7 +10,6 @@ namespace gui_dos.Data
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<DummyModel> Dummys { get; set; }
 
         public static readonly string IsvaerftetDb = nameof(IsvaerftetDb).ToLower();
 
@@ -40,14 +39,6 @@ namespace gui_dos.Data
                         (
                             v => JsonSerializer.Serialize<List<Change>>(v, default),
                             v => JsonSerializer.Deserialize<List<Change>>(v, default)
-                        );
-
-            modelBuilder.Entity<DummyModel>()
-                        .Property(e => e.Images)
-                        .HasConversion
-                        (
-                            v => JsonSerializer.Serialize<List<String>>(v, default),
-                            v => JsonSerializer.Deserialize<List<string>>(v, default)
                         );
         }
 
