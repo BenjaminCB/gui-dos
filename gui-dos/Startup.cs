@@ -14,8 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using gui_dos.Areas.Identity;
 using Microsoft.AspNetCore.Identity;
 using Blazored.Modal;
-using gui_dos.Areas.Identity;
-using gui_dos.Data;
 using MudBlazor.Services;
 
 namespace gui_dos

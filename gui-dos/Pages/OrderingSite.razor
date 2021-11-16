@@ -63,32 +63,17 @@
                 }
             </ul>
         </section>
-
-        <!-- should show cart and not go to cart endpoint -->
-        <button @onclick="() => showCart = !showCart">
-            Show cart
-        </button>
-
-        @if (showCart)
-        {
-            <Cart @ref="_Cart"/>
-        }
-
     </section>
 
 </body>
 
 @code {
-    /* private List<Content> content = new List<Content>(); */
-
     private List<Product> products;
-    private bool showCart = false;
-    private Cart _Cart;
     private int _MaxPrice;
     private int _MinPrice;
     private int _SetNumber { get; set; }
-    private List<String> _PredicateTags;
-    private List<String> _Tags;
+    private List<String> _PredicateTags = new List<string>();
+    private List<String> _Tags = new List<string>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -96,15 +81,10 @@
         {
             products = await ctx.Products.ToListAsync();
         }
-
-        _MaxPrice = products.Select(p => (int) p.Price + 1).Max();
-        _MinPrice = products.Select(p => (int) p.Price + 1).Min();
-        _SetNumber = _MaxPrice;
-
-        _PredicateTags = new List<String>();
-        _Tags = new List<String>();
-        if(products[0].Tags != null)
-        {
+        if(products.Count != 0) {
+            _MaxPrice = products.Select(p => (int) p.Price + 1).Max();
+            _MinPrice = products.Select(p => (int) p.Price + 1).Min();
+            _SetNumber = _MaxPrice;
             foreach (Product p in products)
             {
                 _Tags.AddRange(p.Tags.Split(' ').Where(t => t != ""));
