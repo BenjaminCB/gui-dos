@@ -7,42 +7,50 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-<h1>Products</h1>
-<p>
-    This is all the products that are currently avaiable for purchase on the site
-</p>
 
-@if (products == null)
-{
-    <div>
-        Loading...
-    </div>
-}
-
-@if (products != null && products.Count == 0)
-{
-    <div>
-        No products found...
-    </div>
-}
-
-@if (products != null)
-{
-    @foreach (var product in products)
-    {
-        <div>
-            <ProductComp Product="@product" />
-
-            <button @onclick="() => productEdit(product)">
-                Edit
-            </button>
-
-            <button @onclick="() => productDelete(product)">
-                Delete
-            </button>
-        </div>
-    }
-}
+<AuthorizeView>
+    <Authorized>
+        <h1>Products</h1>
+        <p>
+            This is all the products that are currently avaiable for purchase on the site
+        </p>
+        
+        @if (products == null)
+        {
+            <div>
+                Loading...
+            </div>
+        }
+        
+        @if (products != null && products.Count == 0)
+        {
+            <div>
+                No products found...
+            </div>
+        }
+        
+        @if (products != null)
+        {
+            @foreach (var product in products)
+            {
+                <div>
+                    <ProductComp Product="@product" />
+        
+                    <button @onclick="() => productEdit(product)">
+                        Edit
+                    </button>
+        
+                    <button @onclick="() => productDelete(product)">
+                        Delete
+                    </button>
+                </div>
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <LoginDisplay />
+    </NotAuthorized>
+</AuthorizeView>
 
 
 @code

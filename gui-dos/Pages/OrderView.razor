@@ -7,100 +7,108 @@
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 
-@if (orders != null && orders.Count == 0)
-{
-    <div>
-        No products found...
-    </div>
-}
-<style>
-    .ButtonActive{
-    background-color: #1c7430;
-    }
-</style>
-@if (orders != null)
-{
-    <section>
-        <div>
-            <label>
-                Pending
-                <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Pending))"/>
-            </label>
-            <label>
-                Accepted
-                <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Accepted))"/>
-            </label>
-            <label>
-                Finished
-                <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Finished))"/>
-            </label>
-        </div>
-    </section>
-    
-    @foreach (var order in orders)
-    {
-        @if (_Filter(order))
+
+<AuthorizeView>
+    <Authorized>
+        @if (orders != null && orders.Count == 0)
         {
             <div>
-                <div>
-                    <div>
-                        <p>
-                            Date ordered: @order.DateOrdered.ToString()
-                            Deadline: @order.DateDeadline.ToString()
-                            Name: @order.FirstName @order.LastName
-                            Price: @order.Price
-                        </p>
-
-
-                        @if (orderIsShown && orderToShow.Equals(order))
-                        {
-                            <p>
-                                Mail: @order.Email
-                                Tlf. nr: @order.PhoneNumber
-                                Comment: @order.Comment
-                            </p>
-                            <div>
-                                @foreach (GiftBasket giftBasket in order.GiftBaskets)
-                                {
-                                    <div>
-                                        <p>
-                                            Giftbasket: Det er i benjamins kode, implementer senerer.
-                                            Comment: @giftBasket.Comment
-                                            Price: @giftBasket.Price
-                                        </p>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        @if (!orderIsShown || !orderToShow.Equals(order))
-                        {
-                            <button @onclick="() => showOrder(order)">
-                                Show order
-                            </button>
-                        }
-                        else
-                        {
-                            <button @onclick="() => hideOrder(order)">
-                                Hide order
-                            </button>
-                        }
-
-
-                    </div>
-                </div>
-
-
-                <div>
-                    <button class="@((order.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
-                    <button class="@((order.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
-                    <button class="@((order.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finished</button>
-                    <button class="@((order.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
-                </div>
+                No products found...
             </div>
         }
-    }
-}
-}
+        <style>
+            .ButtonActive{
+            background-color: #1c7430;
+            }
+        </style>
+        @if (orders != null)
+        {
+            <section>
+                <div>
+                    <label>
+                        Pending
+                        <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Pending))"/>
+                    </label>
+                    <label>
+                        Accepted
+                        <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Accepted))"/>
+                    </label>
+                    <label>
+                        Finished
+                        <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Finished))"/>
+                    </label>
+                </div>
+            </section>
+            
+            @foreach (var order in orders)
+            {
+                @if (_Filter(order))
+                {
+                    <div>
+                        <div>
+                            <div>
+                                <p>
+                                    Date ordered: @order.DateOrdered.ToString()
+                                    Deadline: @order.DateDeadline.ToString()
+                                    Name: @order.FirstName @order.LastName
+                                    Price: @order.Price
+                                </p>
+        
+        
+                                @if (orderIsShown && orderToShow.Equals(order))
+                                {
+                                    <p>
+                                        Mail: @order.Email
+                                        Tlf. nr: @order.PhoneNumber
+                                        Comment: @order.Comment
+                                    </p>
+                                    <div>
+                                        @foreach (GiftBasket giftBasket in order.GiftBaskets)
+                                        {
+                                            <div>
+                                                <p>
+                                                    Giftbasket: Det er i benjamins kode, implementer senerer.
+                                                    Comment: @giftBasket.Comment
+                                                    Price: @giftBasket.Price
+                                                </p>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                @if (!orderIsShown || !orderToShow.Equals(order))
+                                {
+                                    <button @onclick="() => showOrder(order)">
+                                        Show order
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button @onclick="() => hideOrder(order)">
+                                        Hide order
+                                    </button>
+                                }
+        
+        
+                            </div>
+                        </div>
+        
+        
+                        <div>
+                            <button class="@((order.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
+                            <button class="@((order.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
+                            <button class="@((order.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finished</button>
+                            <button class="@((order.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
+                        </div>
+                    </div>
+                }
+            }
+        }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <LoginDisplay />
+    </NotAuthorized>
+</AuthorizeView>
 @code
 {
     private bool orderIsShown = false;
