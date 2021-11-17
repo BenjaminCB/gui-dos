@@ -13,6 +13,15 @@
 @* Visible navigation buttons for authorized users *@
 <AuthorizeView>
     <Authorized>
-        
+        <MudPaper Class="mud-primary ma-2">
+            <MudNavLink Icon="@Icons.Outlined.ChecklistRtl" IconColor="Color.Tertiary" Href="order">
+                <MudText Color="Color.Tertiary">Ordrer</MudText>
+            </MudNavLink>
+        </MudPaper>        
+        <MudPaper Class="mud-primary ma-2">
+            <MudNavLink Icon="@Icons.Outlined.ChecklistRtl" IconColor="Color.Tertiary" Href="product">
+                <MudText Color="Color.Tertiary">Produkter</MudText>
+            </MudNavLink>
+        </MudPaper>   
     </Authorized>
 </AuthorizeView>
