@@ -4,10 +4,11 @@ Online Gift-Basket ordering system.
 ## Packages
 |Package     |.NET CLI.                          |
 |------------|-----------------------------------|
-|FsCheck     |dotnet add package FsCheck --version 2.16.3|
+|FsCheck|dotnet add package FsCheck --version 2.16.3|
 |FsCheck.Xunit|dotnet add package FsCheck.Xunit --version 2.16.3      |
-|MailKit     |dotnet add package MailKit --version 2.15.0|
+|MailKit|dotnet add package MailKit --version 2.15.0|
 |Blazored Modal|dotnet add package Blazored.Modal|
+|MudBlazor|dotnet add package MudBlazor --version 5.2.0|
 
 ## endpoints
 - /shop
