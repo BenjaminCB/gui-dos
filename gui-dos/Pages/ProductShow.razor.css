@@ -1,0 +1,21 @@
+h1 {
+    margin: 25px 50px 25px 50px;
+}
+
+.flex-container {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.flex-child {
+    float: left;
+    margin: 25px 50px 25px 50px;
+}
+
+.buttons {
+    margin-right: 15px;
+}
+
+    .buttons:hover {
+        color: red;
+    }

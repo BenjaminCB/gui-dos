@@ -12,38 +12,42 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-
 <AuthorizeView Context="AuthContext">
     <Authorized>
-        <h1>Create new product</h1>
-        
-        <EditForm Model="@productForm" OnValidSubmit="@InsertProduct" Context="EditContext">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-        
-            <div class="form-group">
-                <label for="Title">Title</label>
-                <InputText @bind-Value=productForm.Title />
-            </div>
-            <div class="form-group">
-                <label for="Description">Description</label>
-                <InputTextArea @bind-Value=productForm.Description />
-            </div>
-            <div class="form-group">
-                <label for="Price">Price</label>
-                <InputNumber @bind-Value=productForm.Price />
-            </div>
-            <div class="form-group">
-                <label for="Tags">Tags</label>
-                <InputText @bind-Value=productForm.Tags />
-            </div>
-            <div class="form-group">
-                <label for="Image">Image</label>
-                <InputFile OnChange="@fileUpload" />
-            </div>
-            <button type="submit">Submit</button>
-        </EditForm>
+        <body class="page-wrapper">
+            <h1>Lav nyt product</h1>
 
+            <div class="new-product">
+                <EditForm Model="@productForm" OnValidSubmit="@InsertProduct">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="form-group product-title">
+                        <label for="Title" class="title">Titel:</label>
+                        <InputText @bind-Value=productForm.Title placeholder="Tilføj titel her" />
+                    </div>
+                    <div class="form-group product-description">
+                        <label for="Description" class="title">Beskrivelse:</label>
+                        <div class="description-box">
+                            <InputTextArea @bind-Value=productForm.Description placeholder="Tilføj beskrivelse her" rows="3" />
+                        </div>
+                    </div>
+                    <div class="form-group product-price">
+                        <label for="Price" class="title">Pris:</label>
+                        <InputNumber @bind-Value=productForm.Price />
+                    </div>
+                    <div class="form-group product-image">
+                        <label for="Image" class="title">Billede(r):</label>
+                        <InputFile OnChange="@fileUpload" />
+                    </div>
+                    <div class="form-group product-tags">
+                        <label for="Tags" class="title">Tags:</label>
+                        <InputTextArea @bind-Value="productForm.Tags" />
+                    </div>
+                    <button type="submit" class="buttons">Submit</button>
+                </EditForm>
+            </div>
+        </body>
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />

@@ -1,4 +1,4 @@
-﻿@page "/shop"
+﻿@page "/webshop"
 
 @using gui_dos.Data
 @using System.Collections.Generic
@@ -34,34 +34,24 @@
         </section>
 
         <!--Product section-->
-        <!--TODO: Link to Database-->
         <section id="product-list">
             <h1 class="title_Header">Produkter</h1>
-            <ul class="flex-container wrap">
-                @foreach (var item in products)
+            <div class="flex-container">
+                @foreach (var product in products)
                 {
-                    @if (_Filter(item))
+                    @if (_Filter(product))
                     {
-                        <li>
-                            <div class="flex-body">
-                                <div class="flex-img">
-                                    <img src="@item.Image" height="320" width="320">
-                                </div>
-                                <div class="flex-text">
-                                    <h4 class="flex-title">@item.Title</h4>
-                                    <h4 class="flex-price">@item.Price,- kr</h4>
-                                </div>
-                                <div>
-                                    <p class="see-more">@item.Description</p>
-                                </div>
-                                <button @onclick="() => addToCart(item)">
-                                    Add to cart
-                                </button>
-                            </div>
-                        </li>
+                        <div class="flex-child">
+                            <ProductCard Product="@product" />
+                            <!--<button @onclick="() => addToCart(product)">
+                                Add to cart
+                            </button>
+                            -->
+                        </div>
+
                     }
                 }
-            </ul>
+            </div>
         </section>
     </section>
 
