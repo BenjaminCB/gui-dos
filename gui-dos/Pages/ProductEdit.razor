@@ -17,7 +17,7 @@
 }
 else
 {
-<body>
+<body class="page-wrapper">
 
     <EditForm Model="@productForm" OnValidSubmit="@editProduct">
         <DataAnnotationsValidator />
@@ -41,7 +41,11 @@ else
             <label for="Image" class="title">Billede(r)</label>
             <InputFile OnChange="@fileUpload" />
          </div>
-         <button type="submit">Submit</button>
+         <div class="form-group product-tags">
+             <label for="Tags" class="title">Tags:</label>
+             <InputTextArea @bind-Value="productForm.Tags" />
+         </div>
+         <button type="submit" class="buttons">Submit</button>
 </EditForm>
 
 </body>

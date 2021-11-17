@@ -52,6 +52,7 @@ body[b-cgqux6sexy] {
     float: left;
     border-style: ridge;
     height: 85vh;
+    word-wrap: break-word;
 }
 
 .title_Header[b-cgqux6sexy] {
@@ -124,9 +125,13 @@ body[b-cgqux6sexy] {
 }
 
 .flex-child[b-cgqux6sexy] {
-    margin: 25px 50px 25px 50px;
+    margin: 25px auto 25px auto;
 }
 /* _content/gui-dos/Pages/ProductEdit.razor.rz.scp.css */
+.page-wrapper[b-sv1358poo3] {
+    margin-left: 1vw;
+}
+
 .header[b-sv1358poo3] {
     padding-left: 2vw;
     padding-bottom: 1vh;
@@ -155,7 +160,22 @@ description-box[b-sv1358poo3] {
 .title[b-sv1358poo3] {
     font-weight: bold;
 }
+
+.buttons[b-sv1358poo3] {
+    border: solid;
+    border-width: 1px;
+    border-radius: 12px;
+    padding: 5px 2px;
+}
+
+.buttons:hover[b-sv1358poo3] {
+    color: red;
+}
 /* _content/gui-dos/Pages/ProductInsert.razor.rz.scp.css */
+.page-wrapper[b-tv34xyiyg6] {
+    margin-left: 1vw;
+}
+
 body h1[b-tv34xyiyg6]{
     padding-left: 2vw;
     padding-bottom: 1vh;
@@ -185,6 +205,17 @@ description-box[b-tv34xyiyg6] {
 
 .title[b-tv34xyiyg6] {
     font-weight: bold;
+}
+
+.buttons[b-tv34xyiyg6] {
+    border: solid;
+    border-width: 1px;
+    border-radius: 12px;
+    padding: 5px 2px;
+}
+
+.buttons:hover[b-tv34xyiyg6] {
+    color: red;
 }
 /* _content/gui-dos/Pages/ProductShow.razor.rz.scp.css */
 h1[b-71zgm2vbc4] {

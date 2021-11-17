@@ -13,7 +13,7 @@
     <MudPaper Class="mud-primary">
         <MudText Typo="Typo.h3" Color="Color.Tertiary">@Product.Title</MudText>
         <div>
-            <MudText Color="Color.Tertiary" Style="font-weight: bold;" Inline="true">Pris:</MudText> <MudText Color="Color.Tertiary" Inline="true">@Product.Price kr.</MudText>
+            <MudText Color="Color.Tertiary" Style="font-weight: bold;" Inline="true">Pris:</MudText> <MudText Color="Color.Tertiary" Inline="true">@Product.Price,- kr.</MudText>
         </div>
         <div>
             <MudText Color="Color.Tertiary" Style="font-weight: bold;" Inline="true">Beskrivelse:</MudText> <MudText Color="Color.Tertiary" Inline="true">@Product.Description</MudText>
@@ -42,4 +42,5 @@
 
     //'cycleTime' sets the cycling time for images on carousel
     private TimeSpan cycleTime = TimeSpan.FromSeconds(3);
+
 }

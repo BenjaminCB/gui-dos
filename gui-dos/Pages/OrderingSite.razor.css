@@ -19,6 +19,7 @@ body {
     float: left;
     border-style: ridge;
     height: 85vh;
+    word-wrap: break-word;
 }
 
 .title_Header {
@@ -91,5 +92,5 @@ body {
 }
 
 .flex-child {
-    margin: 25px 50px 25px 50px;
+    margin: 25px auto 25px auto;
 }
