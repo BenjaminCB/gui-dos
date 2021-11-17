@@ -6,3 +6,4 @@ net5.0/
 gui-dos/gui-dos.csproj.user
 gui-dos/bin/
 gui-dos/obj/
+.DS_store
