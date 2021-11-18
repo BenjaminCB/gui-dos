@@ -1,7 +1,6 @@
 <div>
-    <button @onclick="ModalInstance.CancelAsync">No</button>
-    <button @onclick="Yes">yes</button>
-    
+    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Error" Size="Size.Medium" @onclick="ModalInstance.CancelAsync" style="float: left;">Cancel</MudButton>
+    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Save" Color="Color.Info" Size="Size.Medium" @onclick="Yes" style="float: right;">Save</MudButton>
 </div>
 @code{
     [CascadingParameter] BlazoredModalInstance ModalInstance { get; set; }

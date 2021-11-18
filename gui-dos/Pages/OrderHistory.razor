@@ -49,7 +49,7 @@
         </HeaderContent>
         <RowTemplate>
             <MudTd>
-                <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
+                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Info" Color="Color.Transparent" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
                     @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
                 </MudButton>
             </MudTd>
