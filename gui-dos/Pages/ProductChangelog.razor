@@ -19,17 +19,7 @@
             <!-- TODO fix that .Reverse() does not want to work -->
             @foreach (Change c in product.Changelog)
             {
-                <div>
-                    <p>
-                        Change: @c.ChangeString
-                    </p>
-                    <p>
-                        Made by: @c.Name
-                    </p>
-                    <p>
-                        On: @c.Date
-                    </p>
-                </div>
+                <ChangeComp Change="@c" />
             }
         }
     </Authorized>
