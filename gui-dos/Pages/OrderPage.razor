@@ -8,115 +8,162 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-<AuthorizeView>
+<AuthorizeView Context="AuthContext">
     <Authorized>
         @if (orders != null && orders.Count == 0)
         {
             <div>
                 No products found...
-            </div>
-        }
+            </div>}
         <style>
-            .ButtonActive{
-            background-color: #1c7430;
+            .ButtonActive {
+                background-color: #1c7430;
             }
         </style>
+
         @if (orders != null)
         {
-            <section>
-                <div>
-                    <label>
-                        Pending
-                        <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Pending))"/>
-                    </label>
-                    <label>
-                        Accepted
-                        <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Accepted))"/>
-                    </label>
-                    <label>
-                        Finished
-                        <input type="checkbox" @onchange="@(() => _Toggle(OrderStatus.Finished))"/>
-                    </label>
-                </div>
-            </section>
-
-            @foreach (var order in orders)
-            {
-                @if (_Filter(order))
-                {
-                    <div>
-                        <div>
-                            <div>
-                                <p>
-                                    Date ordered: @order.DateOrdered.ToString()
-                                    Deadline: @order.DateDeadline.ToString()
-                                    Name: @order.FirstName @order.LastName
-                                    Price: @order.Price
-                                </p>
-
-                                @if (orderIsShown && orderToShow.Equals(order))
-                                {
-                                    <p>
-                                        Mail: @order.Email
-                                        Tlf. nr: @order.PhoneNumber
-                                        Comment: @order.Comment
-                                    </p>
-                                    <div>
-                                        @foreach (GiftBasket giftBasket in order.GiftBaskets)
-                                        {
-                                            <div>
-                                                <p>
-                                                    Giftbasket: Det er i benjamins kode, implementer senerer.
-                                                    Comment: @giftBasket.Comment
-                                                    Price: @giftBasket.Price
-                                                </p>
-                                            </div>
-                                        }
-                                    </div>
-                                }
-
-                                @if (!orderIsShown || !orderToShow.Equals(order))
-                                {
-                                    <button @onclick="() => showOrder(order)">
-                                        Show order
-                                    </button>
-                                }
-                                else
-                                {
-                                    <button @onclick="() => hideOrder(order)">
-                                        Hide order
-                                    </button>
-                                }
-
-                                <button @onclick="() => orderChangelog(order)">
-                                    Changelog
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <button class="@((order.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
-                            <button class="@((order.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
-                            <button class="@((order.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Finished)">Finished</button>
-                            <button class="@((order.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Delivered)">Delivered</button>
-                        </div>
-                    </div>
-                }
+            <MudTable Items="@orders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Aktive Ordrer</MudText>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                <!-- Coulums and their given size. 'Empty' = fill out what is needed or left -->
+                <ColGroup>
+                    <col style="width:30%" />
+                    <col style="width:15%" />
+                    <col style="width:15%;" />
+                    <col style="width:15%;" />
+                    <col style="width:15%;" />
+                    <col />
+                </ColGroup>
+                <!-- Functionality to be able to sort based on the rows values, '1-9-a-z' for text -->
+                <!--Layout defult sorted by DateOrdered-->
+                <HeaderContent>
+                    <MudTh>Status</MudTh>
+                    <MudTh>Info</MudTh>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)">Deadline</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.FirstName)">Navn</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Price)">Pris</MudTableSortLabel></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>
+                        <!-- Should be in English? -->
+                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Pending)">
+                            Pending
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Accepted)">
+                            Accepted
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Finished)">
+                            Finished
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Delivered)">
+                            Delivered
+                        </MudButton>
+                    </MudTd>
+                    <MudTd>
+                        <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
+                            @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
+                        </MudButton>
+                    </MudTd>
+                    <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
+                    <MudTd DataLabel="Deadline">@context.DateDeadline</MudTd>
+                    <MudTd DataLabel="Navn">@context.FirstName</MudTd>
+                    <MudTd DataLabel="Pris">@context.Price</MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    <MudText>
+                        Intet match var fundet <br />
+                        Det er muligt at søge efter: Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
+                        <p class="text-muted">Disse kan/må ikke kombineres</p>
+                    </MudText>
+                </NoRecordsContent>
+                <LoadingContent>
+                    <MudText>Loading...</MudText>
+                </LoadingContent>
+                <ChildRowContent>
+                    @if (context.ShowDetails)
+                        {
+                        <MudTr>
+                            <td colspan="4">
+                                <MudCard Elevation="0">
+                                    <MudCardHeader>
+                                        <!-- It is possible to move this to the same level as the other data -->
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent Class="pa-0">
+                                        <MudTable Items="@orders" Context="Child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                            <ColGroup>
+                                                <col style="width:25%;" />
+                                                <col style="width:15%;" />
+                                                <col />
+                                            </ColGroup>
+                                            <HeaderContent>
+                                                <MudTh>Email</MudTh>
+                                                <MudTh>Tel nr.</MudTh>
+                                                <MudTh>Kommentar</MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                @if (context.OrderId == Child.OrderId)
+                                                    {
+                                                    <MudTd DataLabel="Email">@Child.Email</MudTd>
+                                                    <MudTd DataLabel="Tel nr.">@Child.PhoneNumber</MudTd>
+                                                    <MudTd DataLabel="Kommentar">@Child.Comment</MudTd>}
+                                            </RowTemplate>
+                                        </MudTable>
+                                        <br />
+                                        <MudTable Items="@orders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                            <ColGroup>
+                                                <col style="width:10%;" />
+                                                <col style="width:10%;" />
+                                                <col style="width:30%;" />
+                                            </ColGroup>
+                                            <HeaderContent>
+                                                <MudTh>ID</MudTh>
+                                                <MudTh>Pris</MudTh>
+                                                <MudTh>Kommentar</MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                @if (context.OrderId == content.OrderId)
+                                                    {
+                                                        for (int i = 0; i < content.GiftBaskets.Count; i++)
+                                                        {
+                                                        <MudTd DataLabel="ID">@content.GiftBaskets[i].GiftBasketId</MudTd>
+                                                        <MudTd DataLabel="Pris">@content.GiftBaskets[i].Price</MudTd>
+                                                        <MudTd DataLabel="Kommentar">@content.GiftBaskets[i].Comment</MudTd>
+                                                        }
+                                                    }
+                                            </RowTemplate>
+                                        </MudTable>
+                                    </MudCardContent>
+                                </MudCard>
+                            </td>
+                        </MudTr>
+                        }
+                    <br />
+                </ChildRowContent>
+            </MudTable>
             }
-        }
         }
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />
     </NotAuthorized>
 </AuthorizeView>
+
 @code
 {
-    private bool orderIsShown = false;
-    private Order orderToShow;
-    private bool pending = true, accepted = true, finished = true;
-    private List<Order> orders, pendingOrders, acceptedOrders, finisedOrders;
-    private List<OrderStatus> _PredicateStatuses = new List<OrderStatus>();
-    private List<OrderStatus> _Statuses = new List<OrderStatus>();
+    // Mudblazor
+    private string searchString = "";
+    private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
+
+    // To change order status
+    private List<Order> orders;
     [CascadingParameter] public IModalService Modal { get; set; }
 
     [CascadingParameter]
@@ -129,30 +176,12 @@
         {
             orders = await ctx.Orders.ToListAsync();
         }
-        OrderByDate();
 
         var user = (await authenticationStateTask).User;
         if (user.Identity.IsAuthenticated)
         {
             _Name = user.Identity.Name;
         }
-    }
-
-    private void _Toggle(OrderStatus order)
-    {
-        if (_PredicateStatuses.Contains(order))
-        {
-            _PredicateStatuses.Remove(order);
-        }
-        else
-        {
-            _PredicateStatuses.Add(order);
-        }
-    }
-    private bool _Filter(Order o)
-    {
-        if (_PredicateStatuses.Count == 0) return true;
-        else return _PredicateStatuses.Contains(o.Status);
     }
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
@@ -180,72 +209,27 @@
 
                 await ctx.SaveChangesAsync();
                 orders = await ctx.Orders.ToListAsync();
-                OrderByDate();
             }
         }
     }
 
-    private void OrderByDate()
+    private void ShowBtnPress(int nr)
     {
-        IEnumerable<Order> query = orders.OrderBy(order => order.DateDeadline);
+        Order tmpPerson = orders.First(f => f.OrderId == nr);
+        tmpPerson.ShowDetails = !tmpPerson.ShowDetails;
     }
 
-    private async void ChangeSearchTerms(OrderStatus o)
+    private bool FilterFunc(Order element, string searchString)
     {
-        switch (o)
-        {
-            case OrderStatus.Pending:
-                pending = !pending;
-                break;
-            case OrderStatus.Accepted:
-                accepted = !accepted;
-                break;
-            case OrderStatus.Finished:
-                    finished = !finished;
-                break;
-        }
-        await using (var ctx = DbContextFactory.CreateDbContext())
-        {
-            if (pending)
-            {
-                pendingOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Pending).ToListAsync();
-            }
-            else
-            {
-                pendingOrders = new List<Order>();
-            }
-            if (accepted)
-            {
-                acceptedOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Accepted).ToListAsync();
-            }
-            else
-            {
-                acceptedOrders = new List<Order>();
-            }
-            if (finished)
-            {
-                finisedOrders = await ctx.Orders.Where(t => t.Status == OrderStatus.Finished).ToListAsync();
-            }
-            else
-            {
-                finisedOrders = new List<Order>();
-            }
-
-        }
-        pendingOrders.AddRange(acceptedOrders);
-        pendingOrders.AddRange(finisedOrders);
-        orders = pendingOrders;
-    }
-
-    private void showOrder(Order o)
-    {
-        orderToShow = o;
-        orderIsShown = true;
-    }
-
-    private void hideOrder(Order o)
-    {
-        orderIsShown = false;
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (element.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
+            return true;
+        return false;
     }
 
     private void orderChangelog(Order o)
