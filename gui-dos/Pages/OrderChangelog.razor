@@ -1,0 +1,45 @@
+@page "/order/changelog/{orderId}"
+
+@using gui_dos.Data
+@using System.Collections.Generic
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+
+<AuthorizeView Context="AuthContext">
+    <Authorized>
+        @if (_Order == null)
+        {
+            <div>
+                Loading...
+            </div>
+        }
+        else
+        {
+            <!-- TODO fix that .Reverse() does not want to work -->
+            @foreach (Change c in _Order.Changelog)
+            {
+                <ChangeComp Change="@c" />
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <LoginDisplay />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Parameter]
+    public string OrderId { get; set; }
+
+    private Order _Order;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            int id = Int32.Parse(OrderId);
+            _Order = await ctx.Orders.SingleAsync(o => o.OrderId == id);
+        }
+    }
+}

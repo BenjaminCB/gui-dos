@@ -11,7 +11,7 @@
 <AuthorizeView Context="AuthContext">
     <Authorized>
         <h1>ProductId is @ProductId</h1>
-        
+
         @if (product == null)
         {
             <div>
@@ -24,7 +24,7 @@
                 <EditForm Model="@productForm" OnValidSubmit="@editProduct" Context="EditContext">
                     <DataAnnotationsValidator/>
                     <ValidationSummary/>
-            
+
                     <div class="form-group product-title">
                         <label for="Title" class="title">Title</label>
                         <InputText @bind-Value=productForm.Title />
@@ -59,6 +59,9 @@
     [Parameter]
     public string ProductId { get; set; }
 
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
     private Product product;
     private ProductForm productForm = new ProductForm();
 
@@ -87,16 +90,63 @@
 
     private async Task editProduct()
     {
+        string name = (await authenticationStateTask).User.Identity.Name;
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             // TODO update this to simpler syntax
-            ctx.Products.Remove(product);
-            ctx.Products.Add(new Product( productForm.Title
-                                        , productForm.Description
-                                        , (int) (productForm.Price * 100)
-                                        , productForm.Image
-                                        , productForm.Tags ));
+            Product p = ctx.Products.Update(product).Entity;
+
+            List<string> changes = new List<string>();
+            if (p.Title != productForm.Title)
+            {
+                p.Title = productForm.Title;
+                changes.Add("Title");
+            }
+
+            if (p.Description != productForm.Description)
+            {
+                p.Description = productForm.Description;
+                changes.Add("Description");
+            }
+
+            if (p.Price != (int) (productForm.Price * 100))
+            {
+                p.Price = (int) (productForm.Price * 100);
+                changes.Add("Price");
+            }
+
+            if (p.Image != productForm.Image)
+            {
+                p.Image = productForm.Image;
+                changes.Add("Image");
+            }
+
+            if (p.Tags != productForm.Tags)
+            {
+                p.Tags = productForm.Tags;
+                changes.Add("Tags");
+            }
+
+            string changeString = $"Product updated [{String.Join(',', changes)}]";
+
+            Change c = new Change()
+            {
+                ChangeString = changeString,
+                Name = name,
+                Date = DateTime.Now.ToString()
+            };
+
+            p.Changelog.Add(c);
+
             await ctx.SaveChangesAsync();
+
+            // Earlier version
+            /* ctx.Products.Remove(product); */
+            /* ctx.Products.Add(new Product( productForm.Title */
+            /*                             , productForm.Description */
+            /*                             , (int) (productForm.Price * 100) */
+            /*                             , productForm.Image */
+            /*                             , productForm.Tags )); */
         }
         NavMan.NavigateTo("/product/show");
     }

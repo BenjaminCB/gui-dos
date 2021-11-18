@@ -55,6 +55,9 @@
 </AuthorizeView>
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
     private long maxImageFileSize = 4096000;
     private ProductForm productForm = new ProductForm() {Tags = ""};
 
@@ -68,13 +71,24 @@
 
     private async Task InsertProduct()
     {
+        string name = (await authenticationStateTask).User.Identity.Name;
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            ctx.Products.Add(new Product( productForm.Title
-                                        , productForm.Description
-                                        , (int) (productForm.Price * 100)
-                                        , productForm.Image
-                                        , productForm.Tags ));
+            Product p = new Product( productForm.Title
+                                   , productForm.Description
+                                   , (int) (productForm.Price * 100)
+                                   , productForm.Image
+                                   , productForm.Tags );
+
+            Change c = new Change()
+            {
+                ChangeString = "Product created",
+                Name = name,
+                Date = DateTime.Now.ToString()
+            };
+
+            p.Changelog.Add(c);
+            ctx.Products.Add(p);
             await ctx.SaveChangesAsync();
         }
         NavMan.NavigateTo("/product/show");
