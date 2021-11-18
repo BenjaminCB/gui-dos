@@ -1,4 +1,4 @@
-@page "/product/changelog/{productId}"
+@page "/order/changelog/{orderId}"
 
 @using gui_dos.Data
 @using System.Collections.Generic
@@ -8,7 +8,7 @@
 
 <AuthorizeView Context="AuthContext">
     <Authorized>
-        @if (product == null)
+        @if (_Order == null)
         {
             <div>
                 Loading...
@@ -17,7 +17,7 @@
         else
         {
             <!-- TODO fix that .Reverse() does not want to work -->
-            @foreach (Change c in product.Changelog)
+            @foreach (Change c in _Order.Changelog)
             {
                 <ChangeComp Change="@c" />
             }
@@ -30,16 +30,16 @@
 
 @code {
     [Parameter]
-    public string ProductId { get; set; }
+    public string OrderId { get; set; }
 
-    private Product product;
+    private Order _Order;
 
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            int id = Int32.Parse(ProductId);
-            product = await ctx.Products.SingleAsync(p => p.ProductId == id);
+            int id = Int32.Parse(OrderId);
+            _Order = await ctx.Orders.SingleAsync(o => o.OrderId == id);
         }
     }
 }

@@ -6,7 +6,7 @@
 @using Microsoft.EntityFrameworkCore;
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
-
+@inject NavigationManager NavMan
 
 <AuthorizeView>
     <Authorized>
@@ -39,7 +39,7 @@
                     </label>
                 </div>
             </section>
-            
+
             @foreach (var order in orders)
             {
                 @if (_Filter(order))
@@ -53,8 +53,7 @@
                                     Name: @order.FirstName @order.LastName
                                     Price: @order.Price
                                 </p>
-        
-        
+
                                 @if (orderIsShown && orderToShow.Equals(order))
                                 {
                                     <p>
@@ -75,6 +74,7 @@
                                         }
                                     </div>
                                 }
+
                                 @if (!orderIsShown || !orderToShow.Equals(order))
                                 {
                                     <button @onclick="() => showOrder(order)">
@@ -87,12 +87,12 @@
                                         Hide order
                                     </button>
                                 }
-        
-        
+
+                                <button @onclick="() => orderChangelog(order)">
+                                    Changelog
+                                </button>
                             </div>
                         </div>
-        
-        
                         <div>
                             <button class="@((order.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Pending)">Pending</button>
                             <button class="@((order.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(order, OrderStatus.Accepted)">Accepted</button>
@@ -119,6 +119,10 @@
     private List<OrderStatus> _Statuses = new List<OrderStatus>();
     [CascadingParameter] public IModalService Modal { get; set; }
 
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private string _Name;
+
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
@@ -126,8 +130,14 @@
             orders = await ctx.Orders.ToListAsync();
         }
         OrderByDate();
+
+        var user = (await authenticationStateTask).User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _Name = user.Identity.Name;
+        }
     }
-    
+
     private void _Toggle(OrderStatus order)
     {
         if (_PredicateStatuses.Contains(order))
@@ -147,6 +157,8 @@
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
+        if (o.Status >= s) return;
+
         var ConfModal = Modal.Show<ConfComp>("Are you sure?");
         var result = await ConfModal.Result;
 
@@ -156,6 +168,16 @@
             {
                 Order thisOrder = ctx.Update(o).Entity;
                 thisOrder.Status = s;
+
+                Change c = new Change()
+                {
+                    ChangeString = $"Update status to {s}",
+                    Name = _Name,
+                    Date = DateTime.Now.ToString()
+                };
+
+                o.Changelog.Add(c);
+
                 await ctx.SaveChangesAsync();
                 orders = await ctx.Orders.ToListAsync();
                 OrderByDate();
@@ -208,7 +230,7 @@
             {
                 finisedOrders = new List<Order>();
             }
-            
+
         }
         pendingOrders.AddRange(acceptedOrders);
         pendingOrders.AddRange(finisedOrders);
@@ -224,5 +246,10 @@
     private void hideOrder(Order o)
     {
         orderIsShown = false;
+    }
+
+    private void orderChangelog(Order o)
+    {
+        NavMan.NavigateTo($"/order/changelog/{o.OrderId}");
     }
 }
