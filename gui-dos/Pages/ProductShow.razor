@@ -43,6 +43,10 @@
                         <button @onclick="() => productDelete(product)" class="buttons">
                             Delete
                         </button>
+
+                        <button @onclick="() => productChangelog(product)" class="buttons">
+                            Changelog
+                        </button>
                     </div>
                 }
             </div>
@@ -76,8 +80,13 @@
         }
     }
 
-    private async Task productEdit(Product p)
+    private void productEdit(Product p)
     {
         NavMan.NavigateTo($"/product/edit/{p.ProductId}");
+    }
+
+    private void productChangelog(Product p)
+    {
+        NavMan.NavigateTo($"/product/changelog/{p.ProductId}");
     }
 }

@@ -1,0 +1,58 @@
+@page "/product/changelog/{productId}"
+
+@using gui_dos.Data
+@using System.Collections.Generic
+@using Microsoft.EntityFrameworkCore;
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+
+<AuthorizeView Context="AuthContext">
+    <Authorized>
+        @if (product == null)
+        {
+            <div>
+                Loading...
+            </div>
+        }
+        else
+        {
+            <!-- TODO fix that .Reverse() does not want to work -->
+            @foreach (Change c in product.Changelog)
+            {
+                <div>
+                    <p>
+                        Change: @c.ChangeString
+                    </p>
+                    <p>
+                        Made by: @c.Name
+                    </p>
+                    <p>
+                        On: @c.Date
+                    </p>
+                </div>
+            }
+        }
+    </Authorized>
+    <NotAuthorized>
+        <LoginDisplay />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Parameter]
+    public string ProductId { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private Product product;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            int id = Int32.Parse(ProductId);
+            product = await ctx.Products.SingleAsync(p => p.ProductId == id);
+        }
+    }
+}
