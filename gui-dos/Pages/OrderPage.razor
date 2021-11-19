@@ -101,23 +101,30 @@
                                 </CardHeaderContent>
                             </MudCardHeader>
                             <MudCardContent Class="pa-0">
-                                <MudTable Items="@orders" Context="Child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                <MudTable Items="@orders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
                                     <ColGroup>
                                         <col style="width:25%;" />
                                         <col style="width:15%;" />
+                                        <col />
                                         <col />
                                     </ColGroup>
                                     <HeaderContent>
                                         <MudTh>Email</MudTh>
                                         <MudTh>Tel nr.</MudTh>
                                         <MudTh>Kommentar</MudTh>
+                                        <MudTh>Forløb</MudTh>
                                     </HeaderContent>
                                     <RowTemplate>
-                                        @if (context.OrderId == Child.OrderId)
+                                        @if (context.OrderId == child.OrderId)
                                             {
-                                            <MudTd DataLabel="Email">@Child.Email</MudTd>
-                                            <MudTd DataLabel="Tel nr.">@Child.PhoneNumber</MudTd>
-                                            <MudTd DataLabel="Kommentar">@Child.Comment</MudTd>}
+                                            <MudTd DataLabel="Email">@child.Email</MudTd>
+                                            <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
+                                            <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
+                                               @foreach (var item in child.Changelog)
+                                                {
+                                                <MudTd DataLabel="Forløb">ChangeID @item.ChangeId: @item.ToString()</MudTd>
+                                                }
+                                            }
                                     </RowTemplate>
                                 </MudTable>
                                 <br />
@@ -147,12 +154,10 @@
                             </MudCardContent>
                         </MudCard>
                     </td>
-                </MudTr>
-                }
+                </MudTr>}
             <br />
         </ChildRowContent>
-    </MudTable>
-        }
+    </MudTable>}
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />
@@ -200,14 +205,14 @@
     private async Task OrderChangeDate(Order o)
     {
         var ConfModal = Modal.Show<DatePicker>("Valg af ny leveringsdato for ordre ID: " + o.OrderId);
-        DateTime b = o.DateDeadline;
+        DateTime DateResult = o.DateDeadline;
         //Call to popup
         var result = await ConfModal.Result;
         //MUST check for null-reference
         if (result.Data != null)
         {
-            string a = result.Data.ToString();
-            b = DateTime.Parse(a);
+            string StringResult = result.Data.ToString();
+            DateResult = DateTime.Parse(StringResult);
         }
 
         if (!result.Cancelled)
@@ -217,7 +222,7 @@
 
                 Order thisOrder = ctx.Update(o).Entity;
                 Console.WriteLine(result.Data);
-                thisOrder.DateDeadline = b;
+                thisOrder.DateDeadline = DateResult;
                 await ctx.SaveChangesAsync();
                 orders = await ctx.Orders.ToListAsync();
             }
