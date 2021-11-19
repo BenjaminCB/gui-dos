@@ -174,7 +174,7 @@
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            orders = await ctx.Orders.ToListAsync();
+            orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
         }
 
         var user = (await authenticationStateTask).User;
@@ -208,7 +208,8 @@
                 o.Changelog.Add(c);
 
                 await ctx.SaveChangesAsync();
-                orders = await ctx.Orders.ToListAsync();
+                orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
+                StateHasChanged();
             }
         }
     }
