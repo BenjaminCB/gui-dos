@@ -5,9 +5,9 @@ namespace gui_dos.Models
     {
         Pending,
         Accepted,
-        Declined,
         Assembling,
         Finished,
-        Delivered
+        Delivered,
+        Declined
     }
 }

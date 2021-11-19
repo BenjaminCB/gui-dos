@@ -128,8 +128,8 @@
                 <NoRecordsContent>
                     <MudText>
                         Intet match blev fundet <br />
-                        Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
-                        <p class="text-muted">Disse kan/må ikke kombineres</p>
+                        Det er muligt at sï¿½ge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
+                        <p class="text-muted">Disse kan/mï¿½ ikke kombineres</p>
                     </MudText>
                 </NoRecordsContent>
                 <LoadingContent>
@@ -158,7 +158,7 @@
                                                 <MudTh>Email</MudTh>
                                                 <MudTh>Tel nr.</MudTh>
                                                 <MudTh>Kommentar</MudTh>
-                                                <MudTh>Forløb</MudTh>
+                                                <MudTh>Forlï¿½b</MudTh>
                                             </HeaderContent>
                                             <RowTemplate>
                                                 @if (context.OrderId == child.OrderId)
@@ -168,7 +168,7 @@
                                                     <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
                                                     @foreach (var item in child.Changelog)
                                                         {
-                                                        <MudTd DataLabel="Forløb">ChangeID @item.ChangeId: @item.ToString()</MudTd>
+                                                        <MudTd DataLabel="Forlï¿½b">ChangeID @item.ChangeId: @item.ToString()</MudTd>
                                                         }
                                                     }
                                             </RowTemplate>
@@ -223,17 +223,27 @@
     private List<Order> orders;
     [CascadingParameter] public IModalService Modal { get; set; }
 
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    private string _Name;
+
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            orders = await ctx.Orders.ToListAsync();
+            orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
+        }
+
+        var user = (await authenticationStateTask).User;
+        if (user.Identity.IsAuthenticated)
+        {
+            _Name = user.Identity.Name;
         }
     }
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
-        var ConfModal = Modal.Show<ConfComp>($"Vil du ændre ordre ID: {o.OrderId} fra '{o.Status}' til '{s}'");
+        var ConfModal = Modal.Show<ConfComp>($"Vil du ï¿½ndre ordre ID: {o.OrderId} fra '{o.Status}' til '{s}'");
         var result = await ConfModal.Result;
 
         if (!result.Cancelled)
@@ -272,7 +282,8 @@
                 Console.WriteLine(result.Data);
                 thisOrder.DateDeadline = DateResult;
                 await ctx.SaveChangesAsync();
-                orders = await ctx.Orders.ToListAsync();
+                orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
+                StateHasChanged();
             }
         }
     }
@@ -298,4 +309,8 @@
         return false;
     }
 
+    private void orderChangelog(Order o)
+    {
+        NavMan.NavigateTo($"/order/changelog/{o.OrderId}");
+    }
 }

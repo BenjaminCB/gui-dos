@@ -133,6 +133,15 @@
         {
             Order order = new Order(ShoppingCart.GiftBaskets);
             order.FillInformation(orderForm);
+
+            Change c = new Change()
+            {
+                ChangeString = "Order created",
+                Name = "Customer",
+                Date = DateTime.Now.ToString()
+            };
+            order.Changelog.Add(c);
+
             ctx.Orders.Add(order);
             await ctx.SaveChangesAsync();
         }

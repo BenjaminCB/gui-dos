@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System.Linq;                          //Database Query
+using System.Threading.Tasks;               //Memory Managment
+using Microsoft.AspNetCore.Hosting;         //Blazor
+using Microsoft.Extensions.Configuration;   //Configure Logging and Authentication
+using Microsoft.Extensions.Hosting;         //Blazor WebAssemly
+using Microsoft.Extensions.Logging;         //Actual Logging Extension
 
 namespace gui_dos
 {

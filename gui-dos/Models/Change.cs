@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Collections.Generic;
 
 namespace gui_dos.Models
 {
@@ -13,29 +12,22 @@ namespace gui_dos.Models
         public int ChangeId { get; set; }
 
         ///<summary>Gets the DateTime object of the comitted change. </summary>
-        public DateTime Date { get; }
+        public string Date { get; set; }
 
         ///<summary>Gets or sets the string description of the comitted change. </summary>
-        public string ChangeMade { get; set; }
+        public string ChangeString { get; set; }
 
         ///<summary>Gets the Employee who comitted the change. </summary>
-        public Employee Employee { get; }
+        public string Name { get; set; }
 
-        ///<summary>Constructs a Change object.
-        ///<param name="changeString"> the string description of the comitted change. </param>
-        ///<param name="employee"> the employee responsible for the change. </param>
-        ///</summary>
-        public Change(string changeString, Employee employee)
-        {
-            Date = DateTime.Now;
-            ChangeMade = changeString;
-            Employee = employee;
-        }
+        /// there should be a constructor as ef core implicitly uses them
+        /// this creates a bug where the Date is always updated because we used
+        /// DateTime.Now in the constructor
 
         ///<summary>Converts the Change object to a string. </summary>
         public override string ToString()
         {
-            return $"{ChangeMade} was changed at {Date.ToShortDateString()} by {Employee.Username}";
+            return $"{ChangeString} was changed at {Date} by {Name}";
         }
     }
 }

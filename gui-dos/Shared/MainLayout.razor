@@ -5,7 +5,7 @@
 
 <MudLayout>
     @* Navigation menu in the top of every page*@
-    <MudAppBar Class="mud-primary">
+    <MudAppBar Class="mud-primary" Elevation="10" Style="min-height:2cm;">
         <BrandLogoButton/>
         <MudSpacer/>
         <MudHidden Breakpoint="Breakpoint.Xs">
@@ -14,25 +14,19 @@
         <MudHidden Breakpoint="Breakpoint.SmAndUp">
             <MudIconButton Icon="@Icons.Outlined.Menu" Color="Color.Tertiary" OnClick="ToggleNav"/>
         </MudHidden>
-        <MudSpacer/>
-        <MudIconButton Icon="@Icons.Outlined.ShoppingCart" Color="Color.Tertiary" OnClick="ToggleCart"/>
     </MudAppBar>
 
     @* Navigation drawer for small viewports *@
-    <MudDrawer @bind-Open="@_navOpen" Anchor="Anchor.Top"
+    <MudDrawer @bind-Open="@navOpen" Anchor="Anchor.Top"
      Variant="DrawerVariant.Temporary" >
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6"> Isværftet </MudText>
-        </MudDrawerHeader>
+        <MudText Typo="Typo.h6" Align="Align.Center"> Menu </MudText>
         <MainLayoutNavMenu/>
     </MudDrawer>
 
     @* Shopping cart drawer *@
-    <MudDrawer @bind-Open="@_cartOpen" Anchor="Anchor.Right" 
+    <MudDrawer @bind-Open="@cartOpen" Anchor="Anchor.Right" 
      Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">Indkøbskurv</MudText>
-        </MudDrawerHeader>
+        <MudText Typo="Typo.h6" Align="Align.Center"> Indkøbskurv</MudText>
     </MudDrawer>
 
     @* Page content *@
@@ -46,16 +40,16 @@
 
 @code
 {
-    bool _navOpen = false;
+    bool navOpen = false;
 
-    bool _cartOpen = false;
+    bool cartOpen = false;
 
     void ToggleCart() {
-        _cartOpen = !_cartOpen;
+        cartOpen = !cartOpen;
     }
 
     void ToggleNav() {
-        _navOpen = !_navOpen;
+        navOpen = !navOpen;
     }
 
     // MudBlazor theme customizations

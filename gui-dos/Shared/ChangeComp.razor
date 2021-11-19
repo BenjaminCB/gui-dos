@@ -1,0 +1,16 @@
+<div>
+    <p>
+        Change: @Change.ChangeString
+    </p>
+    <p>
+        Made by: @Change.Name
+    </p>
+    <p>
+        On: @Change.Date
+    </p>
+</div>
+
+@code {
+    [Parameter]
+    public Change Change { get; set; }
+}
