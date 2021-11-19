@@ -16,9 +16,42 @@
                 No products found...
             </div>}
         <style>
-            .ButtonActive {
-                background-color: #1c7430;
-            }
+        /* CAN'T be moed to css as 'snabelA' doesn't work in there */
+        .ButtonActivePending {
+            @($"background:{Colors.Yellow.Default}")
+        }
+        .ButtonActivePending:hover {
+            @($"background:{Colors.Yellow.Darken1}")
+        }
+
+        .ButtonActiveAccepted {
+            @($"background:{Colors.Green.Default}")
+        }
+        .ButtonActiveAccepted:hover {
+            @($"background:{Colors.Green.Darken1}")
+        }
+
+        .ButtonActiveFinished {
+            @($"background:{Colors.LightBlue.Default}")
+        }
+        .ButtonActiveFinished:hover {
+            @($"background:{Colors.LightBlue.Darken1}")
+        }
+
+        .ButtonActiveDelivered {
+            @($"background:{Colors.Teal.Default}")
+        }
+        .ButtonActiveDelivered:hover {
+            @($"background:{Colors.Teal.Darken1}")
+        }
+
+        .Cancel:hover {
+            @($"background:{Colors.Red.Darken1}")
+        }
+
+        .Date:hover {
+            @($"background:{Colors.LightBlue.Darken1}")
+        }
         </style>
 
         @if (orders != null)
@@ -29,7 +62,7 @@
                     <MudSpacer />
                     <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 </ToolBarContent>
-                <!-- Coulums and their given size. 'Empty' = fill out what is needed or left -->
+                @*Coulums and their given size. 'Empty' = fill out what is needed or left*@
                 <ColGroup>
                     <col style="width:30%" />
                     <col style="width:15%" />
@@ -38,8 +71,8 @@
                     <col style="width:15%;" />
                     <col />
                 </ColGroup>
-                <!-- Functionality to be able to sort based on the rows values, '1-9-a-z' for text -->
-                <!--Layout defult sorted by DateOrdered-->
+                @*Functionality to be able to sort based on the rows values, '1-9-a-z' for text
+                    Layout defult sorted by DateOrdered*@
                 <HeaderContent>
                     <MudTh>Status</MudTh>
                     <MudTh>Info</MudTh>
@@ -50,22 +83,40 @@
                 </HeaderContent>
                 <RowTemplate>
                     <MudTd>
-                        <!-- Should be in English? -->
-                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Pending)">
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.HourglassTop"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Pending ? "ButtonActivePending" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Pending)">
                             Pending
                         </MudButton>
-                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Accepted)">
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.CheckCircle"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Accepted ? "ButtonActiveAccepted" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Accepted)">
                             Accepted
                         </MudButton>
-                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Finished)">
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Beenhere"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Finished ? "ButtonActiveFinished" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Finished)">
                             Finished
                         </MudButton>
-                        <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Delivered)">
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Outbox"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActiveDelivered" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Delivered)">
                             Delivered
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                                   Size="Size.Small" class="Cancel"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Declined)">
+                            Cancel
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.EditCalendar"
+                                   Size="Size.Small" Class="Date"
+                                   @onclick="() => OrderChangeDate(context)">
+                            Ny Dato
                         </MudButton>
                     </MudTd>
                     <MudTd>
-                        <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Info"
+                                   Color="Color.Transparent" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
                             @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
                         </MudButton>
                     </MudTd>
@@ -76,9 +127,9 @@
                 </RowTemplate>
                 <NoRecordsContent>
                     <MudText>
-                        Intet match var fundet <br />
-                        Det er muligt at søge efter: Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
-                        <p class="text-muted">Disse kan/må ikke kombineres</p>
+                        Intet match blev fundet <br />
+                        Det er muligt at sï¿½ge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
+                        <p class="text-muted">Disse kan/mï¿½ ikke kombineres</p>
                     </MudText>
                 </NoRecordsContent>
                 <LoadingContent>
@@ -91,29 +142,35 @@
                             <td colspan="4">
                                 <MudCard Elevation="0">
                                     <MudCardHeader>
-                                        <!-- It is possible to move this to the same level as the other data -->
                                         <CardHeaderContent>
                                             <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
                                         </CardHeaderContent>
                                     </MudCardHeader>
                                     <MudCardContent Class="pa-0">
-                                        <MudTable Items="@orders" Context="Child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                        <MudTable Items="@orders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
                                             <ColGroup>
                                                 <col style="width:25%;" />
                                                 <col style="width:15%;" />
+                                                <col />
                                                 <col />
                                             </ColGroup>
                                             <HeaderContent>
                                                 <MudTh>Email</MudTh>
                                                 <MudTh>Tel nr.</MudTh>
                                                 <MudTh>Kommentar</MudTh>
+                                                <MudTh>Forlï¿½b</MudTh>
                                             </HeaderContent>
                                             <RowTemplate>
-                                                @if (context.OrderId == Child.OrderId)
+                                                @if (context.OrderId == child.OrderId)
                                                     {
-                                                    <MudTd DataLabel="Email">@Child.Email</MudTd>
-                                                    <MudTd DataLabel="Tel nr.">@Child.PhoneNumber</MudTd>
-                                                    <MudTd DataLabel="Kommentar">@Child.Comment</MudTd>}
+                                                    <MudTd DataLabel="Email">@child.Email</MudTd>
+                                                    <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
+                                                    <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
+                                                    @foreach (var item in child.Changelog)
+                                                        {
+                                                        <MudTd DataLabel="Forlï¿½b">ChangeID @item.ChangeId: @item.ToString()</MudTd>
+                                                        }
+                                                    }
                                             </RowTemplate>
                                         </MudTable>
                                         <br />
@@ -143,13 +200,10 @@
                                     </MudCardContent>
                                 </MudCard>
                             </td>
-                        </MudTr>
-                        }
+                        </MudTr>}
                     <br />
                 </ChildRowContent>
-            </MudTable>
-            }
-        }
+            </MudTable>}
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />
@@ -158,9 +212,12 @@
 
 @code
 {
-    // Mudblazor
     private string searchString = "";
     private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
+    // Mudblazor
+
+    MudDatePicker _picker;
+    DateTime? date = DateTime.Today;
 
     // To change order status
     private List<Order> orders;
@@ -186,9 +243,7 @@
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
-        if (o.Status >= s) return;
-
-        var ConfModal = Modal.Show<ConfComp>("Are you sure?");
+        var ConfModal = Modal.Show<ConfComp>($"Vil du ï¿½ndre ordre ID: {o.OrderId} fra '{o.Status}' til '{s}'");
         var result = await ConfModal.Result;
 
         if (!result.Cancelled)
@@ -197,16 +252,35 @@
             {
                 Order thisOrder = ctx.Update(o).Entity;
                 thisOrder.Status = s;
+                // Insure ShowDetails isn't opes as defult, if Status changes while ShowDetails = true
+                thisOrder.ShowDetails = false;
+                await ctx.SaveChangesAsync();
+                orders = await ctx.Orders.ToListAsync();
+            }
+        }
+    }
 
-                Change c = new Change()
-                {
-                    ChangeString = $"Update status to {s}",
-                    Name = _Name,
-                    Date = DateTime.Now.ToString()
-                };
+    private async Task OrderChangeDate(Order o)
+    {
+        var ConfModal = Modal.Show<Shared.DatePicker>("Valg af ny leveringsdato for ordre ID: " + o.OrderId);
+        DateTime DateResult = o.DateDeadline;
+        //Call to popup
+        var result = await ConfModal.Result;
+        //MUST check for null-reference
+        if (result.Data != null)
+        {
+            string StringResult = result.Data.ToString();
+            DateResult = DateTime.Parse(StringResult);
+        }
 
-                o.Changelog.Add(c);
+        if (!result.Cancelled)
+        {
+            using (var ctx = DbContextFactory.CreateDbContext())
+            {
 
+                Order thisOrder = ctx.Update(o).Entity;
+                Console.WriteLine(result.Data);
+                thisOrder.DateDeadline = DateResult;
                 await ctx.SaveChangesAsync();
                 orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
                 StateHasChanged();
@@ -223,6 +297,8 @@
     private bool FilterFunc(Order element, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.Status.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;

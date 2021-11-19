@@ -49,7 +49,7 @@
         </HeaderContent>
         <RowTemplate>
             <MudTd>
-                <MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
+                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Info" Color="Color.Transparent" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
                     @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
                 </MudButton>
             </MudTd>
@@ -80,7 +80,7 @@
                                 </CardHeaderContent>
                             </MudCardHeader>
                             <MudCardContent Class="pa-0">
-                                <MudTable Items="@oldOrders" Context="Child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                <MudTable Items="@oldOrders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
                                     <ColGroup>
                                         <col style="width:25%;" />
                                         <col style="width:15%;" />
@@ -90,13 +90,19 @@
                                         <MudTh>Email</MudTh>
                                         <MudTh>Tel nr.</MudTh>
                                         <MudTh>Kommentar</MudTh>
+                                        <MudTh>Forløb</MudTh>
                                     </HeaderContent>
                                     <RowTemplate>
-                                        @if (context.OrderId == Child.OrderId)
+                                        @if (context.OrderId == child.OrderId)
                                             {
-                                            <MudTd DataLabel="Email">@Child.Email</MudTd>
-                                            <MudTd DataLabel="Tel nr.">@Child.PhoneNumber</MudTd>
-                                            <MudTd DataLabel="Kommentar">@Child.Comment</MudTd>}
+                                            <MudTd DataLabel="Email">@child.Email</MudTd>
+                                            <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
+                                            <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
+                                            @foreach (var item in child.Changelog)
+                                                {
+                                                <MudTd DataLabel="Forløb">ChangeID @item.ChangeId: @item.ToString()</MudTd>
+                                                }
+                                            }
                                     </RowTemplate>
                                 </MudTable>
                                 <br />
