@@ -135,7 +135,7 @@
     </NotAuthorized>
 </AuthorizeView>
 @code
-{ 
+{
     private List<Order> oldOrders;
     private string searchString = "";
     private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
@@ -144,7 +144,10 @@
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            oldOrders = await ctx.Orders.OrderBy(t => t.DateOrdered).ToListAsync();
+            oldOrders = await ctx.Orders
+                                 .Where(o => o.Status >= OrderStatus.Delivered)
+                                 .OrderBy(t => t.DateOrdered)
+                                 .ToListAsync();
             // ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).OrderBy(t=>t.DateOrdered).ToListAsync();
         }
     }
