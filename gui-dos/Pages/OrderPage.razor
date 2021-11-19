@@ -6,7 +6,7 @@
 @using Microsoft.EntityFrameworkCore;
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
-
+@inject NavigationManager NavMan
 
 <AuthorizeView Context="AuthContext">
     <Authorized>
@@ -16,148 +16,194 @@
                 No products found...
             </div>}
         <style>
-            .ButtonActive {
-                background-color: #1c7430;
-            }
+        /* CAN'T be moed to css as 'snabelA' doesn't work in there */
+        .ButtonActivePending {
+            @($"background:{Colors.Yellow.Default}")
+        }
+        .ButtonActivePending:hover {
+            @($"background:{Colors.Yellow.Darken1}")
+        }
+
+        .ButtonActiveAccepted {
+            @($"background:{Colors.Green.Default}")
+        }
+        .ButtonActiveAccepted:hover {
+            @($"background:{Colors.Green.Darken1}")
+        }
+
+        .ButtonActiveFinished {
+            @($"background:{Colors.LightBlue.Default}")
+        }
+        .ButtonActiveFinished:hover {
+            @($"background:{Colors.LightBlue.Darken1}")
+        }
+
+        .ButtonActiveDelivered {
+            @($"background:{Colors.Teal.Default}")
+        }
+        .ButtonActiveDelivered:hover {
+            @($"background:{Colors.Teal.Darken1}")
+        }
+
+        .Cancel:hover {
+            @($"background:{Colors.Red.Darken1}")
+        }
+
+        .Date:hover {
+            @($"background:{Colors.LightBlue.Darken1}")
+        }
         </style>
 
         @if (orders != null)
         {
-    <MudTable Items="@orders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
-        <ToolBarContent>
-            <MudText Typo="Typo.h6">Aktive Ordrer</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
-        </ToolBarContent>
-        @*Coulums and their given size. 'Empty' = fill out what is needed or left*@
-        <ColGroup>
-            <col style="width:30%" />
-            <col style="width:15%" />
-            <col style="width:15%;" />
-            <col style="width:15%;" />
-            <col style="width:15%;" />
-            <col />
-        </ColGroup>
-        @*Functionality to be able to sort based on the rows values, '1-9-a-z' for text
-        Layout defult sorted by DateOrdered*@
-        <HeaderContent>
-            <MudTh>Status</MudTh>
-            <MudTh>Info</MudTh>
-            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)">Deadline</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.FirstName)">Navn</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Price)">Pris</MudTableSortLabel></MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd>
-                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.HourglassTop" Color="Color.Transparent" Size="Size.Small" class="@((context.Status == OrderStatus.Pending ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Pending)">
-                    Pending
-                </MudButton>
-                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.CheckCircle" Color="Color.Transparent" Size="Size.Small" class="@((context.Status == OrderStatus.Accepted ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Accepted)">
-                    Accepted
-                </MudButton>
-                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Beenhere" Color="Color.Transparent" Size="Size.Small" class="@((context.Status == OrderStatus.Finished ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Finished)">
-                    Finished
-                </MudButton>
-                <MudButton Variant="Variant.Outlined" Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Delivered)">
-                    Delivered
-                </MudButton>
-                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel" Color="Color.Transparent" Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeStatus(context, OrderStatus.Declined)">
-                    Cancel
-                </MudButton>
-                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.EditCalendar" Color="Color.Transparent" Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActive" : "Button"))" @onclick="() => OrderChangeDate(context)">
-                    Ny Dato
-                </MudButton>
-            </MudTd>
-            <MudTd>
-                <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Info" Color="Color.Transparent" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
-                    @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
-                </MudButton>
-            </MudTd>
-            <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
-            <MudTd DataLabel="Deadline">@context.DateDeadline</MudTd>
-            <MudTd DataLabel="Navn">@context.FirstName</MudTd>
-            <MudTd DataLabel="Pris">@context.Price</MudTd>
-        </RowTemplate>
-        <NoRecordsContent>
-            <MudText>
-                Intet match blev fundet <br />
-                Det er muligt at søge efter: Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
-                <p class="text-muted">Disse kan/må ikke kombineres</p>
-            </MudText>
-        </NoRecordsContent>
-        <LoadingContent>
-            <MudText>Loading...</MudText>
-        </LoadingContent>
-        <ChildRowContent>
-            @if (context.ShowDetails)
-                {
-                <MudTr>
-                    <td colspan="4">
-                        <MudCard Elevation="0">
-                            <MudCardHeader>
-                                <CardHeaderContent>
-                                    <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent Class="pa-0">
-                                <MudTable Items="@orders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
-                                    <ColGroup>
-                                        <col style="width:25%;" />
-                                        <col style="width:15%;" />
-                                        <col />
-                                        <col />
-                                    </ColGroup>
-                                    <HeaderContent>
-                                        <MudTh>Email</MudTh>
-                                        <MudTh>Tel nr.</MudTh>
-                                        <MudTh>Kommentar</MudTh>
-                                        <MudTh>Forløb</MudTh>
-                                    </HeaderContent>
-                                    <RowTemplate>
-                                        @if (context.OrderId == child.OrderId)
-                                            {
-                                            <MudTd DataLabel="Email">@child.Email</MudTd>
-                                            <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
-                                            <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
-                                               @foreach (var item in child.Changelog)
-                                                {
-                                                <MudTd DataLabel="Forløb">ChangeID @item.ChangeId: @item.ToString()</MudTd>
-                                                }
-                                            }
-                                    </RowTemplate>
-                                </MudTable>
-                                <br />
-                                <MudTable Items="@orders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
-                                    <ColGroup>
-                                        <col style="width:10%;" />
-                                        <col style="width:10%;" />
-                                        <col style="width:30%;" />
-                                    </ColGroup>
-                                    <HeaderContent>
-                                        <MudTh>ID</MudTh>
-                                        <MudTh>Pris</MudTh>
-                                        <MudTh>Kommentar</MudTh>
-                                    </HeaderContent>
-                                    <RowTemplate>
-                                        @if (context.OrderId == content.OrderId)
-                                            {
-                                                for (int i = 0; i < content.GiftBaskets.Count; i++)
-                                                {
-                                                <MudTd DataLabel="ID">@content.GiftBaskets[i].GiftBasketId</MudTd>
-                                                <MudTd DataLabel="Pris">@content.GiftBaskets[i].Price</MudTd>
-                                                <MudTd DataLabel="Kommentar">@content.GiftBaskets[i].Comment</MudTd>
-                                                }
-                                            }
-                                    </RowTemplate>
-                                </MudTable>
-                            </MudCardContent>
-                        </MudCard>
-                    </td>
-                </MudTr>}
-            <br />
-        </ChildRowContent>
-    </MudTable>}
+            <MudTable Items="@orders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Aktive Ordrer</MudText>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                @*Coulums and their given size. 'Empty' = fill out what is needed or left*@
+                <ColGroup>
+                    <col style="width:30%" />
+                    <col style="width:15%" />
+                    <col style="width:15%;" />
+                    <col style="width:15%;" />
+                    <col style="width:15%;" />
+                    <col />
+                </ColGroup>
+                @*Functionality to be able to sort based on the rows values, '1-9-a-z' for text
+                    Layout defult sorted by DateOrdered*@
+                <HeaderContent>
+                    <MudTh>Status</MudTh>
+                    <MudTh>Info</MudTh>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)">Deadline</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.FirstName)">Navn</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Price)">Pris</MudTableSortLabel></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd>
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.HourglassTop"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Pending ? "ButtonActivePending" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Pending)">
+                            Pending
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.CheckCircle"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Accepted ? "ButtonActiveAccepted" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Accepted)">
+                            Accepted
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Beenhere"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Finished ? "ButtonActiveFinished" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Finished)">
+                            Finished
+                        </MudButton>
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Outbox"
+                                   Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActiveDelivered" : "Button"))"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Delivered)">
+                            Delivered
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
+                                   Size="Size.Small" class="Cancel"
+                                   @onclick="() => OrderChangeStatus(context, OrderStatus.Declined)">
+                            Cancel
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.EditCalendar"
+                                   Size="Size.Small" Class="Date"
+                                   @onclick="() => OrderChangeDate(context)">
+                            Ny Dato
+                        </MudButton>
+                    </MudTd>
+                    <MudTd>
+                        <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Info"
+                                   Color="Color.Transparent" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
+                            @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
+                        </MudButton>
+                    </MudTd>
+                    <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
+                    <MudTd DataLabel="Deadline">@context.DateDeadline</MudTd>
+                    <MudTd DataLabel="Navn">@context.FirstName</MudTd>
+                    <MudTd DataLabel="Pris">@context.Price</MudTd>
+                </RowTemplate>
+                <NoRecordsContent>
+                    <MudText>
+                        Intet match blev fundet <br />
+                        Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
+                        <p class="text-muted">Disse kan/må ikke kombineres</p>
+                    </MudText>
+                </NoRecordsContent>
+                <LoadingContent>
+                    <MudText>Loading...</MudText>
+                </LoadingContent>
+                <ChildRowContent>
+                    @if (context.ShowDetails)
+                        {
+                        <MudTr>
+                            <td colspan="4">
+                                <MudCard Elevation="0">
+                                    <MudCardHeader>
+                                        <CardHeaderContent>
+                                            <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
+                                        </CardHeaderContent>
+                                    </MudCardHeader>
+                                    <MudCardContent Class="pa-0">
+                                        <MudTable Items="@orders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                            <ColGroup>
+                                                <col style="width:25%;" />
+                                                <col style="width:15%;" />
+                                                <col />
+                                                <col />
+                                            </ColGroup>
+                                            <HeaderContent>
+                                                <MudTh>Email</MudTh>
+                                                <MudTh>Tel nr.</MudTh>
+                                                <MudTh>Kommentar</MudTh>
+                                                <MudTh>Forløb</MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                @if (context.OrderId == child.OrderId)
+                                                    {
+                                                    <MudTd DataLabel="Email">@child.Email</MudTd>
+                                                    <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
+                                                    <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
+                                                    @foreach (var item in child.Changelog)
+                                                        {
+                                                        <MudTd DataLabel="Forløb">ChangeID @item.ChangeId: @item.ToString()</MudTd>
+                                                        }
+                                                    }
+                                            </RowTemplate>
+                                        </MudTable>
+                                        <br />
+                                        <MudTable Items="@orders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                            <ColGroup>
+                                                <col style="width:10%;" />
+                                                <col style="width:10%;" />
+                                                <col style="width:30%;" />
+                                            </ColGroup>
+                                            <HeaderContent>
+                                                <MudTh>ID</MudTh>
+                                                <MudTh>Pris</MudTh>
+                                                <MudTh>Kommentar</MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                @if (context.OrderId == content.OrderId)
+                                                    {
+                                                        for (int i = 0; i < content.GiftBaskets.Count; i++)
+                                                        {
+                                                        <MudTd DataLabel="ID">@content.GiftBaskets[i].GiftBasketId</MudTd>
+                                                        <MudTd DataLabel="Pris">@content.GiftBaskets[i].Price</MudTd>
+                                                        <MudTd DataLabel="Kommentar">@content.GiftBaskets[i].Comment</MudTd>
+                                                        }
+                                                    }
+                                            </RowTemplate>
+                                        </MudTable>
+                                    </MudCardContent>
+                                </MudCard>
+                            </td>
+                        </MudTr>}
+                    <br />
+                </ChildRowContent>
+            </MudTable>}
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />
@@ -166,9 +212,9 @@
 
 @code
 {
-    // Mudblazor
     private string searchString = "";
     private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
+    // Mudblazor
 
     MudDatePicker _picker;
     DateTime? date = DateTime.Today;
@@ -196,6 +242,8 @@
             {
                 Order thisOrder = ctx.Update(o).Entity;
                 thisOrder.Status = s;
+                // Insure ShowDetails isn't opes as defult, if Status changes while ShowDetails = true
+                thisOrder.ShowDetails = false;
                 await ctx.SaveChangesAsync();
                 orders = await ctx.Orders.ToListAsync();
             }
@@ -204,7 +252,7 @@
 
     private async Task OrderChangeDate(Order o)
     {
-        var ConfModal = Modal.Show<DatePicker>("Valg af ny leveringsdato for ordre ID: " + o.OrderId);
+        var ConfModal = Modal.Show<Shared.DatePicker>("Valg af ny leveringsdato for ordre ID: " + o.OrderId);
         DateTime DateResult = o.DateDeadline;
         //Call to popup
         var result = await ConfModal.Result;
@@ -238,6 +286,8 @@
     private bool FilterFunc(Order element, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (element.Status.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
