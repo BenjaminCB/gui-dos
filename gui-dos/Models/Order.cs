@@ -19,7 +19,7 @@ namespace gui_dos.Models
         public OrderStatus Status { get; set; }
 
         ///<summary>Gets or sets the total price of the order. </summary>
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         ///<summary>Gets or sets the date the order was made. </summary>
         public DateTime DateOrdered { get; set; }

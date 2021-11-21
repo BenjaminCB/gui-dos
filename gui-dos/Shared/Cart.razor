@@ -22,7 +22,7 @@ else
 
 <div>
     <strong>
-        Total: @((double) total / 100)
+        Total: @total
     </strong>
 </div>
 
@@ -32,7 +32,7 @@ else
 
 @code
 {
-    private int total;
+    private double total;
 
     private void goToOrder()
     {
@@ -53,7 +53,7 @@ else
 
     private void updateTotal()
     {
-        total = ShoppingCart.GiftBaskets.Aggregate(0, (acc, gb) => acc + gb.Price);
+        total = ShoppingCart.GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price);
     }
 
     protected override void OnInitialized()

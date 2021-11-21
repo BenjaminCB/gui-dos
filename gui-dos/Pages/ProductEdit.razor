@@ -109,9 +109,9 @@
                 changes.Add("Description");
             }
 
-            if (p.Price != (int) (productForm.Price * 100))
+            if (p.Price != productForm.Price)
             {
-                p.Price = (int) (productForm.Price * 100);
+                p.Price = productForm.Price;
                 changes.Add("Price");
             }
 
