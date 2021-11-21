@@ -3,24 +3,26 @@
 @using Microsoft.EntityFrameworkCore
 @using System.Linq
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
-@inject ShoppingCart ShoppingCart
 
-@* Product Grid *@
 <MudContainer MaxWidth="MaxWidth.Large">
-    <MudPaper Class="mud-primary my-4 d-flex justify-space-around align-items-center" Elevation="10">
-        <MudButton StartIcon="@Icons.Outlined.FilterList" IconColor="Color.Tertiary" OnClick="ToggleFilterDrawer">
+    @* Filter/cart bar *@
+    <MudPaper Class="mud-primary my-4 d-flex justify-space-around border border-dark" Elevation="10">
+        @* Filter button *@
+        <MudButton StartIcon="@Icons.Outlined.FilterList" IconColor="Color.Tertiary" OnClick="ToggleFilterDrawer" FullWidth="true">
             <MudText Typo="Typo.h6" Color="Color.Tertiary">Filter</MudText>
         </MudButton>
-        <MudButton EndIcon="@Icons.Outlined.ShoppingCart" IconColor="Color.Tertiary" OnClick="ToggleCartDrawer">
+        @* Cart button *@
+        <MudButton EndIcon="@Icons.Outlined.ShoppingCart" IconColor="Color.Tertiary" OnClick="ToggleCartDrawer" FullWidth="true">
             <MudText Typo="Typo.h6" Color="Color.Tertiary">Kurv</MudText>
         </MudButton>
     </MudPaper>
+    @* Product Grid *@
     <div class="d-flex justify-center flex-wrap">
         @foreach (var product in products)
         {
             @if (FilterProduct(product))
             {
-                <ProductCard Product="@product" />
+                <ProductCard product="@product"/>
             }
         }
     </div>
@@ -48,16 +50,17 @@
 <MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2"
  Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always" Color="Color.Primary">
     <MudText Typo="Typo.h4" Align="Align.Center">Indkøbskurv</MudText>
-
+    <Cart @ref=@cart/>
 </MudDrawer>
 
 @code 
 {
+    private Cart cart;
     private bool filterDrawerOpen = false;
     private bool cartDrawerOpen = false;
     private int maxPrice;
     private int minPrice;
-    private int setPrice { get; set; }
+    private int setPrice;
     private List<Product> products;
     private Dictionary<string, bool> tags = new Dictionary<string, bool>();
 
@@ -94,16 +97,12 @@
         return true;
     }
 
-    private void AddToCart(Product p)
-    {
-        ShoppingCart.GiftBaskets.Add(new GiftBasket(p.Title, "", (int) p.Price));
-    }
-
     private void ToggleFilterDrawer() {
         filterDrawerOpen = !filterDrawerOpen;
     }
 
     private void ToggleCartDrawer() {
+        cart.Refresh();
         cartDrawerOpen = !cartDrawerOpen;
     }
 }

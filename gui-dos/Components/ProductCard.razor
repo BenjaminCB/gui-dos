@@ -1,18 +1,19 @@
-<MudPaper Height="@cardSize" Width="@cardSize" Style="position: relative;"
- Elevation="@elevation" Class="mud-primary p-4 m-4" 
- @onmouseenter="Elevate" @onmouseleave="DeElevate">
-    <MudCarousel Class="rounded" TData="object" 
-     AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
-     ShowArrows="arrow" NavigationButtonsClass="white-text" 
-     ShowDelimiters="delim" DelimitersClass="white-text"
-     Style="height:250px;max-width:350px;"> 
+@inject ShoppingCart ShoppingCart
+
+@* Product card *@
+<MudPaper Width="@cardWidth" Style="position: relative;" Elevation="@elevation" Class="mud-primary m-3 border border-dark" @onmouseenter="Elevate" @onmouseleave="DeElevate">
+    
+    @* Product card image(s) *@
+    <MudCarousel Class="rounded-top border-bottom border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
+    ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:300px;"> 
         @* foreach over flere billeder *@
-        <MudCarouselItem Transition="Transition.Fade" Class="rounded" 
-            Style="height:inherit;max-width:350px;">
-            <img src="@product.Image" class="rounded" style="width:100%;height:100%;"/>
+        <MudCarouselItem Transition="Transition.Fade" Class="rounded-top">
+            <img src="@product.Image" class="rounded-top" style="width:100%;height:100%;"/>
         </MudCarouselItem>
     </MudCarousel>
-    <div class="d-flex justify-space-between">
+
+    @* Product card text *@
+    <div class="d-flex justify-space-between m-2">
         <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
             @product.Title
         </MudText>
@@ -25,19 +26,21 @@
             </MudText>
         </div> 
     </div>
-    <div class="d-flex justify-space-between">
-        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" 
-            OnClick="ToggleOverlay" Class="rounded-pill">
+
+    @* Product card buttons *@
+    <div class="d-flex justify-space-between m-2">
+        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="ToggleOverlay" Class="rounded-pill">
             Se mere
         </MudButton>
-        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary"
-            Class="rounded-pill">
+        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="ToggleOrder" Class="rounded-pill">
             Bestil
         </MudButton>
     </div>
-    <MudOverlay @bind-Visible="overlayVisible" Absolute="true"
-     AutoClose="true" DarkBackground="true" @onmouseover="Elevate" @onmouseleave="ToggleOverlay">
-        <MudPaper Class="mud-primary" Height="@cardSize" Width="@cardSize">
+
+    @* Product card overlay for more info *@
+    <MudOverlay @bind-Visible="overlayVisible" Absolute="true" AutoClose="true" DarkBackground="true" @onmouseover="Elevate" @onmouseleave="ToggleOverlay">
+        <MudPaper Class="mud-primary border border-dark" Width="@cardWidth" Square="true">
+    
             <div class="d-flex justify-space-between pa-4">
                 <MudText Typo="Typo.h6" Color="Color.Tertiary">
                     @product.Title
@@ -51,43 +54,97 @@
                     </MudText>
                 </div> 
             </div>
+
             <MudText Typo="Typo.body1" Color="Color.Tertiary" Class="pa-4">
                 @product.Description
             </MudText>
+
         </MudPaper>
     </MudOverlay>
+
 </MudPaper>
+
+@* Ordering overlay *@
+<MudOverlay @bind-Visible=@orderVisible DarkBackground="true" LockScroll="true">
+    <MudPaper Class="mud-primary p-3 border border-dark" MaxWidth="90vw" Width="auto">
+        <div class="d-flex flex-wrap justify-center">
+
+            @* Ordering layout product images *@
+            <MudCarousel Class="rounded m-3 border border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
+            ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:350px;width:400px"> 
+                <MudCarouselItem Transition="Transition.Fade" Class="rounded">
+                    <img src="@product.Image" class="rounded" style="height:100%;width:100%;"/>
+                </MudCarouselItem>
+            </MudCarousel>
+
+            <div class="d-inline-block m-3" style="max-width:400px"> 
+                @* Ordering layout product title *@
+                <MudText Typo="Typo.h5" Color="Color.Tertiary" Align="Align.Center">@product.Title</MudText>
+
+                @* Ordering layout product description *@
+                <MudText Typo="Typo.body1" Color="Color.Tertiary">@product.Description</MudText>
+
+                @* Ordering layout add comment *@
+                <MudTextField Class="mud-theme-tertiary rounded mt-10" T="string" Lines="3" Variant="Variant.Filled" DisableUnderLine="true"
+                Label="Kommentar" Placeholder="Tilføj en kommentar med specielle ønsker til din gavekurv" @bind-Text=@commentInput/>
+
+                @* Ordering overlay buttons *@
+                <div class="d-flex justify-space-between mt-5">
+                    <MudButton Class="m-2 rounded-pill" StartIcon="@Icons.Outlined.ArrowBack" IconColor="Color.Tertiary" 
+                    Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@ToggleOrder>
+                        Tilbage
+                    </MudButton>
+                    <MudButton Class="m-2 rounded-pill" EndIcon="@Icons.Outlined.AddShoppingCart" IconColor="Color.Tertiary" 
+                    Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@AddToCart>
+                        Tilføj til kurv
+                    </MudButton>
+                </div>
+            </div>
+
+        </div>
+    </MudPaper>
+</MudOverlay>
 
 @code{
     
     [Parameter]
     public Product product { get; set;}
 
-    private static string cardSize = "350px";
+    //Sets the width of a product card
+    private static string cardWidth = "350px";
 
+    //Sets the visibility of the product card overlay
     private bool overlayVisible = false;
+    
+    //Sets the visibility of the product ordering overlay
+    private bool orderVisible = false;
 
-    //Sets the base and highlight elevation values of the product card 
+    //Sets the base value of the product card 
     private static readonly int baseElevation = 4;
+
+    //Sets the highlighted elevation value of the product card
     private static readonly int highlightElevation = 24;
 
-    //'elevation' sets the elevation of the product card
+    //Sets the elevation of the product card
     private int elevation = baseElevation;
 
-    //'cycle' determines if images should auto-cycle on carousel
+    //Sets image-cycle of the product card
     private bool cycle = false;
+
+    //Current image-cycle index of the product card
     private int cycleIndex = 0;
 
-    //'arrow' determines if arrows should be shown on carousel
+    //Sets visibility of arrows on the image carousel
     private bool arrow = false;
 
-    //'delim' determines if delimitors should be shown on carousel
+    //Sets visibility of delimiters on the image carousel
     private bool delim = false;
 
-    //'cycleTime' sets the cycling time for images on carousel
+    //Sets the image-cycle time on the image carousel
     private TimeSpan cycleTime = TimeSpan.FromSeconds(3);
 
-    //Switches the elevation of the product card when mouse enters and leaves the card
+    private string commentInput;
+
     private void Elevate() {
         cycle = true;
         elevation = highlightElevation;
@@ -101,6 +158,16 @@
 
     private void ToggleOverlay() {
         overlayVisible = !overlayVisible;
+    }
+
+    private void ToggleOrder() {
+        orderVisible = !orderVisible;
+    }
+
+    private void AddToCart() {
+        GiftBasket gb = new GiftBasket(product.Title, commentInput, product.Price);
+        ShoppingCart.GiftBaskets.Add(gb);
+        ToggleOrder();
     }
 
     protected override Task OnInitializedAsync()
