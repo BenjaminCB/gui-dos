@@ -34,7 +34,7 @@
     <MudText Typo="Typo.h4" Align="Align.Center">Filter</MudText>
     <MudText Typo="Typo.h5">Pris</MudText>
     <div class="border rounded p-2 my-2">
-        <MudText Typo="Typo.body1">Maksimum pris: @setPrice,-</MudText>
+        <MudText Typo="Typo.body1">Maksimum pris: @setPrice kr.</MudText>
         <input type="range" min="@minPrice" max="@maxPrice" class="slider" step="1" @bind="setPrice" @bind:event="oninput"/>
     </div>
     <MudText Typo="Typo.h5">Præferencer</MudText>
@@ -47,15 +47,15 @@
 </MudDrawer>
 
 @* Cart Drawer *@
-<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2"
+<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2" Width="300px"
  Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always" Color="Color.Primary">
     <MudText Typo="Typo.h4" Align="Align.Center">Indkøbskurv</MudText>
-    <Cart @ref=@cart/>
+    <CartComp @ref=@cart/>
 </MudDrawer>
 
 @code 
 {
-    private Cart cart;
+    private CartComp cart;
     private bool filterDrawerOpen = false;
     private bool cartDrawerOpen = false;
     private double maxPrice;
