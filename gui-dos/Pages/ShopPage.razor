@@ -3,28 +3,28 @@
 @using Microsoft.EntityFrameworkCore
 @using System.Linq
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
-@inject ShoppingCart ShoppingCart
 
+@* Filter/cart bar *@
+<MudPaper Class="mud-primary my-4 d-flex justify-space-around border border-dark" Elevation="10">
+    @* Filter button *@
+    <MudButton StartIcon="@Icons.Outlined.FilterList" IconColor="Color.Tertiary" OnClick="ToggleFilterDrawer" FullWidth="true">
+        <MudText Typo="Typo.h6" Color="Color.Tertiary">Filter</MudText>
+    </MudButton>
+    @* Cart button *@
+    <MudButton EndIcon="@Icons.Outlined.ShoppingCart" IconColor="Color.Tertiary" OnClick="ToggleCartDrawer" FullWidth="true">
+        <MudText Typo="Typo.h6" Color="Color.Tertiary">Kurv</MudText>
+    </MudButton>
+</MudPaper>
 @* Product Grid *@
-<MudContainer MaxWidth="MaxWidth.Large">
-    <MudPaper Class="mud-primary my-4 d-flex justify-space-around align-items-center" Elevation="10">
-        <MudButton StartIcon="@Icons.Outlined.FilterList" IconColor="Color.Tertiary" OnClick="ToggleFilterDrawer">
-            <MudText Typo="Typo.h6" Color="Color.Tertiary">Filter</MudText>
-        </MudButton>
-        <MudButton EndIcon="@Icons.Outlined.ShoppingCart" IconColor="Color.Tertiary" OnClick="ToggleCartDrawer">
-            <MudText Typo="Typo.h6" Color="Color.Tertiary">Kurv</MudText>
-        </MudButton>
-    </MudPaper>
-    <div class="d-flex justify-center flex-wrap">
-        @foreach (var product in products)
+<div class="d-flex justify-center flex-wrap">
+    @foreach (var product in products)
+    {
+        @if (FilterProduct(product))
         {
-            @if (FilterProduct(product))
-            {
-                <ProductCard Product="@product" />
-            }
+            <ProductCard Product="@product"/>
         }
-    </div>
-</MudContainer>
+    }
+</div>
 
 @* Filter Drawer *@
 <MudDrawer @bind-Open=@filterDrawerOpen Elevation="10" Anchor="Anchor.Start" Class="p-2"
@@ -32,7 +32,7 @@
     <MudText Typo="Typo.h4" Align="Align.Center">Filter</MudText>
     <MudText Typo="Typo.h5">Pris</MudText>
     <div class="border rounded p-2 my-2">
-        <MudText Typo="Typo.body1">Maksimum pris: @setPrice,-</MudText>
+        <MudText Typo="Typo.body1">Maks. pris: @setPrice.ToString("N2") kr.</MudText>
         <input type="range" min="@minPrice" max="@maxPrice" class="slider" step="1" @bind="setPrice" @bind:event="oninput"/>
     </div>
     <MudText Typo="Typo.h5">Præferencer</MudText>
@@ -45,19 +45,20 @@
 </MudDrawer>
 
 @* Cart Drawer *@
-<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2"
+<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2" Width="300px"
  Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always" Color="Color.Primary">
     <MudText Typo="Typo.h4" Align="Align.Center">Indkøbskurv</MudText>
-
+    <CartComp @ref=@cart/>
 </MudDrawer>
 
 @code 
 {
+    private CartComp cart;
     private bool filterDrawerOpen = false;
     private bool cartDrawerOpen = false;
-    private int maxPrice;
-    private int minPrice;
-    private int setPrice { get; set; }
+    private double maxPrice;
+    private double minPrice;
+    private double setPrice;
     private List<Product> products;
     private Dictionary<string, bool> tags = new Dictionary<string, bool>();
 
@@ -94,16 +95,12 @@
         return true;
     }
 
-    private void AddToCart(Product p)
-    {
-        ShoppingCart.GiftBaskets.Add(new GiftBasket(p.Title, "", (int) p.Price));
-    }
-
     private void ToggleFilterDrawer() {
         filterDrawerOpen = !filterDrawerOpen;
     }
 
     private void ToggleCartDrawer() {
+        cart.Refresh();
         cartDrawerOpen = !cartDrawerOpen;
     }
 }

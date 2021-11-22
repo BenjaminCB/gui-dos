@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using gui_dos.Models;
 
 namespace gui_dos.Data
@@ -16,6 +17,14 @@ namespace gui_dos.Data
                     res += item.Price;
                 }
                 return res;
+            }
+        }
+
+        public double Total 
+        {
+            get
+            {
+                return GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price);
             }
         }
 

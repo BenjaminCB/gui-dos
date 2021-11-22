@@ -109,9 +109,9 @@
                 changes.Add("Description");
             }
 
-            if (p.Price != (int) (productForm.Price * 100))
+            if (p.Price != productForm.Price)
             {
-                p.Price = (int) (productForm.Price * 100);
+                p.Price = productForm.Price;
                 changes.Add("Price");
             }
 
@@ -129,12 +129,7 @@
 
             string changeString = $"Product updated [{String.Join(',', changes)}]";
 
-            Change c = new Change()
-            {
-                ChangeString = changeString,
-                Name = name,
-                Date = DateTime.Now.ToString()
-            };
+            Change c = new Change(DateTime.Now.ToString(), changeString, name);
 
             p.Changelog.Add(c);
 
@@ -148,6 +143,6 @@
             /*                             , productForm.Image */
             /*                             , productForm.Tags )); */
         }
-        NavMan.NavigateTo("/product/show");
+        NavMan.NavigateTo("/product");
     }
 }

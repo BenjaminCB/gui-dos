@@ -21,13 +21,13 @@ namespace gui_dos.Models
         public string Comment { get; set; }
 
         ///<summary>Gets or sets the price on the gift-basket. </summary>
-        public int Price { get; set; }
+        public double Price { get; set; }
 
         ///<summary> Constructs a gift-basket object.
         ///<param name="comment"> the comment for the particular gift-basket. </param>
         ///<param name="price"> the price of the gift basket in danske oere. </param>
         ///</summary>
-        public GiftBasket(string title, string comment, int price)
+        public GiftBasket(string title, string comment, double price)
         {
             Title = title;
             Comment = comment;
