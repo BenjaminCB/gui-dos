@@ -122,14 +122,14 @@
                     </MudTd>
                     <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
                     <MudTd DataLabel="Deadline">@context.DateDeadline</MudTd>
-                    <MudTd DataLabel="Navn">@context.FirstName</MudTd>
+                    <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
                     <MudTd DataLabel="Pris">@context.Price</MudTd>
                 </RowTemplate>
                 <NoRecordsContent>
                     <MudText>
                         Intet match blev fundet <br />
-                        Det er muligt at s�ge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
-                        <p class="text-muted">Disse kan/m� ikke kombineres</p>
+                        Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
+                        <p class="text-muted">Disse kan/må ikke kombineres</p>
                     </MudText>
                 </NoRecordsContent>
                 <LoadingContent>
@@ -139,7 +139,7 @@
                     @if (context.ShowDetails)
                         {
                         <MudTr>
-                            <td colspan="4">
+                            <td colspan="6">
                                 <MudCard Elevation="0">
                                     <MudCardHeader>
                                         <CardHeaderContent>
@@ -149,8 +149,8 @@
                                     <MudCardContent Class="pa-0">
                                         <MudTable Items="@orders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
                                             <ColGroup>
-                                                <col style="width:25%;" />
-                                                <col style="width:15%;" />
+                                                <col />
+                                                <col />
                                                 <col />
                                                 <col />
                                             </ColGroup>
@@ -158,7 +158,7 @@
                                                 <MudTh>Email</MudTh>
                                                 <MudTh>Tel nr.</MudTh>
                                                 <MudTh>Kommentar</MudTh>
-                                                <MudTh>Forl�b</MudTh>
+                                                <MudTh>Forløb</MudTh>
                                             </HeaderContent>
                                             <RowTemplate>
                                                 @if (context.OrderId == child.OrderId)
@@ -168,7 +168,7 @@
                                                     <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
                                                     @foreach (var item in child.Changelog)
                                                         {
-                                                        <MudTd DataLabel="Forl�b">ChangeID @item.ChangeId: @item.ToString()</MudTd>
+                                                        <MudTd DataLabel="Forløb">@item.ToString()</MudTd>
                                                         }
                                                     }
                                             </RowTemplate>
@@ -176,9 +176,9 @@
                                         <br />
                                         <MudTable Items="@orders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
                                             <ColGroup>
-                                                <col style="width:10%;" />
-                                                <col style="width:10%;" />
-                                                <col style="width:30%;" />
+                                                <col />
+                                                <col />
+                                                <col />
                                             </ColGroup>
                                             <HeaderContent>
                                                 <MudTh>ID</MudTh>
@@ -216,7 +216,6 @@
     private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
     // Mudblazor
 
-    MudDatePicker _picker;
     DateTime? date = DateTime.Today;
 
     // To change order status
@@ -243,30 +242,36 @@
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
-        var ConfModal = Modal.Show<ConfComp>($"Vil du �ndre ordre ID: {o.OrderId} fra '{o.Status}' til '{s}'");
+
+        var ConfModal = Modal.Show<ConfComp>($"Vil du ændre ordre ID: {o.OrderId} fra '{o.Status}' til '{s}'");
+        //Call to popup
         var result = await ConfModal.Result;
 
         if (!result.Cancelled)
         {
+            Change c = new Change(DateTime.Now.ToString(), $"Status changed from {s} to {o.Status}", _Name);
+
             using (var ctx = DbContextFactory.CreateDbContext())
             {
                 Order thisOrder = ctx.Update(o).Entity;
+                thisOrder.Changelog.Add(c);
                 thisOrder.Status = s;
                 // Insure ShowDetails isn't opes as defult, if Status changes while ShowDetails = true
                 thisOrder.ShowDetails = false;
                 await ctx.SaveChangesAsync();
-                orders = await ctx.Orders.ToListAsync();
+                orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
+                StateHasChanged();
             }
         }
     }
 
     private async Task OrderChangeDate(Order o)
     {
-        var ConfModal = Modal.Show<Shared.DatePicker>("Valg af ny leveringsdato for ordre ID: " + o.OrderId);
+        var ConfModal = Modal.Show<Shared.DatePicker>($"Valg af ny leveringsdato for ordre ID: {o.OrderId}");
         DateTime DateResult = o.DateDeadline;
+        DateTime StatusBeforeChange = o.DateDeadline;
         //Call to popup
         var result = await ConfModal.Result;
-        //MUST check for null-reference
         if (result.Data != null)
         {
             string StringResult = result.Data.ToString();
@@ -275,12 +280,16 @@
 
         if (!result.Cancelled)
         {
+            Change c = new Change(DateTime.Now.ToString(), $"Date changed from {StatusBeforeChange.ToString()} to {DateResult.ToString()}", _Name);
+
             using (var ctx = DbContextFactory.CreateDbContext())
             {
 
                 Order thisOrder = ctx.Update(o).Entity;
-                Console.WriteLine(result.Data);
+                thisOrder.Changelog.Add(c);
                 thisOrder.DateDeadline = DateResult;
+                // Insure ShowDetails isn't opes as defult, if Status changes while ShowDetails = true
+                thisOrder.ShowDetails = false;
                 await ctx.SaveChangesAsync();
                 orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
                 StateHasChanged();
