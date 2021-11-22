@@ -34,7 +34,7 @@ else
                 <MudText Typo="Typo.body2">
                     <strong>Pris: </strong>
                 </MudText>
-                <MudText Typo="Typo.body2">@gb.Price kr.</MudText>
+                <MudText Typo="Typo.body2">@gb.Price.ToString("N2") kr.</MudText>
             </div>        
         </div>
     }
@@ -44,7 +44,7 @@ else
         <MudText Typo="Typo.body1">
             <strong>Samlet pris: </strong>
         </MudText>
-        <MudText Typo="Typo.body1">@ShoppingCart.Total kr.</MudText>
+        <MudText Typo="Typo.body1">@ShoppingCart.Total.ToString("N2") kr.</MudText>
     </div>
 
     @* Order cart button *@

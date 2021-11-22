@@ -18,11 +18,8 @@
             @product.Title
         </MudText>
         <div>
-            <MudText Typo="Typo.caption" Color="Color.Tertiary" Inline="true">
-                Fra:
-            </MudText>
             <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
-                @product.Price kr.
+                @product.Price.ToString("N2") kr.
             </MudText>
         </div> 
     </div>
@@ -46,11 +43,8 @@
                     @product.Title
                 </MudText>
                 <div>
-                    <MudText Typo="Typo.caption" Color="Color.Tertiary" Inline="true">
-                        Fra:
-                    </MudText>
                     <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
-                        @product.Price kr.
+                        @product.Price.ToString("N2") kr.
                     </MudText>
                 </div> 
             </div>

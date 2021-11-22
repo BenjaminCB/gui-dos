@@ -34,7 +34,7 @@
     <MudText Typo="Typo.h4" Align="Align.Center">Filter</MudText>
     <MudText Typo="Typo.h5">Pris</MudText>
     <div class="border rounded p-2 my-2">
-        <MudText Typo="Typo.body1">Maksimum pris: @setPrice kr.</MudText>
+        <MudText Typo="Typo.body1">Maks. pris: @setPrice.ToString("N2") kr.</MudText>
         <input type="range" min="@minPrice" max="@maxPrice" class="slider" step="1" @bind="setPrice" @bind:event="oninput"/>
     </div>
     <MudText Typo="Typo.h5">Præferencer</MudText>
