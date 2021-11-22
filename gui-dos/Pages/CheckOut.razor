@@ -84,17 +84,12 @@
             Order order = new Order(ShoppingCart.GiftBaskets);
             order.FillInformation(orderForm);
 
-            Change c = new Change()
-            {
-                ChangeString = "Order created",
-                Name = "Customer",
-                Date = DateTime.Now.ToString()
-            };
+            Change c = new Change(DateTime.Now.ToString(), "Order created", "Customer");
             order.Changelog.Add(c);
 
             ctx.Orders.Add(order);
             await ctx.SaveChangesAsync();
         }
-        //NavMan.NavigateTo("/orders");
+        NavMan.NavigateTo("/orders");
     }
 }

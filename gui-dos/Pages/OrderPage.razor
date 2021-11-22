@@ -242,7 +242,6 @@
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
-        Change c = new Change();
 
         var ConfModal = Modal.Show<ConfComp>($"Vil du ændre ordre ID: {o.OrderId} fra '{o.Status}' til '{s}'");
         //Call to popup
@@ -250,9 +249,7 @@
 
         if (!result.Cancelled)
         {
-            c.Date = DateTime.Now.ToString();
-            c.Name = _Name;
-            c.ChangeString = $"Status changed from {s} to {o.Status}";
+            Change c = new Change(DateTime.Now.ToString(), $"Status changed from {s} to {o.Status}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
@@ -270,8 +267,6 @@
 
     private async Task OrderChangeDate(Order o)
     {
-        Change c = new Change();
-
         var ConfModal = Modal.Show<Shared.DatePicker>($"Valg af ny leveringsdato for ordre ID: {o.OrderId}");
         DateTime DateResult = o.DateDeadline;
         DateTime StatusBeforeChange = o.DateDeadline;
@@ -285,9 +280,7 @@
 
         if (!result.Cancelled)
         {
-            c.Date = DateTime.Now.ToString();
-            c.Name = _Name;
-            c.ChangeString = $"Date changed from {StatusBeforeChange.ToString()} to {DateResult.ToString()}";
+            Change c = new Change(DateTime.Now.ToString(), $"Date changed from {StatusBeforeChange.ToString()} to {DateResult.ToString()}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
