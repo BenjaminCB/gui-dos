@@ -9,44 +9,40 @@
 
 <AuthorizeView>
     <Authorized>
-        <h1>Products</h1>
-        <!--<p>
-            This is all the products that are currently avaiable for purchase on the site
-        </p>-->
-
+        <div class="text-center">
+            <MudText Typo="Typo.h2">Produkter</MudText>
+            <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.Add" Variant="Variant.Filled" Class="rounded-pill border border-dark" OnClick="productInsert">
+                Nyt produkt
+            </MudButton> 
+        </div>
         @if (products == null)
         {
-            <div>
-                Loading...
-            </div>
+            <MudText Typo="Typo.h5">Indlæser produkter fra databasen</MudText>
         }
 
         @if (products != null && products.Count == 0)
         {
-            <div>
-                No products found...
-            </div>
+            <MudText Typo="Typo.h5">Ingen produkter i databasen</MudText>
         }
 
         @if (products != null)
         {
-            <div class="flex-container">
+            <div class="d-flex justify-center flex-wrap">
                 @foreach (var product in products)
                 {
-                    <div class="flex-child">
-                        <ProductComp Product="@product" />
-
-                        <button @onclick="() => productEdit(product)" class="buttons">
-                            Edit
-                        </button>
-
-                        <button @onclick="() => productDelete(product)" class="buttons">
-                            Delete
-                        </button>
-
-                        <button @onclick="() => productChangelog(product)" class="buttons">
-                            Changelog
-                        </button>
+                    <div class="m-2 mud-secondary rounded border border-dark">
+                        <ProductCard Product="@product" ShopView="false"/>
+                        <div class="d-flex justify-space-between mx-4 mb-4">
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-pill border border-dark" OnClick="() => productEdit(product)">
+                                Rediger
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-pill border border-dark" OnClick="() => productChangelog(product)">
+                                Ændringer
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-pill border border-dark" OnClick="() => productDelete(product)">
+                                Slet
+                            </MudButton>
+                        </div>
                     </div>
                 }
             </div>
@@ -56,7 +52,6 @@
         <LoginDisplay />
     </NotAuthorized>
 </AuthorizeView>
-
 
 @code
 {
@@ -68,6 +63,10 @@
         {
             products = await ctx.Products.ToListAsync();
         }
+    }
+
+    private void productInsert() {
+        NavMan.NavigateTo("/product/insert");
     }
 
     private async Task productDelete(Product p)
