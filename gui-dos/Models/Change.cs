@@ -27,7 +27,7 @@ namespace gui_dos.Models
         ///<summary>Converts the Change object to a string. </summary>
         public override string ToString()
         {
-            return $"{ChangeString} was changed at {Date} by {Name}";
+            return $"{ChangeString}. At {Date} by {Name}";
         }
     }
 }

@@ -1,0 +1,100 @@
+﻿@page "/order-f"
+@using gui_dos.Forms
+@using gui_dos.Models
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject Data.ShoppingCart ShoppingCart
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<EditForm Model="@orderForm" OnValidSubmit="OrderOrder">
+    <DataAnnotationsValidator />
+    <MudContainer Class="mt-16" MaxWidth="MaxWidth.Medium">
+        @*<MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Checkout</MudText>*@
+        <MudGrid Spacing="6" Class="mt-16">
+            <MudItem xs="7">
+                <MudText Typo="Typo.h5" GutterBottom="true">Checkout</MudText>
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTextField T="string" Label="Email" @bind-Value="orderForm.Email" For="@(() => orderForm.Email)" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField T="string" Label="Mobile number" @bind-Value="orderForm.PhoneNumber" For="@(() => orderForm.PhoneNumber)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField T="string" Label="First name" @bind-Value="orderForm.FirstName" For="@(() => orderForm.FirstName)" />
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudTextField T="string" Label="Last name" @bind-Value="orderForm.LastName" For="@(() => orderForm.LastName)" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField T="string" Label="Kommentar" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10"  For="(() => orderForm.Comment)" />
+                    </MudItem>
+                    <MudItem xs="12" Class="d-flex justify-center">
+                        <MudButton Class="mt-8" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Send ordrer</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+
+            @* Cart *@
+            <MudItem xs="5">
+                <MudText Typo="Typo.h5" GutterBottom="true">Cart</MudText>
+                <MudPaper Class="d-flex flex-column" Style="height:80%;" Outlined="true">
+                    <MudList Clickable="true">
+                        @foreach (var item in ShoppingCart.GiftBaskets)
+                        {
+                            <MudListItem Icon="@Icons.Material.Filled.ShoppingBasket">
+                                <div class="d-flex">
+                                    <MudText>@item.Title</MudText>
+                                    <MudText Inline="true" Class="ml-auto">@item.Price</MudText>
+                                </div>
+                            </MudListItem>
+                            <MudListItem Icon="@Icons.Material.Filled.Comment">
+                                <div class="d-flex">
+                                    <MudText>@item.Comment</MudText>
+                                </div>
+                            </MudListItem>
+                        }
+                    </MudList>
+                    <div class="mt-auto">
+                        <MudDivider />
+                        <div class="d-flex pa-4">
+                            <MudText>Total:</MudText>
+                            <MudText Class="ml-auto"><b>@ShoppingCart.TotalPrice,- kr</b></MudText>
+                        </div>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+</EditForm>
+
+@code
+{
+    private OrderForm orderForm = new OrderForm();
+
+    private async Task OrderOrder()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            Order order = new Order(ShoppingCart.GiftBaskets);
+            order.FillInformation(orderForm);
+
+            Change c = new Change()
+            {
+                ChangeString = "Order created",
+                Name = "Customer",
+                Date = DateTime.Now.ToString()
+            };
+            order.Changelog.Add(c);
+
+            ctx.Orders.Add(order);
+            await ctx.SaveChangesAsync();
+        }
+        //NavMan.NavigateTo("/orders");
+    }
+}
