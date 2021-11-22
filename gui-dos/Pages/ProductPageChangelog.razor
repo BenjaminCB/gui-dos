@@ -1,4 +1,4 @@
-@page "/product/changelog/{productId}"
+@page "/product/changelog/{ProductId}"
 
 @using gui_dos.Data
 @using System.Collections.Generic
@@ -7,20 +7,42 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 
 <AuthorizeView Context="AuthContext">
-    <Authorized>
-        @if (product == null)
+    <Authorized>  
+        @if (changelog == null)
         {
-            <div>
-                Loading...
-            </div>
+            <div class="text-center m-3">
+                <MudText Align="Align.Center" Typo="Typo.h6" Class="m-2">
+                    Intet produkt med id: @ProductId
+                </MudText>
+                <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Link="/product"
+                Variant="Variant.Filled" Class="rounded-pill border border-dark">
+                    Tilbage
+                </MudButton> 
+            </div>  
         }
         else
         {
-            <!-- TODO fix that .Reverse() does not want to work -->
-            @foreach (Change c in product.Changelog)
-            {
-                <ChangeComp Change="@c" />
-            }
+            <div class="text-center m-3">
+                <MudText Align="Align.Center" Typo="Typo.h5" Class="m-2">
+                    Ændringer af "@product.Title"
+                </MudText>
+                <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Link="/product" 
+                Variant="Variant.Filled" Class="rounded-pill border border-dark">
+                    Tilbage
+                </MudButton> 
+            </div>   
+            <MudTable Items=@changelog Hover="true" Class="border border-dark m-2">
+                <HeaderContent>
+                    <MudTh Style="width:60%">Ændring:</MudTh>
+                    <MudTh Style="width:20%">Af:</MudTh>
+                    <MudTh Style="width:20%">Dato:</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Ændring:">@context.ChangeString</MudTd>
+                    <MudTd DataLabel="Af:">@context.Name</MudTd>
+                    <MudTd DataLabel="Dato:">@context.Date</MudTd>
+                </RowTemplate>
+            </MudTable>
         }
     </Authorized>
     <NotAuthorized>
@@ -33,13 +55,19 @@
     public string ProductId { get; set; }
 
     private Product product;
+    
+    private List<Change> changelog;
 
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             int id = Int32.Parse(ProductId);
-            product = await ctx.Products.SingleAsync(p => p.ProductId == id);
+            product = await ctx.Products.SingleOrDefaultAsync(p => p.ProductId == id);
+            if(product != null) {
+                changelog = product.Changelog;
+                changelog.Reverse();
+            }
         }
     }
 }

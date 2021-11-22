@@ -80,12 +80,7 @@
                                    , productForm.Image
                                    , productForm.Tags );
 
-            Change c = new Change()
-            {
-                ChangeString = "Product created",
-                Name = name,
-                Date = DateTime.Now.ToString()
-            };
+            Change c = new Change(DateTime.Now.ToString(), "Produkt oprettet", name);
 
             p.Changelog.Add(c);
             ctx.Products.Add(p);

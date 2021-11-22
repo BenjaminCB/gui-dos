@@ -129,12 +129,7 @@
 
             string changeString = $"Product updated [{String.Join(',', changes)}]";
 
-            Change c = new Change()
-            {
-                ChangeString = changeString,
-                Name = name,
-                Date = DateTime.Now.ToString()
-            };
+            Change c = new Change(DateTime.Now.ToString(), changeString, name);
 
             p.Changelog.Add(c);
 
