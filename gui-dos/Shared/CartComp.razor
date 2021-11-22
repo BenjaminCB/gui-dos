@@ -1,0 +1,81 @@
+@inject ShoppingCart ShoppingCart
+@inject NavigationManager NavMan
+
+@if (ShoppingCart.GiftBaskets.Count == 0)
+{
+    <MudText Align="Align.Center">
+        <strong>Din indkøbskurv er tom.</strong>
+    </MudText>
+}
+else
+{
+    @foreach (GiftBasket gb in ShoppingCart.GiftBaskets)
+    {
+        <div class="d-inline-block border rounded p-2 my-2">
+
+            @* Giftbasket title & delete button*@
+            <div class="d-flex justify-space-between mb-1">
+                <MudText Typo="Typo.body1">
+                    <strong>@gb.Title</strong>
+                </MudText>
+                <MudIconButton Icon="@Icons.Outlined.Delete" Color="Color.Tertiary" Size="Size.Small" OnClick="() => remove(gb)"/>
+            </div>
+
+            @* Gifbasket comment *@
+            @if(gb.Comment != String.Empty) 
+            {
+                <MudText Typo="Typo.body2">
+                    <strong>Kommentar: </strong> "@gb.Comment"
+                </MudText>
+            }   
+
+            @* Giftbasket price *@
+            <div class="d-flex justify-space-between mt-1">
+                <MudText Typo="Typo.body2">
+                    <strong>Pris: </strong>
+                </MudText>
+                <MudText Typo="Typo.body2">@gb.Price kr.</MudText>
+            </div>        
+        </div>
+    }
+
+    @* Cart total *@
+    <div class="d-flex justify-space-between m-2">
+        <MudText Typo="Typo.body1">
+            <strong>Samlet pris: </strong>
+        </MudText>
+        <MudText Typo="Typo.body1">@ShoppingCart.Total kr.</MudText>
+    </div>
+
+    @* Order cart button *@
+    <div class="d-flex justify-space-between m-2">
+        <MudButton Class="rounded-pill" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=removeAll>
+            <MudText Typo="Typo.body2">Tøm kurv</MudText>
+        </MudButton>
+        <MudButton Class="rounded-pill" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=goToOrder>
+            <MudText Typo="Typo.body2">Gå til kassen</MudText>
+        </MudButton>
+    </div>
+}
+
+@code
+{
+    private void goToOrder()
+    {
+        NavMan.NavigateTo("/order-fill");
+    }
+
+    private void remove(GiftBasket gb)
+    {
+        ShoppingCart.GiftBaskets.Remove(gb);
+    }
+    private void removeAll() 
+    {
+        ShoppingCart.GiftBaskets.Clear();
+    }
+
+    public void Refresh()
+    {
+        StateHasChanged();
+    }
+}
