@@ -8,53 +8,66 @@
     ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:300px;"> 
         @* foreach over flere billeder *@
         <MudCarouselItem Transition="Transition.Fade" Class="rounded-top">
-            <img src="@product.Image" class="rounded-top" style="width:100%;height:100%;"/>
+            <img src="@Product.Image" class="rounded-top" style="width:100%;height:100%;"/>
         </MudCarouselItem>
     </MudCarousel>
 
     @* Product card text *@
     <div class="d-flex justify-space-between m-2">
         <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
-            @product.Title
+            @Product.Title
         </MudText>
         <div>
             <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
-                @product.Price.ToString("N2") kr.
+                @Product.Price.ToString("N2") kr.
             </MudText>
         </div> 
     </div>
 
-    @* Product card buttons *@
-    <div class="d-flex justify-space-between m-2">
-        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="ToggleOverlay" Class="rounded-pill">
-            Se mere
-        </MudButton>
-        <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="ToggleOrder" Class="rounded-pill">
-            Bestil
-        </MudButton>
-    </div>
+    @* Show description on card if not in shopview *@
+    @if(!ShopView)
+    {
+        <MudText Typo="Typo.body2" Color="Color.Tertiary" Class="m-2">
+            <strong>Beskrivelse: </strong>@Product.Description <br/>
+            <strong>Tags: </strong>@Product.Tags
+        </MudText>
+    }
 
-    @* Product card overlay for more info *@
-    <MudOverlay @bind-Visible="overlayVisible" Absolute="true" AutoClose="true" DarkBackground="true" @onmouseover="Elevate" @onmouseleave="ToggleOverlay">
-        <MudPaper Class="mud-primary border border-dark" Width="@cardWidth" Square="true">
-    
-            <div class="d-flex justify-space-between pa-4">
-                <MudText Typo="Typo.h6" Color="Color.Tertiary">
-                    @product.Title
-                </MudText>
-                <div>
-                    <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
-                        @product.Price.ToString("N2") kr.
+    @* Show shop buttons and overlay if in shopview *@
+    @if(ShopView) 
+    {
+        @* Product card buttons *@
+        <div class="d-flex justify-space-between m-2">
+            <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="ToggleOverlay" Class="rounded-pill">
+                Se mere
+            </MudButton>
+            <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="ToggleOrder" Class="rounded-pill">
+                Bestil
+            </MudButton>
+        </div>
+
+        @* Product card overlay for more info *@
+        <MudOverlay @bind-Visible=@overlayVisible Absolute="true" AutoClose="true" DarkBackground="true" @onmouseover=@Elevate @onmouseleave=@ToggleOverlay>
+            <MudPaper Class="mud-primary border border-dark" Width="@cardWidth" Square="true">
+        
+                <div class="d-flex justify-space-between p-4">
+                    <MudText Typo="Typo.h6" Color="Color.Tertiary">
+                        @Product.Title
                     </MudText>
-                </div> 
-            </div>
+                    <div>
+                        <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
+                            @Product.Price.ToString("N2") kr.
+                        </MudText>
+                    </div> 
+                </div>
 
-            <MudText Typo="Typo.body1" Color="Color.Tertiary" Class="pa-4">
-                @product.Description
-            </MudText>
+                <MudText Typo="Typo.body1" Color="Color.Tertiary" Class="p-4">
+                    @Product.Description
+                </MudText>
 
-        </MudPaper>
-    </MudOverlay>
+            </MudPaper>
+        </MudOverlay>
+    }
 
 </MudPaper>
 
@@ -62,21 +75,19 @@
 <MudOverlay @bind-Visible=@orderVisible DarkBackground="true" LockScroll="true">
     <MudPaper Class="mud-primary p-3 border border-dark" MaxWidth="90vw" Width="auto">
         <div class="d-flex flex-wrap justify-center">
-
             @* Ordering layout product images *@
-            <MudCarousel Class="rounded m-3 border border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
+            <MudCarousel Class="rounded m-3 border border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex=@cycleIndex
             ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:350px;width:400px"> 
                 <MudCarouselItem Transition="Transition.Fade" Class="rounded">
-                    <img src="@product.Image" class="rounded" style="height:100%;width:100%;"/>
+                    <img src="@Product.Image" class="rounded" style="height:100%;width:100%;"/>
                 </MudCarouselItem>
             </MudCarousel>
-
             <div class="d-inline-block m-3" style="max-width:400px"> 
                 @* Ordering layout product title *@
-                <MudText Typo="Typo.h5" Color="Color.Tertiary" Align="Align.Center">@product.Title</MudText>
+                <MudText Typo="Typo.h5" Color="Color.Tertiary" Align="Align.Center">@Product.Title</MudText>
 
                 @* Ordering layout product description *@
-                <MudText Typo="Typo.body1" Color="Color.Tertiary">@product.Description</MudText>
+                <MudText Typo="Typo.body1" Color="Color.Tertiary">@Product.Description</MudText>
 
                 @* Ordering layout add comment *@
                 <MudTextField Class="mud-theme-tertiary rounded mt-10" T="string" Lines="3" Variant="Variant.Filled" DisableUnderLine="true"
@@ -94,7 +105,6 @@
                     </MudButton>
                 </div>
             </div>
-
         </div>
     </MudPaper>
 </MudOverlay>
@@ -102,7 +112,10 @@
 @code{
     
     [Parameter]
-    public Product product { get; set;}
+    public Product Product { get; set;}
+
+    [Parameter]
+    public bool ShopView { get; set; } = true;
 
     //Sets the width of a product card
     private static string cardWidth = "350px";
@@ -114,13 +127,13 @@
     private bool orderVisible = false;
 
     //Sets the base value of the product card 
-    private static readonly int baseElevation = 4;
+    private int baseElevation;
 
     //Sets the highlighted elevation value of the product card
-    private static readonly int highlightElevation = 24;
+    private int highlightElevation;
 
     //Sets the elevation of the product card
-    private int elevation = baseElevation;
+    private int elevation;
 
     //Sets image-cycle of the product card
     private bool cycle = false;
@@ -160,7 +173,7 @@
     }
 
     private void AddToCart() {
-        GiftBasket gb = new GiftBasket(product.Title, commentInput, product.Price);
+        GiftBasket gb = new GiftBasket(Product.Title, commentInput, Product.Price);
         ShoppingCart.GiftBaskets.Add(gb);
         ToggleOrder();
     }
@@ -170,6 +183,11 @@
         //if (product.Images.Count > 1) {
         //    arrow = delim = true;
         //}
+        
+        baseElevation = ShopView ? 4 : 0;
+        highlightElevation = ShopView ? 24 : 0;
+        elevation = baseElevation;
+
         return base.OnInitializedAsync();
     }
 }
