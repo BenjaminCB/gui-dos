@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,10 +20,7 @@ namespace gui_dos.Models
         public OrderStatus Status { get; set; }
 
         ///<summary>Gets the total price of the order. </summary>
-        public double Price 
-        { 
-            get { return GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price); } 
-        }
+        public double Price { get; set; }
 
         ///<summary>Gets or sets the date the order was made. </summary>
         public DateTime DateOrdered { get; set; }
@@ -102,7 +100,6 @@ namespace gui_dos.Models
             PhoneNumber = orderDetails.PhoneNumber;
             Comment = orderDetails.Comment;
             DateOrdered = DateTime.Now;
-            DateDeadline = orderDetails.Date;
             CancelId = orderDetails.GetHashCode().ToString();
             Status = OrderStatus.Pending;
 
