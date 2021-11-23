@@ -100,6 +100,7 @@ namespace gui_dos.Models
             PhoneNumber = orderDetails.PhoneNumber;
             Comment = orderDetails.Comment;
             DateOrdered = DateTime.Now;
+            DateDeadline = orderDetails.Date.GetValueOrDefault();
             CancelId = orderDetails.GetHashCode().ToString();
             Status = OrderStatus.Pending;
             Price = GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price);
