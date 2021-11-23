@@ -10,48 +10,43 @@
 
 <AuthorizeView Context="AuthContext">
     <Authorized>
-        @if (orders != null && orders.Count == 0)
-        {
-            <div>
-                No products found...
-            </div>}
+        @* CAN'T be moved to css as '@' doesn't work in there *@
         <style>
-        /* CAN'T be moed to css as 'snabelA' doesn't work in there */
-        .ButtonActivePending {
-            @($"background:{Colors.Yellow.Default}")
-        }
-        .ButtonActivePending:hover {
-            @($"background:{Colors.Yellow.Darken1}")
-        }
+            .ButtonActivePending {
+                @($"background:{Colors.Yellow.Default}")
+            }
+            .ButtonActivePending:hover {
+                @($"background:{Colors.Yellow.Darken1}")
+            }
 
-        .ButtonActiveAccepted {
-            @($"background:{Colors.Green.Default}")
-        }
-        .ButtonActiveAccepted:hover {
-            @($"background:{Colors.Green.Darken1}")
-        }
+            .ButtonActiveAccepted {
+                @($"background:{Colors.Green.Default}")
+            }
+            .ButtonActiveAccepted:hover {
+                @($"background:{Colors.Green.Darken1}")
+            }
 
-        .ButtonActiveFinished {
-            @($"background:{Colors.LightBlue.Default}")
-        }
-        .ButtonActiveFinished:hover {
-            @($"background:{Colors.LightBlue.Darken1}")
-        }
+            .ButtonActiveFinished {
+                @($"background:{Colors.LightBlue.Default}")
+            }
+            .ButtonActiveFinished:hover {
+                @($"background:{Colors.LightBlue.Darken1}")
+            }
 
-        .ButtonActiveDelivered {
-            @($"background:{Colors.Teal.Default}")
-        }
-        .ButtonActiveDelivered:hover {
-            @($"background:{Colors.Teal.Darken1}")
-        }
+            .ButtonActiveDelivered {
+                @($"background:{Colors.Teal.Default}")
+            }
+            .ButtonActiveDelivered:hover {
+                @($"background:{Colors.Teal.Darken1}")
+            }
 
-        .Cancel:hover {
-            @($"background:{Colors.Red.Darken1}")
-        }
+            .Cancel:hover {
+                @($"background:{Colors.Red.Darken1}")
+            }
 
-        .Date:hover {
-            @($"background:{Colors.LightBlue.Darken1}")
-        }
+            .Date:hover {
+                @($"background:{Colors.LightBlue.Darken1}")
+            }
         </style>
 
         @if (orders != null)
