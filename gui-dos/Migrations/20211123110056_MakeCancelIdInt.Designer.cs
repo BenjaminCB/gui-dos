@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using gui_dos.Data;
 
 namespace gui_dos.Migrations
 {
     [DbContext(typeof(IsvaerftetDbContext))]
-    partial class IsvaerftetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211123110056_MakeCancelIdInt")]
+    partial class MakeCancelIdInt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,8 +24,8 @@ namespace gui_dos.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CancelId")
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CancelId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Changelog")
                         .HasColumnType("TEXT");

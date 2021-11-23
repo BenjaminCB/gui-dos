@@ -1,0 +1,65 @@
+@page "/shop/cancel/{cancelId}"
+
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+
+
+@if (_Order == null)
+{
+    <p>
+        There does not seem any order with this id.
+    </p>
+}
+else if (_Status != OrderStatus.Pending)
+{
+    <p>
+        We have already accepted your order, please contact us for further details.
+    </p>
+}
+else
+{
+    <p>
+        your order has been cancelled.
+    </p>
+}
+
+@code {
+    [Parameter]
+    public string CancelId { get; set; }
+
+    private Order _Order;
+    private OrderStatus _Status;
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            try
+            {
+                _Order = await ctx.Orders.SingleAsync(o => o.CancelId == CancelId);
+                _Status = _Order.Status;
+
+
+                if (_Order.Status == OrderStatus.Pending)
+                {
+                    Order o = ctx.Orders.Update(_Order).Entity;
+                    o.Status = OrderStatus.Cancelled;
+
+                    Change c = new Change( DateTime.Now.ToString("")
+                                         , "Customer cancelled order"
+                                         , "Customer" );
+
+                    o.Changelog.Add(c);
+
+                    await ctx.SaveChangesAsync();
+                }
+            }
+            catch
+            {
+                _Order = null;
+            }
+        }
+    }
+}
