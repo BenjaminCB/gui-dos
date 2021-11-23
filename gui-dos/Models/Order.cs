@@ -102,6 +102,7 @@ namespace gui_dos.Models
             DateOrdered = DateTime.Now;
             CancelId = orderDetails.GetHashCode().ToString();
             Status = OrderStatus.Pending;
+            Price = GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price);
 
             // TODO remove once we send emails
             Console.WriteLine(CancelId);
