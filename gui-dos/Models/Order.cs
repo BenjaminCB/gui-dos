@@ -48,6 +48,9 @@ namespace gui_dos.Models
         ///<summary>Gets or set the list of changes made to the order. </summary>
         public List<Change> Changelog { get; set; }
 
+        ///<summary>Gets or sets the the id used to cancel an order. </summary>
+        public string CancelId { get; set; }
+
         public bool ShowDetails { get; set; } = false;
 
         public void SendStatusMail()
@@ -86,9 +89,9 @@ namespace gui_dos.Models
             FirstName = "";
             LastName = "";
             Email = "";
-            PhoneNumber = ""; 
+            PhoneNumber = "";
         }
-              
+
         public void FillInformation(OrderForm orderDetails) {
             FirstName = orderDetails.FirstName;
             LastName = orderDetails.LastName;
@@ -96,6 +99,11 @@ namespace gui_dos.Models
             PhoneNumber = orderDetails.PhoneNumber;
             Comment = orderDetails.Comment;
             DateOrdered = DateTime.Now;
+            CancelId = orderDetails.GetHashCode().ToString();
+            Status = OrderStatus.Pending;
+
+            // TODO remove once we send emails
+            Console.WriteLine(CancelId);
         }
 
         public override string ToString()
