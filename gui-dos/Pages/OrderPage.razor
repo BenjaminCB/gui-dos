@@ -151,22 +151,16 @@
                                         </RowTemplate>
                                     </MudTable>
                                     <br />
-                                    <MudTable Items="@orders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
+                                    <MudTable Items="@context.GiftBaskets" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
                                         <HeaderContent>
                                             <MudTh>ID</MudTh>
                                             <MudTh>Pris</MudTh>
                                             <MudTh>Kommentar</MudTh>
                                         </HeaderContent>
                                         <RowTemplate>
-                                            @if (context.OrderId == content.OrderId)
-                                            {
-                                                @foreach(var giftBasket in content.GiftBaskets)
-                                                {
-                                                    <MudTd DataLabel="ID">@giftBasket.Title</MudTd>
-                                                    <MudTd DataLabel="Pris">@giftBasket.Price</MudTd>
-                                                    <MudTd DataLabel="Kommentar">@giftBasket.Comment</MudTd>
-                                                }
-                                            }
+                                            <MudTd DataLabel="ID">@content.Title</MudTd>
+                                            <MudTd DataLabel="Pris">@content.Price</MudTd>
+                                            <MudTd DataLabel="Kommentar">@content.Comment</MudTd>
                                         </RowTemplate>
                                     </MudTable>
                                 </MudCardContent>
