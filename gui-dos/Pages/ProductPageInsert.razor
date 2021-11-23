@@ -14,40 +14,34 @@
 
 <AuthorizeView Context="AuthContext">
     <Authorized>
-        <body class="page-wrapper">
-            <h1>Lav nyt product</h1>
+        <div class="d-flex justify-center text-center m-5">
+            <MudPaper class="p-2">
+                <MudText Typo="Typo.h5" Align="Align.Center">
+                    Opret nyt produkt
+                </MudText>
+                <EditForm Model="@productForm" OnValidSubmit="InsertProduct" Context="EditContext" style="width: 100%;">
+                    <DataAnnotationsValidator/>
+                    <ValidationSummary/>
 
-            <div class="new-product">
-                <EditForm Model="@productForm" OnValidSubmit="@InsertProduct">
-                    <DataAnnotationsValidator />
-                    <ValidationSummary />
-
-                    <div class="form-group product-title">
-                        <label for="Title" class="title">Titel:</label>
-                        <InputText @bind-Value=productForm.Title placeholder="Tilføj titel her" />
+                    <MudTextField @bind-Value=productForm.Title Class="mud-theme-tertiary rounded m-2" Label="Titel" Variant="Variant.Filled"/>
+                    <MudTextField @bind-Value=productForm.Description Class="mud-theme-tertiary rounded m-2" Label="Beskrivelse" Variant="Variant.Filled" Lines="3"/>
+                    <MudNumericField @bind-Value=productForm.Price Class="mud-theme-tertiary rounded m-2" Label="Pris" Variant="Variant.Filled" Adornment="Adornment.End" AdornmentText="kr." Min="0"/>
+                    <MudTextField @bind-Value=productForm.Tags Class="mud-theme-tertiary rounded m-2" Label="Tags" Variant="Variant.Filled"/>
+                    <div class="m-2">
+                        <label style="font-weight: bold;">Billede(r): </label>
+                        <InputFile OnChange="@fileUpload"/>
                     </div>
-                    <div class="form-group product-description">
-                        <label for="Description" class="title">Beskrivelse:</label>
-                        <div class="description-box">
-                            <InputTextArea @bind-Value=productForm.Description placeholder="Tilføj beskrivelse her" rows="3" />
-                        </div>
+                    <div class="d-flex justify-space-between m-2"> 
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Class="rounded-pill border border-dark" Link="/product">
+                            Tilbage
+                        </MudButton>
+                        <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Outlined.Add" Class="rounded-pill border border-dark">
+                            Opret
+                        </MudButton>
                     </div>
-                    <div class="form-group product-price">
-                        <label for="Price" class="title">Pris:</label>
-                        <InputNumber @bind-Value=productForm.Price />
-                    </div>
-                    <div class="form-group product-image">
-                        <label for="Image" class="title">Billede(r):</label>
-                        <InputFile OnChange="@fileUpload" />
-                    </div>
-                    <div class="form-group product-tags">
-                        <label for="Tags" class="title">Tags:</label>
-                        <InputTextArea @bind-Value="productForm.Tags" />
-                    </div>
-                    <button type="submit" class="buttons">Submit</button>
                 </EditForm>
-            </div>
-        </body>
+            </MudPaper>
+        </div>
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />
@@ -57,7 +51,6 @@
 @code {
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
-
     private long maxImageFileSize = 4096000;
     private ProductForm productForm = new ProductForm() {Tags = ""};
 
