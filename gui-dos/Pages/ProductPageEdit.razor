@@ -10,45 +10,46 @@
 
 <AuthorizeView Context="AuthContext">
     <Authorized>
-        <h1>ProductId is @ProductId</h1>
+        <div class="d-flex justify-center text-center m-5">
+            @if (product == null)
+            {
+                <div class="p-2">
+                    <MudText Typo="Typo.h5">Ingen produkt med id: @ProductId</MudText>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Class="rounded-pill border border-dark" Link="/product">
+                        Tilbage
+                    </MudButton>
+                </div>
+            }
+            else
+            {
+                <MudPaper class="p-2">
+                    <MudText Typo="Typo.h5" Align="Align.Center">
+                        Rediger '@product.Title'
+                    </MudText>
+                    <EditForm Model="@productForm" OnValidSubmit="@editProduct" Context="EditContext" style="width: 100%;">
+                        <DataAnnotationsValidator/>
+                        <ValidationSummary/>
 
-        @if (product == null)
-        {
-            <div>
-                Loading...
-            </div>
-        }
-        else
-        {
-            <body class="page-wrapper">
-                <EditForm Model="@productForm" OnValidSubmit="@editProduct" Context="EditContext">
-                    <DataAnnotationsValidator/>
-                    <ValidationSummary/>
-
-                    <div class="form-group product-title">
-                        <label for="Title" class="title">Title</label>
-                        <InputText @bind-Value=productForm.Title />
-                    </div>
-                    <div class="form-group product-description">
-                        <label for="Description" class="title">Description</label>
-                        <InputTextArea @bind-Value=productForm.Description />
-                    </div>
-                    <div class="form-group product-price">
-                        <label for="Price" class="title">Price</label>
-                        <InputNumber @bind-Value=productForm.Price />
-                    </div>
-                    <div class="form-group product-image">
-                        <label for="Image" class="title">Image</label>
-                        <InputFile OnChange="@fileUpload" />
-                    </div>
-                    <div class="form-group product-tags">
-                        <label for="Tags" class="title">Tags:</label>
-                        <InputTextArea @bind-Value=productForm.Tags />
-                    </div>
-                    <button type="submit" class="buttons">Submit</button>
-                </EditForm>
-            </body>
-        }
+                        <MudTextField @bind-Value=productForm.Title Class="mud-theme-tertiary rounded m-2" Label="Titel" Variant="Variant.Filled"/>
+                        <MudTextField @bind-Value=productForm.Description Class="mud-theme-tertiary rounded m-2" Label="Beskrivelse" Variant="Variant.Filled" Lines="3"/>
+                        <MudNumericField @bind-Value=productForm.Price Class="mud-theme-tertiary rounded m-2" Label="Pris" Variant="Variant.Filled" Adornment="Adornment.End" AdornmentText="kr." Min="0"/>
+                        <MudTextField @bind-Value=productForm.Tags Class="mud-theme-tertiary rounded m-2" Label="Tags" Variant="Variant.Filled"/>
+                        <div class="m-2">
+                            <label style="font-weight: bold;">Billede(r): </label>
+                            <InputFile OnChange="@fileUpload"/>
+                        </div>
+                        <div class="d-flex justify-space-between m-2"> 
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Class="rounded-pill border border-dark" Link="/product">
+                                Tilbage
+                            </MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" EndIcon="@Icons.Outlined.Save" Class="rounded-pill border border-dark">
+                                Gem ændringer
+                            </MudButton>
+                        </div>
+                    </EditForm>
+                </MudPaper>
+            }
+        </div>
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />
@@ -70,14 +71,16 @@
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             int id = Int32.Parse(ProductId);
-            product = await ctx.Products.SingleAsync(p => p.ProductId == id);
+            product = await ctx.Products.SingleOrDefaultAsync(p => p.ProductId == id);
+            if(product != null) 
+            {
+                productForm.Title = product.Title;
+                productForm.Description = product.Description;
+                productForm.Price = product.Price;
+                productForm.Image = product.Image;
+                productForm.Tags = product.Tags;
+            }
         }
-
-        productForm.Title = product.Title;
-        productForm.Description = product.Description;
-        productForm.Price = product.Price;
-        productForm.Image = product.Image;
-        productForm.Tags = product.Tags;
     }
 
     private async Task fileUpload(InputFileChangeEventArgs e)
@@ -93,55 +96,46 @@
         string name = (await authenticationStateTask).User.Identity.Name;
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            // TODO update this to simpler syntax
             Product p = ctx.Products.Update(product).Entity;
+            string changeDate = DateTime.Now.ToString();
+            string changeString = String.Empty;
 
-            List<string> changes = new List<string>();
             if (p.Title != productForm.Title)
             {
+                changeString = $"Titel fra '{p.Title}' til '{productForm.Title}'";
+                p.Changelog.Add(new Change(changeDate, changeString, name));
                 p.Title = productForm.Title;
-                changes.Add("Title");
             }
 
             if (p.Description != productForm.Description)
             {
+                changeString = $"Beskrivelse fra '{p.Description}' til '{productForm.Description}'";
+                p.Changelog.Add(new Change(changeDate, changeString, name));
                 p.Description = productForm.Description;
-                changes.Add("Description");
             }
 
             if (p.Price != productForm.Price)
             {
+                changeString = $"Pris fra {p.Price} kr. til {productForm.Price} kr.";
+                p.Changelog.Add(new Change(changeDate, changeString, name));
                 p.Price = productForm.Price;
-                changes.Add("Price");
             }
 
             if (p.Image != productForm.Image)
             {
+                changeString = $"Nyt billede";
+                p.Changelog.Add(new Change(changeDate, changeString, name));
                 p.Image = productForm.Image;
-                changes.Add("Image");
             }
 
             if (p.Tags != productForm.Tags)
             {
+                changeString = $"Tags fra '{p.Tags}' til '{productForm.Tags}'";
+                p.Changelog.Add(new Change(changeDate, changeString, name));
                 p.Tags = productForm.Tags;
-                changes.Add("Tags");
             }
 
-            string changeString = $"Product updated [{String.Join(',', changes)}]";
-
-            Change c = new Change(DateTime.Now.ToString(), changeString, name);
-
-            p.Changelog.Add(c);
-
             await ctx.SaveChangesAsync();
-
-            // Earlier version
-            /* ctx.Products.Remove(product); */
-            /* ctx.Products.Add(new Product( productForm.Title */
-            /*                             , productForm.Description */
-            /*                             , (int) (productForm.Price * 100) */
-            /*                             , productForm.Image */
-            /*                             , productForm.Tags )); */
         }
         NavMan.NavigateTo("/product");
     }
