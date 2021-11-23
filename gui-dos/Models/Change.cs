@@ -18,7 +18,7 @@ namespace gui_dos.Models
         ///<summary>Gets the string description of the comitted change. </summary>
         public string ChangeString { get; set; }
 
-        ///<summary>Gets the Employee who comitted the change. </summary>
+        ///<summary>Gets the Employee name who comitted the change. </summary>
         public string Name { get; set; }
 
         public Change(string date, string changeString, string name)
