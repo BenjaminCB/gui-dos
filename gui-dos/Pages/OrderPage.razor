@@ -207,7 +207,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Status ændret fra {s} til {o.Status}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Status ændret fra {o.Status} til {s}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
