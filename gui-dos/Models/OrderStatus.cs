@@ -8,6 +8,7 @@ namespace gui_dos.Models
         Assembling,
         Finished,
         Delivered,
-        Declined
+        Declined,
+        Cancelled
     }
 }

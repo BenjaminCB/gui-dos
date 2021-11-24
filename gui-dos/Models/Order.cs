@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,7 +19,7 @@ namespace gui_dos.Models
         ///<summary>Gets or sets the status of the order. </summary>
         public OrderStatus Status { get; set; }
 
-        ///<summary>Gets or sets the total price of the order. </summary>
+        ///<summary>Gets the total price of the order. </summary>
         public double Price { get; set; }
 
         ///<summary>Gets or sets the date the order was made. </summary>
@@ -47,6 +48,9 @@ namespace gui_dos.Models
 
         ///<summary>Gets or set the list of changes made to the order. </summary>
         public List<Change> Changelog { get; set; }
+
+        ///<summary>Gets or sets the the id used to cancel an order. </summary>
+        public string CancelId { get; set; }
 
         public bool ShowDetails { get; set; } = false;
 
@@ -86,9 +90,9 @@ namespace gui_dos.Models
             FirstName = "";
             LastName = "";
             Email = "";
-            PhoneNumber = ""; 
+            PhoneNumber = "";
         }
-              
+
         public void FillInformation(OrderForm orderDetails) {
             FirstName = orderDetails.FirstName;
             LastName = orderDetails.LastName;
@@ -96,6 +100,13 @@ namespace gui_dos.Models
             PhoneNumber = orderDetails.PhoneNumber;
             Comment = orderDetails.Comment;
             DateOrdered = DateTime.Now;
+            DateDeadline = orderDetails.Date.GetValueOrDefault();
+            CancelId = orderDetails.GetHashCode().ToString();
+            Status = OrderStatus.Pending;
+            Price = GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price);
+
+            // TODO remove once we send emails
+            Console.WriteLine(CancelId);
         }
 
         public override string ToString()
