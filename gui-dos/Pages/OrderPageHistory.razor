@@ -7,56 +7,35 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject NavigationManager NavMan
 
-
 <AuthorizeView Context="AuthContext">
     <Authorized>
-        @if (oldOrders == null)
-        {
-            <div>
-                Loading...
-            </div>}
-
-        @if (oldOrders != null && oldOrders.Count == 0)
-        {
-            <div>
-                Ingen ordre fundet..
-            </div>}
-
-        @if (oldOrders != null)
-        {
     <MudTable Items="@oldOrders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Arkiverede Ordrer</MudText>
+            <MudText Typo="Typo.h6">Ordrehistorik</MudText>
             <MudSpacer />
             <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
         </ToolBarContent>
-        <!-- Coulums and their given size. 'Empty' = fill out what is needed or left -->
-        <ColGroup>
-            <col style="width:20%" />
-            <col style="width:20%;" />
-            <col style="width:20%;" />
-            <col style="width:20%;" />
-            <col />
-        </ColGroup>
-        <!-- Functionality to be able to sort based on the rows values, '1-9-a-z' for text -->
-        <!-- Layout defult sorted by DateOrdered -->
         <HeaderContent>
-            <MudTh>Info</MudTh>
-            <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)">Leverings-Dato</MudTableSortLabel></MudTh>
+            <MudTh Style="width:5%"><MudTableSortLabel SortBy="new Func<Order,object>(x=>x.OrderId)" InitialDirection="SortDirection.Ascending">Nr.</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.FirstName)">Navn</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Email)">Email</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)">Deadline</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Price)">Pris</MudTableSortLabel></MudTh>
+            <MudTh Style="width:10%">Mere Info</MudTh>
         </HeaderContent>
         <RowTemplate>
+            <MudTd DataLabel="Nr.">@context.OrderId</MudTd>
+            <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
+            <MudTd DataLabel="Navn">@context.Email</MudTd>
+            <MudTd DataLabel="Oprettet">@context.DateOrdered.ToShortDateString()</MudTd>
+            <MudTd DataLabel="Afsluttet">@context.DateDeadline.ToShortDateString()</MudTd>
+            <MudTd DataLabel="Pris">@context.Price kr.</MudTd>
             <MudTd>
                 <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Info" Color="Color.Transparent" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
-                    @((context.ShowDetails == true)? "Skjul" : "Vis") mere info
+                    @((context.ShowDetails == true)? "Skjul" : "Vis")
                 </MudButton>
             </MudTd>
-            <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
-            <MudTd DataLabel="Afsluttet">@context.DateDeadline</MudTd>
-            <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
-            <MudTd DataLabel="Pris">@context.Price</MudTd>
         </RowTemplate>
         <NoRecordsContent>
             <MudText>
@@ -70,72 +49,53 @@
         </LoadingContent>
         <ChildRowContent>
             @if (context.ShowDetails)
-                {
+            {
                 <MudTr>
-                    <td colspan="4">
+                    <td colspan="7">
                         <MudCard Elevation="0">
-                            <MudCardHeader>
-                                <CardHeaderContent>
-                                    <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
-                                </CardHeaderContent>
-                            </MudCardHeader>
-                            <MudCardContent Class="pa-0">
-                                <MudTable Items="@oldOrders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
-                                    <ColGroup>
-                                        <col style="width:25%;" />
-                                        <col style="width:15%;" />
-                                        <col />
-                                    </ColGroup>
-                                    <HeaderContent>
-                                        <MudTh>Email</MudTh>
-                                        <MudTh>Tel nr.</MudTh>
-                                        <MudTh>Kommentar</MudTh>
-                                        <MudTh>Forløb</MudTh>
-                                    </HeaderContent>
-                                    <RowTemplate>
-                                        @if (context.OrderId == child.OrderId)
-                                        {
-                                            <MudTd DataLabel="Email">@child.Email</MudTd>
-                                            <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
-                                            <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
-                                            @foreach (var item in child.Changelog)
-                                            {
-                                                <MudTd DataLabel="Forløb">ChangeID @item.ChangeId: @item.ToString()</MudTd>
-                                            }
-                                        }
-                                    </RowTemplate>
-                                </MudTable>
-                                <br />
-                                <MudTable Items="@oldOrders" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
-                                    <ColGroup>
-                                        <col style="width:10%;" />
-                                        <col style="width:10%;" />
-                                        <col style="width:30%;" />
-                                    </ColGroup>
-                                    <HeaderContent>
-                                        <MudTh>Titel</MudTh>
-                                        <MudTh>Pris</MudTh>
-                                        <MudTh>Kommentar</MudTh>
-                                    </HeaderContent>
-                                    <RowTemplate>
-                                        @if (context.OrderId == content.OrderId)
-                                        {
-                                            foreach (var giftBasket in content.GiftBaskets)
-                                            {
-                                                <MudTd DataLabel="Titel">@giftBasket.Title</MudTd>
-                                                <MudTd DataLabel="Pris">@giftBasket.Price</MudTd>
-                                                <MudTd DataLabel="Kommentar">@giftBasket.Comment</MudTd>
-                                            }
-                                        }
-                                    </RowTemplate>
-                                </MudTable>
+                            <MudCardContent Class="px-4">
+                                <MudGrid Justify="Justify.SpaceBetween">
+                                    <MudItem xs="12" sm="4">
+                                        <MudText Typo="Typo.h6" Align="Align.Center">Ordre detaljer:</MudText>
+                                        <MudPaper Class="p-2">
+                                            <MudText Typo="Typo.body1"><strong>Navn:</strong> @context.FirstName @context.LastName </MudText>
+                                            <MudText Typo="Typo.body1"><strong>Email:</strong> @context.Email </MudText>
+                                            <MudText Typo="Typo.body1"><strong>Telefon:</strong> @context.PhoneNumber</MudText>
+                                            <MudText Typo="Typo.body1"><strong>Pris:</strong> @context.Price kr.</MudText>
+                                            <MudText Typo="Typo.body1"><strong>Kommentar:</strong> @context.Comment</MudText>
+                                            <div class="p-2 d-flex justify-space-between">
+                                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.History" 
+                                                 Size="Size.Small" OnClick="() => OrderChangelog(context)">
+                                                    Historik
+                                                </MudButton>
+                                            </div>
+                                        </MudPaper>
+                                    </MudItem>
+                                    <MudItem xs="12" sm="8">
+                                        <MudText Typo="Typo.h6" Align="Align.Center">
+                                            Ordre indhold:
+                                        </MudText>
+                                        <MudTable Items="@context.GiftBaskets" Context="content" Hover="true" Breakpoint="Breakpoint.None">
+                                            <HeaderContent>
+                                                <MudTh Style="width: 30%">Titel</MudTh>
+                                                <MudTh Style="width: 50%">Kommentar</MudTh>
+                                                <MudTh Style="width: 20%">Pris</MudTh>
+                                            </HeaderContent>
+                                            <RowTemplate>
+                                                <MudTd DataLabel="ID">@content.Title</MudTd>
+                                                <MudTd DataLabel="Kommentar">@content.Comment</MudTd>
+                                                <MudTd DataLabel="Pris">@content.Price kr.</MudTd>
+                                            </RowTemplate>
+                                        </MudTable>
+                                    </MudItem>
+                                </MudGrid>
                             </MudCardContent>
                         </MudCard>
                     </td>
-                </MudTr>}
-            <br />
+                </MudTr>
+            }
         </ChildRowContent>
-    </MudTable>}
+    </MudTable>
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />
@@ -155,7 +115,6 @@
                                  .Where(o => o.Status >= OrderStatus.Delivered)
                                  .OrderBy(t => t.DateOrdered)
                                  .ToListAsync();
-            // ctx.Orders.Where(t => t.Status == OrderStatus.Delivered).OrderBy(t=>t.DateOrdered).ToListAsync();
         }
     }
 
@@ -165,7 +124,6 @@
         tmpPerson.ShowDetails = !tmpPerson.ShowDetails;
     }
 
-    // Desides what can be search for
     private bool FilterFunc(Order element, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString))
@@ -177,5 +135,10 @@
         if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
             return true;
         return false;
+    }
+
+    private void OrderChangelog(Order o)
+    {
+        NavMan.NavigateTo($"/order/changelog/{o.OrderId}");
     }
 }
