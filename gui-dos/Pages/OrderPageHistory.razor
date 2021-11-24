@@ -169,7 +169,7 @@
         {
             oldOrders.Remove(o);
             ctx.Orders.Remove(o);
-            ctx.SaveChangesAsync();
+            await ctx.SaveChangesAsync();
         }
     }
 }
