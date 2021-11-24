@@ -59,10 +59,10 @@ namespace gui_dos.Models
             var mailMessage = new MimeMessage();
             mailMessage.From.Add(new MailboxAddress("Isvaerftet", "noreply@Isvaerftet.dk"));
             mailMessage.To.Add(new MailboxAddress(FirstName + " " + LastName, Email));
-            mailMessage.Subject = "Din odre er nu " + Status;
+            mailMessage.Subject = "Din ordre er nu " + Status;
             mailMessage.Body = new TextPart("plain")
             {
-                Text = $"Hej, {FirstName} din odre er nu {Status}"
+                Text = $"Hej, {FirstName} din ordre er nu {Status}"
             };
 
             using (var smtpClient = new SmtpClient())
@@ -111,7 +111,7 @@ namespace gui_dos.Models
 
         public override string ToString()
         {
-            return $"Order #{OrderId} - Name: {FirstName} {LastName} - Email: {Email} - Phone: {PhoneNumber} - Date Ordered: {DateOrdered.ToString("dd/MM/yyyy")}";
+            return $"Order #{OrderId} - Navn: {FirstName} {LastName} - Email: {Email} - tlf nr: {PhoneNumber} - Dato: {DateOrdered.ToString("dd/MM/yyyy")}";
         }
     }
 }

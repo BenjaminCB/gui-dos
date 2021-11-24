@@ -84,7 +84,7 @@
             Order order = new Order(ShoppingCart.GiftBaskets);
             order.FillInformation(orderForm);
 
-            Change c = new Change(DateTime.Now.ToString(), "Order created", "Customer");
+            Change c = new Change(DateTime.Now.ToString(), "Order lavet", "kunde");
             order.Changelog.Add(c);
 
             ctx.Orders.Add(order);
