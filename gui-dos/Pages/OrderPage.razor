@@ -238,7 +238,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Dato ændret fra {StatusBeforeChange.ToString()} til {DateResult.ToString()}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Dato ændret fra {StatusBeforeChange.ToShortDateString()} til {DateResult.ToShortDateString()}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
