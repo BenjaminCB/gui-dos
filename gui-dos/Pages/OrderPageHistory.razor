@@ -11,14 +11,25 @@
     <Authorized>
     <MudTable Items="@oldOrders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
         <ToolBarContent>
-            <MudText Typo="Typo.h6">Ordrehistorik</MudText>
-            <MudSpacer />
-            <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            <MudText Typo="Typo.h4">Ordrehistorik</MudText>
+            <MudSpacer/>
+            <MudTextField @bind-Value="searchString" Placeholder="Søg" Variant="Variant.Outlined" Margin="Margin.Dense" 
+             Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"/>
+            <MudSpacer/>
+            <MudMenu Label="Filter" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+                <div class="m-2">
+                    <MudText Typo="Typo.h6">Status:</MudText>
+                    <MudDivider/>
+                    <MudSwitch @bind-Checked=@showDelivered Label="Afhentet" Color="Color.Primary"/> <br/>
+                    <MudSwitch @bind-Checked=@showDeclined Label="Afslået" Color="Color.Primary"/> <br/>
+                    <MudSwitch @bind-Checked=@showCancelled Label="Annlueret" Color="Color.Primary"/>
+                </div>
+            </MudMenu>
         </ToolBarContent>
         <HeaderContent>
             <MudTh Style="width:5%"><MudTableSortLabel SortBy="new Func<Order,object>(x=>x.OrderId)" InitialDirection="SortDirection.Ascending">Nr.</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Status)">Status</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.FirstName)">Navn</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Email)">Email</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)">Deadline</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Price)">Pris</MudTableSortLabel></MudTh>
@@ -26,8 +37,8 @@
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Nr.">@context.OrderId</MudTd>
+            <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
             <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
-            <MudTd DataLabel="Navn">@context.Email</MudTd>
             <MudTd DataLabel="Oprettet">@context.DateOrdered.ToShortDateString()</MudTd>
             <MudTd DataLabel="Afsluttet">@context.DateDeadline.ToShortDateString()</MudTd>
             <MudTd DataLabel="Pris">@context.Price kr.</MudTd>
@@ -68,6 +79,10 @@
                                                  Size="Size.Small" OnClick="() => OrderChangelog(context)">
                                                     Historik
                                                 </MudButton>
+                                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.Delete"
+                                                 Size="Size.Small" OnClick="() => OrderDelete(context)">
+                                                    Slet
+                                                </MudButton>
                                             </div>
                                         </MudPaper>
                                     </MudItem>
@@ -106,6 +121,7 @@
     private List<Order> oldOrders;
     private string searchString = "";
     private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
+    private bool showDelivered = true, showDeclined = true, showCancelled = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -126,19 +142,34 @@
 
     private bool FilterFunc(Order element, string searchString)
     {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
-            return true;
+        if ((showDelivered && element.Status == OrderStatus.Delivered) ||
+            (showCancelled && element.Status == OrderStatus.Cancelled) ||
+            (showDeclined && element.Status == OrderStatus.Declined))
+        {
+            if (string.IsNullOrWhiteSpace(searchString))
+                return true;
+            if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
+                return true;
+        }
         return false;
     }
 
     private void OrderChangelog(Order o)
     {
         NavMan.NavigateTo($"/order/changelog/{o.OrderId}");
+    }
+
+    private async Task OrderDelete(Order o) 
+    {
+        using (var ctx = DbContextFactory.CreateDbContext())
+        {
+            oldOrders.Remove(o);
+            ctx.Orders.Remove(o);
+            ctx.SaveChangesAsync();
+        }
     }
 }
