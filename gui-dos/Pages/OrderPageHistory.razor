@@ -1,4 +1,4 @@
-@page "/orderhistory"
+@page "/order/history"
 
 @using System.Collections.Generic
 @using gui_dos.Data
@@ -19,7 +19,7 @@
         @if (oldOrders != null && oldOrders.Count == 0)
         {
             <div>
-                No orders found...
+                Ingen ordre fundet..
             </div>}
 
         @if (oldOrders != null)
@@ -62,7 +62,7 @@
             <MudText>
                 Intet match var fundet <br />
                 Det er muligt at søge efter: Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
-                <p class="text-muted">Disse kan/må ikke kombineres</p>
+                <p class="text-muted">Disse kan ikke kombineres</p>
             </MudText>
         </NoRecordsContent>
         <LoadingContent>
@@ -94,15 +94,15 @@
                                     </HeaderContent>
                                     <RowTemplate>
                                         @if (context.OrderId == child.OrderId)
-                                            {
+                                        {
                                             <MudTd DataLabel="Email">@child.Email</MudTd>
                                             <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
                                             <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
                                             @foreach (var item in child.Changelog)
-                                                {
+                                            {
                                                 <MudTd DataLabel="Forløb">ChangeID @item.ChangeId: @item.ToString()</MudTd>
-                                                }
                                             }
+                                        }
                                     </RowTemplate>
                                 </MudTable>
                                 <br />
@@ -113,19 +113,20 @@
                                         <col style="width:30%;" />
                                     </ColGroup>
                                     <HeaderContent>
-                                        <MudTh>ID</MudTh>
+                                        <MudTh>Titel</MudTh>
                                         <MudTh>Pris</MudTh>
                                         <MudTh>Kommentar</MudTh>
                                     </HeaderContent>
                                     <RowTemplate>
                                         @if (context.OrderId == content.OrderId)
+                                        {
+                                            foreach (var giftBasket in content.GiftBaskets)
                                             {
-                                                for (int i = 0; i < content.GiftBaskets.Count; i++)
-                                                {
-                                                <MudTd DataLabel="ID">@content.GiftBaskets[i].GiftBasketId</MudTd>
-                                                <MudTd DataLabel="Pris">@content.GiftBaskets[i].Price</MudTd>
-                                                <MudTd DataLabel="Kommentar">@content.GiftBaskets[i].Comment</MudTd>}
+                                                <MudTd DataLabel="Titel">@giftBasket.Title</MudTd>
+                                                <MudTd DataLabel="Pris">@giftBasket.Price</MudTd>
+                                                <MudTd DataLabel="Kommentar">@giftBasket.Comment</MudTd>
                                             }
+                                        }
                                     </RowTemplate>
                                 </MudTable>
                             </MudCardContent>
