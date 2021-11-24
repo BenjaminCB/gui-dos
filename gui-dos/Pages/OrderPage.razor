@@ -111,7 +111,7 @@
             <NoRecordsContent>
                 <MudText>
                     Intet match blev fundet <br />
-                    Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
+                    Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr., Pris og Produktnavne<br />
                     <p class="text-muted">Disse kan/må ikke kombineres</p>
                 </MudText>
             </NoRecordsContent>
@@ -282,6 +282,15 @@
             return true;
         if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
             return true;
+
+        foreach (GiftBasket giftBasket in element.GiftBaskets)
+        {
+            if (giftBasket.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
