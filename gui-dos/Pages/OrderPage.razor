@@ -106,7 +106,7 @@
                 <MudTd DataLabel="Oprettet">@context.DateOrdered</MudTd>
                 <MudTd DataLabel="Deadline">@context.DateDeadline</MudTd>
                 <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
-                <MudTd DataLabel="Pris">@context.Price</MudTd>
+                <MudTd DataLabel="Pris">@context.Price kr.</MudTd>
             </RowTemplate>
             <NoRecordsContent>
                 <MudText>
@@ -121,52 +121,46 @@
             <ChildRowContent>
                 @if (context.ShowDetails)
                 {
-                    <MudTr>
-                        <td colspan="6">
-                            <MudCard Elevation="0">
-                                <MudCardHeader>
-                                    <CardHeaderContent>
-                                        <MudText Typo="Typo.body1">Information om Order: <strong>@context.OrderId</strong> <br /></MudText>
-                                    </CardHeaderContent>
-                                </MudCardHeader>
-                                <MudCardContent Class="pa-0">
-                                    <MudTable Items="@orders" Context="child" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
-                                        <HeaderContent>
-                                            <MudTh>Email</MudTh>
-                                            <MudTh>Tel nr.</MudTh>
-                                            <MudTh>Kommentar</MudTh>
-                                            <MudTh>Forløb</MudTh>
-                                        </HeaderContent>
-                                        <RowTemplate>
-                                            @if (context.OrderId == child.OrderId)
-                                                {
-                                                    <MudTd DataLabel="Email">@child.Email</MudTd>
-                                                    <MudTd DataLabel="Tel nr.">@child.PhoneNumber</MudTd>
-                                                    <MudTd DataLabel="Kommentar">@child.Comment</MudTd>
-                                                    @foreach (var item in child.Changelog)
-                                                    {
-                                                        <MudTd DataLabel="Forløb">@item.ToString()</MudTd>
-                                                    }
-                                                }
-                                        </RowTemplate>
-                                    </MudTable>
-                                    <br />
-                                    <MudTable Items="@context.GiftBaskets" Context="content" Hover="true" Breakpoint="Breakpoint.Sm" Elevation="0" Dense="true">
-                                        <HeaderContent>
-                                            <MudTh>ID</MudTh>
-                                            <MudTh>Pris</MudTh>
-                                            <MudTh>Kommentar</MudTh>
-                                        </HeaderContent>
-                                        <RowTemplate>
-                                            <MudTd DataLabel="ID">@content.Title</MudTd>
-                                            <MudTd DataLabel="Pris">@content.Price</MudTd>
-                                            <MudTd DataLabel="Kommentar">@content.Comment</MudTd>
-                                        </RowTemplate>
-                                    </MudTable>
-                                </MudCardContent>
-                            </MudCard>
-                        </td>
-                    </MudTr>
+    <MudTr>
+        <td colspan="6">
+            <MudCard Elevation="0">
+                @* <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Information om ordre <strong>#@context.OrderId</strong> <br /></MudText>
+                    </CardHeaderContent>
+                </MudCardHeader> *@
+                <MudCardContent Class="px-4">
+                    <MudGrid Justify="Justify.SpaceBetween">
+                        <MudItem xs="4">
+                            <MudText Typo="Typo.h6" Align="Align.Center">Ordre detaljer:</MudText>
+                            <MudPaper Class="p-2">
+                                <MudText Typo="Typo.body1"><strong>Email:</strong> @context.Email </MudText>
+                                <MudText Typo="Typo.body1"><strong>Telefon:</strong> @context.PhoneNumber</MudText>
+                                <MudText Typo="Typo.body1"><strong>Kommentar:</strong> @context.Comment</MudText>
+                            </MudPaper>
+                        </MudItem>
+                        <MudItem xs="8">
+                            <MudText Typo="Typo.h6" Align="Align.Center">
+                                Ordre indhold:
+                            </MudText>
+                            <MudTable Items="@context.GiftBaskets" Context="content" Hover="true" Breakpoint="Breakpoint.Sm">
+                                <HeaderContent>
+                                    <MudTh Style="width: 20%">Titel</MudTh>
+                                    <MudTh Style="width: 60%">Kommentar</MudTh>
+                                    <MudTh Style="width: 20%">Pris</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="ID">@content.Title</MudTd>
+                                    <MudTd DataLabel="Kommentar">@content.Comment</MudTd>
+                                    <MudTd DataLabel="Pris">@content.Price kr.</MudTd>
+                                </RowTemplate>
+                            </MudTable>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </td>
+    </MudTr>
                 }
                 <br/>
             </ChildRowContent>
