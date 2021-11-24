@@ -60,7 +60,7 @@
                 <ToolBarContent>
                     <MudText Typo="Typo.h6">Aktive Ordrer</MudText>
                     <MudSpacer />
-                    <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    <MudTextField @bind-Value="searchString" Placeholder="Søg" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
                 </ToolBarContent>
                 @*Coulums and their given size. 'Empty' = fill out what is needed or left*@
                 <ColGroup>
@@ -86,27 +86,27 @@
                         <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.HourglassTop"
                                    Size="Size.Small" class="@((context.Status == OrderStatus.Pending ? "ButtonActivePending" : "Button"))"
                                    @onclick="() => OrderChangeStatus(context, OrderStatus.Pending)">
-                            Pending
+                            Afventer
                         </MudButton>
                         <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.CheckCircle"
                                    Size="Size.Small" class="@((context.Status == OrderStatus.Accepted ? "ButtonActiveAccepted" : "Button"))"
                                    @onclick="() => OrderChangeStatus(context, OrderStatus.Accepted)">
-                            Accepted
+                            Accepteret
                         </MudButton>
                         <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Beenhere"
                                    Size="Size.Small" class="@((context.Status == OrderStatus.Finished ? "ButtonActiveFinished" : "Button"))"
                                    @onclick="() => OrderChangeStatus(context, OrderStatus.Finished)">
-                            Finished
+                            Færdig
                         </MudButton>
                         <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Outbox"
                                    Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActiveDelivered" : "Button"))"
                                    @onclick="() => OrderChangeStatus(context, OrderStatus.Delivered)">
-                            Delivered
+                            Afhentet
                         </MudButton>
                         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
                                    Size="Size.Small" class="Cancel"
                                    @onclick="() => OrderChangeStatus(context, OrderStatus.Declined)">
-                            Cancel
+                            Annuller
                         </MudButton>
                         <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.EditCalendar"
                                    Size="Size.Small" Class="Date"
@@ -129,7 +129,7 @@
                     <MudText>
                         Intet match blev fundet <br />
                         Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
-                        <p class="text-muted">Disse kan/må ikke kombineres</p>
+                        <p class="text-muted">Disse kan ikke kombineres</p>
                     </MudText>
                 </NoRecordsContent>
                 <LoadingContent>
@@ -249,7 +249,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Status changed from {s} to {o.Status}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Status ændret fra {s} til {o.Status}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
@@ -280,7 +280,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Date changed from {StatusBeforeChange.ToString()} to {DateResult.ToString()}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Dato ændret fra {StatusBeforeChange.ToString()} til {DateResult.ToString()}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {

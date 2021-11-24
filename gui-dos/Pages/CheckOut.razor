@@ -1,4 +1,4 @@
-﻿@page "/order-f"
+﻿@page "/checkout"
 @using gui_dos.Forms
 @using gui_dos.Models
 @using gui_dos.Data
@@ -90,6 +90,6 @@
             ctx.Orders.Add(order);
             await ctx.SaveChangesAsync();
         }
-        NavMan.NavigateTo("/orders");
+        NavMan.NavigateTo("/shop");
     }
 }
