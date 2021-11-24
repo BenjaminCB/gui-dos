@@ -37,7 +37,7 @@
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Nr.">@context.OrderId</MudTd>
-            <MudTd DataLabel="Status">@context.Status.ToString()</MudTd>
+            <MudTd DataLabel="Status">@context.GetStatusString()</MudTd>
             <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
             <MudTd DataLabel="Oprettet">@context.DateOrdered.ToShortDateString()</MudTd>
             <MudTd DataLabel="Afsluttet">@context.DateDeadline.ToShortDateString()</MudTd>
