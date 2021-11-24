@@ -1,4 +1,4 @@
-﻿@page "/order-f"
+﻿@page "/checkout"
 @using gui_dos.Forms
 @using gui_dos.Models
 @using gui_dos.Data
@@ -84,12 +84,12 @@
             Order order = new Order(ShoppingCart.GiftBaskets);
             order.FillInformation(orderForm);
 
-            Change c = new Change(DateTime.Now.ToString(), "Order created", "Customer");
+            Change c = new Change(DateTime.Now.ToString(), "Order lavet", "kunde");
             order.Changelog.Add(c);
 
             ctx.Orders.Add(order);
             await ctx.SaveChangesAsync();
         }
-        NavMan.NavigateTo("/orders");
+        NavMan.NavigateTo("/shop");
     }
 }

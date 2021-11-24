@@ -53,7 +53,7 @@
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Aktive Ordrer</MudText>
                 <MudSpacer />
-                <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudTextField @bind-Value="searchString" Placeholder="Søg" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             @*Functionality to be able to sort based on the rows values, '1-9-a-z' for text Layout defult sorted by DateOrdered*@
             <HeaderContent>
@@ -216,7 +216,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Status changed from {s} to {o.Status}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Status ændret fra {s} til {o.Status}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
@@ -247,7 +247,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Date changed from {StatusBeforeChange.ToString()} to {DateResult.ToString()}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Dato ændret fra {StatusBeforeChange.ToString()} til {DateResult.ToString()}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
