@@ -3,14 +3,14 @@ using FsCheck;
 using FsCheck.Xunit;
 using Xunit;
 using Xunit.Abstractions;
-
-
-namespace gui_dos_test
+using gui_dos;
+using Bunit;
+namespace gui_dos.Tests
 {
-    namespace gui_dos_test
-    {
+    
         public class TestClass
         {
+            public Order shit;
             public Func<int, bool> FuncToTest = (xs) => true;
             public Func<int, bool> FuncToFail = (xs) => false;
             private readonly ITestOutputHelper testOutputHelper;
@@ -22,14 +22,24 @@ namespace gui_dos_test
             public void Test1()
             {
                 Prop.ForAll(FuncToTest).VerboseCheckThrowOnFailure(testOutputHelper);
-                
             }
             [Fact]
             public void Test2()
             {
                 Prop.ForAll(FuncToFail).VerboseCheckThrowOnFailure(testOutputHelper);
             }
+            [Fact]
+            public void HelloWorldComponentRendersCorrectly()
+            {
+                // Arrange
+                using var ctx = new TestContext();
 
+                // Act
+                var cut = ctx.RenderComponent<gui_dos.Shared.CartComp>();
+
+                // Assert
+                cut.MarkupMatches("< MudText Align = 'Align.Center' >< strong > Din indkøbskurv er tom.</ strong ></ MudText >");
+            }
         }
         public class OutputHelper : ITestOutputHelper
         {
@@ -59,6 +69,6 @@ namespace gui_dos_test
         //        testClass.Test1();
         //    }
         //}
-    }
+    
 
 }

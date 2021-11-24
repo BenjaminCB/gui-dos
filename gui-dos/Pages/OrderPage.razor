@@ -45,7 +45,7 @@
             <ToolBarContent>
                 <MudText Typo="Typo.h6">Aktive Ordrer</MudText>
                 <MudSpacer />
-                <MudTextField @bind-Value="searchString" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudTextField @bind-Value="searchString" Placeholder="Søg" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
             </ToolBarContent>
             @* Table header content *@
             <HeaderContent>
@@ -97,7 +97,7 @@
             <NoRecordsContent>
                 <MudText>
                     Intet match blev fundet <br />
-                    Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr. og Pris<br />
+                    Det er muligt at søge efter: Status, Fornavn, Efternavn, OrdrerID, Telefon nr., Pris og Produktnavne<br />
                     <p class="text-muted">Disse kan/må ikke kombineres</p>
                 </MudText>
             </NoRecordsContent>
@@ -207,7 +207,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Status changed from {s} to {o.Status}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Status ændret fra {s} til {o.Status}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
@@ -238,7 +238,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Date changed from {StatusBeforeChange.ToString()} to {DateResult.ToString()}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Dato ændret fra {StatusBeforeChange.ToString()} til {DateResult.ToString()}", _Name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
@@ -273,6 +273,15 @@
             return true;
         if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
             return true;
+
+        foreach (GiftBasket giftBasket in element.GiftBaskets)
+        {
+            if (giftBasket.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
         return false;
     }
 
