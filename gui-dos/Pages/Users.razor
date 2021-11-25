@@ -1,0 +1,54 @@
+@page "/admin/users"
+
+@using System
+@using System.IO
+@using System.Collections.Generic
+@using gui_dos.Models
+@using gui_dos.Forms
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Forms
+@using gui_dos.Areas.Identity;
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<IdentityUser> UserManager
+
+<AuthorizeView Roles="superuser">
+    <Authorized>
+        @foreach (var user in _Users)
+        {
+            <div>
+                <p>
+                    @user.UserName
+                </p>
+                <button @onclick="() => _DeleteUser(user)">
+                    Delete
+                </button>
+            </div>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <LoginDisplay />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    List<IdentityUser> _Users = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string name = (await authenticationStateTask).User.Identity.Name;
+        _Users = UserManager.Users
+                            .Where(u => u.UserName != name)
+                            .ToList();
+    }
+
+    private async void _DeleteUser(IdentityUser user)
+    {
+        await UserManager.DeleteAsync(user);
+        _Users.Remove(user);
+    }
+}
