@@ -15,6 +15,7 @@ using gui_dos.Areas.Identity;
 using Microsoft.AspNetCore.Identity;
 using Blazored.Modal;
 using MudBlazor.Services;
+using gui_dos.Areas.Identity.Data;
 
 namespace gui_dos
 {
