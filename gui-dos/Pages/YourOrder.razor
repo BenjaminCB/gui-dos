@@ -1,0 +1,39 @@
+﻿@page "/your/order/{cancelId}"
+
+@using gui_dos.Forms
+@using gui_dos.Models
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+
+<MudPaper Width="500px" Class="border border-dark">
+    <MudText Typo="Typo.h4">Tak for din bestilling</MudText>
+    <MudText Typo="Typo.h5">Ordrenummer:</MudText>
+    <MudGrid>
+        <div>
+            <MudItem>
+                <MudText>Navn: </MudText>
+            </MudItem>
+        </div>
+        <div>
+            <MudItem>
+                <MudText>Email: </MudText>
+            </MudItem>
+        </div>
+        <div>
+            <MudItem>
+                <MudText>Din ordre</MudText>
+                <MudList>
+                    @foreach (var item in Order)
+                    {
+
+                    }
+                </MudList>
+            </MudItem>
+        </div>
+    </MudGrid>
+</MudPaper>
