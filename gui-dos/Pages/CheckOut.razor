@@ -20,7 +20,7 @@
                         <MudTextField T="string" Label="Email" @bind-Value="orderForm.Email" For="@(() => orderForm.Email)" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudTextField T="string" Label="Mobile number" @bind-Value="orderForm.PhoneNumber" For="@(() => orderForm.PhoneNumber)" />
+                        <MudTextField T="string" Label="Mobile nummer" @bind-Value="orderForm.PhoneNumber" For="@(() => orderForm.PhoneNumber)" />
                     </MudItem>
                     <MudItem xs="6">
                         <MudTextField T="string" Label="First name" @bind-Value="orderForm.FirstName" For="@(() => orderForm.FirstName)" />
@@ -32,17 +32,18 @@
                         <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudTextField T="string" Label="Kommentar" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10"  For="(() => orderForm.Comment)" />
+                        <MudTextField T="string" Label="Kommentar: Ønsker til hele ordren" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10" 
+                        Counter="500" MaxLength="500" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
                     </MudItem>
                     <MudItem xs="12" Class="d-flex justify-center">
-                        <MudButton Class="mt-8" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Send ordrer</MudButton>
+                        <MudButton Class="mt-8" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Send order</MudButton>
                     </MudItem>
                 </MudGrid>
             </MudItem>
 
             @* Cart *@
             <MudItem xs="5">
-                <MudText Typo="Typo.h5" GutterBottom="true">Cart</MudText>
+                <MudText Typo="Typo.h5" GutterBottom="true">Kurv</MudText>
                 <MudPaper Class="d-flex flex-column" Style="height:80%;" Outlined="true">
                     <MudList Clickable="true">
                         @foreach (var item in ShoppingCart.GiftBaskets)
@@ -53,7 +54,7 @@
                                     <MudText Inline="true" Class="ml-auto">@item.Price</MudText>
                                 </div>
                             </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Comment">
+                            <MudListItem Icon="@Icons.Material.Filled.Comment" IconSize="Size.Small">
                                 <div class="d-flex">
                                     <MudText>@item.Comment</MudText>
                                 </div>
@@ -64,7 +65,7 @@
                         <MudDivider />
                         <div class="d-flex pa-4">
                             <MudText>Total:</MudText>
-                            <MudText Class="ml-auto"><b>@ShoppingCart.Total kr.</b></MudText>
+                            <MudText Class="ml-auto"><b>@ShoppingCart.Total,- kr.</b></MudText>
                         </div>
                     </div>
                 </MudPaper>
@@ -91,5 +92,11 @@
             await ctx.SaveChangesAsync();
         }
         NavMan.NavigateTo("/shop");
+    }
+
+    private IEnumerable<string> MaxCharacters(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 500 < ch?.Length)
+            yield return "Max 500 karakterer";
     }
 }
