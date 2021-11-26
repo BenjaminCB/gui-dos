@@ -8,26 +8,8 @@
     <MudAppBar Class="mud-primary" Elevation="10" Style="min-height:2cm;">
         <BrandLogoButton/>
         <MudSpacer/>
-        <MudHidden Breakpoint="Breakpoint.Xs">
-            <MainLayoutNavMenu/>
-        </MudHidden>
-        <MudHidden Breakpoint="Breakpoint.SmAndUp">
-            <MudIconButton Icon="@Icons.Outlined.Menu" Color="Color.Tertiary" OnClick="ToggleNav"/>
-        </MudHidden>
-    </MudAppBar>
-
-    @* Navigation drawer for small viewports *@
-    <MudDrawer @bind-Open="@navOpen" Anchor="Anchor.Top"
-     Variant="DrawerVariant.Temporary" >
-        <MudText Typo="Typo.h6" Align="Align.Center"> Menu </MudText>
         <MainLayoutNavMenu/>
-    </MudDrawer>
-
-    @* Shopping cart drawer *@
-    <MudDrawer @bind-Open="@cartOpen" Anchor="Anchor.Right" 
-     Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always">
-        <MudText Typo="Typo.h6" Align="Align.Center"> Indkøbskurv</MudText>
-    </MudDrawer>
+    </MudAppBar>
 
     @* Page content *@
     <MudMainContent Style="min-height:100vh;">
@@ -42,18 +24,6 @@
 
 @code
 {
-    bool navOpen = false;
-
-    bool cartOpen = false;
-
-    void ToggleCart() {
-        cartOpen = !cartOpen;
-    }
-
-    void ToggleNav() {
-        navOpen = !navOpen;
-    }
-
     // MudBlazor theme customizations
     MudTheme BrandTheme = new MudTheme() 
     {
