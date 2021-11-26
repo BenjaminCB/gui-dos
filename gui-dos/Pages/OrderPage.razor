@@ -20,42 +20,46 @@
             }
 
             .ButtonActiveAccepted {
-                @($"background:{Colors.Green.Default}")
-            }
-            .ButtonActiveAccepted:hover {
-                @($"background:{Colors.Green.Darken1}")
-            }
-
-            .ButtonActiveFinished {
                 @($"background:{Colors.LightBlue.Default}")
             }
-            .ButtonActiveFinished:hover {
+            .ButtonActiveAccepted:hover {
                 @($"background:{Colors.LightBlue.Darken1}")
             }
 
-            .ButtonActiveDelivered {
-                @($"background:{Colors.Teal.Default}")
+            .ButtonActiveFinished {
+                @($"background:{Colors.Green.Default}")
             }
-            .ButtonActiveDelivered:hover {
-                @($"background:{Colors.Teal.Darken1}")
+            .ButtonActiveFinished:hover {
+                @($"background:{Colors.Green.Darken1}")
             }
         </style>
 
         <MudTable Items="@orders" Hover="true" Breakpoint="Breakpoint.Xs" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Aktive Ordrer</MudText>
-                <MudSpacer />
-                <MudTextField @bind-Value="searchString" Placeholder="Søg" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                <MudText Typo="Typo.h4">Aktive Ordre</MudText>
+                <MudSpacer/>
+                <MudTextField @bind-Value="searchString" Placeholder="Søg" Variant="Variant.Outlined" Margin="Margin.Dense"
+                 Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"></MudTextField>
+                <MudSpacer/>
+                <MudMenu Label="Filter" Variant="Variant.Outlined" AnchorOrigin="Origin.BottomCenter" TransformOrigin="Origin.TopCenter">
+                    <div class="m-2">
+                        <MudText Typo="Typo.h6">Status:</MudText>
+                        <MudDivider/>
+                        <MudSwitch @bind-Checked=@showPending Label="Afventer" Color="Color.Primary"/> <br/>
+                        <MudSwitch @bind-Checked=@showAccepted Label="Accepteret" Color="Color.Primary"/> <br/>
+                        <MudSwitch @bind-Checked=@showFinished Label="Afsluttet" Color="Color.Primary"/>
+                    </div>
+                </MudMenu>
             </ToolBarContent>
             @* Table header content *@
             <HeaderContent>
                 <MudTh Style="width:2%">ID</MudTh>
                 <MudTh Style="width:50%">Status</MudTh>
-                <MudTh Style="width:10%">Info</MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<Order, object>(x=>x.DateDeadline)">Deadline</MudTableSortLabel></MudTh>
                 <MudTh Style="width:18%"><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.FirstName)">Navn</MudTableSortLabel></MudTh>
                 <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Price)">Pris</MudTableSortLabel></MudTh>
+                <MudTh Style="width:10%">Mere info</MudTh>
             </HeaderContent>
             @* Table row content *@
             <RowTemplate>
@@ -82,16 +86,16 @@
                         Afhentet
                     </MudButton>
                 </MudTd>
+                <MudTd DataLabel="Oprettet">@context.DateOrdered.ToShortDateString()</MudTd>
+                <MudTd DataLabel="Deadline">@context.DateDeadline.ToShortDateString()</MudTd>
+                <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
+                <MudTd DataLabel="Pris">@context.Price kr.</MudTd>
                 <MudTd>
                     <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Info"
                                 Color="Color.Transparent" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.OrderId))">
                         @((context.ShowDetails == true)? "Skjul" : "Vis")
                     </MudButton>
                 </MudTd>
-                <MudTd DataLabel="Oprettet">@context.DateOrdered.ToShortDateString()</MudTd>
-                <MudTd DataLabel="Deadline">@context.DateDeadline.ToShortDateString()</MudTd>
-                <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
-                <MudTd DataLabel="Pris">@context.Price kr.</MudTd>
             </RowTemplate>
             @* No results view *@
             <NoRecordsContent>
@@ -170,19 +174,17 @@
 
 @code
 {
-    private string searchString = "";
-    private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
-    // Mudblazor
-
-    DateTime? date = DateTime.Today;
-
-    // To change order status
-    private List<Order> orders;
-    [CascadingParameter] public IModalService Modal { get; set; }
-
+    [CascadingParameter] 
+    public IModalService Modal { get; set; }
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
-    private string _Name;
+
+    private string searchString = "";
+    private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
+
+    private List<Order> orders;
+    private string name;
+    private bool showPending = true, showAccepted = true, showFinished = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -194,7 +196,7 @@
         var user = (await authenticationStateTask).User;
         if (user.Identity.IsAuthenticated)
         {
-            _Name = user.Identity.Name;
+            name = user.Identity.Name;
         }
     }
 
@@ -207,7 +209,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Status ændret fra {s} til {o.Status}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Status ændret fra {o.Status} til {s}", name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
@@ -238,7 +240,7 @@
 
         if (!result.Cancelled)
         {
-            Change c = new Change(DateTime.Now.ToString(), $"Dato ændret fra {StatusBeforeChange.ToString()} til {DateResult.ToString()}", _Name);
+            Change c = new Change(DateTime.Now.ToString(), $"Dato ændret fra {StatusBeforeChange.ToShortDateString()} til {DateResult.ToShortDateString()}", name);
 
             using (var ctx = DbContextFactory.CreateDbContext())
             {
@@ -263,22 +265,25 @@
 
     private bool FilterFunc(Order element, string searchString)
     {
-        if (string.IsNullOrWhiteSpace(searchString))
-            return true;
-        if (element.Status.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if (element.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            return true;
-        if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
-            return true;
-
-        foreach (GiftBasket giftBasket in element.GiftBaskets)
-        {
-            if (giftBasket.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
-            {
+        if((showPending && element.Status == OrderStatus.Pending) || 
+           (showAccepted && element.Status == OrderStatus.Accepted) ||
+           (showFinished && element.Status == OrderStatus.Finished)) 
+        {    
+            if (string.IsNullOrWhiteSpace(searchString))
                 return true;
+            if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (element.LastName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
+                return true;
+
+            foreach (GiftBasket giftBasket in element.GiftBaskets)
+            {
+                if (giftBasket.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
             }
         }
 

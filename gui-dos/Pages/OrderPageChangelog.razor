@@ -8,19 +8,41 @@
 
 <AuthorizeView Context="AuthContext">
     <Authorized>
-        @if (_Order == null)
+        @if (changelog == null)
         {
-            <div>
-                Loading...
-            </div>
+            <div class="text-center m-3">
+                <MudText Align="Align.Center" Typo="Typo.h6" Class="m-2">
+                    Ingen ordre med nr. @OrderId fundet i databasen
+                </MudText>
+                <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Link="/order"
+                Variant="Variant.Filled" Class="rounded-pill border border-dark">
+                    Tilbage
+                </MudButton> 
+            </div>  
         }
         else
         {
-            <!-- TODO fix that .Reverse() does not want to work -->
-            @foreach (Change c in _Order.Changelog)
-            {
-                <ChangeComp Change="@c" />
-            }
+            <div class="text-center m-3">
+                <MudText Align="Align.Center" Typo="Typo.h5" Class="m-2">
+                    Ændringshistorik af ordre nr. @order.OrderId
+                </MudText>
+                <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Link="/order" 
+                Variant="Variant.Filled" Class="rounded-pill border border-dark">
+                    Tilbage
+                </MudButton> 
+            </div>   
+            <MudTable Items=@changelog Hover="true" Class="border border-dark m-2">
+                <HeaderContent>
+                    <MudTh Style="width:60%">Ændring:</MudTh>
+                    <MudTh Style="width:20%">Af:</MudTh>
+                    <MudTh Style="width:20%">Dato:</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Ændring:">@context.ChangeString</MudTd>
+                    <MudTd DataLabel="Af:">@context.Name</MudTd>
+                    <MudTd DataLabel="Dato:">@context.Date</MudTd>
+                </RowTemplate>
+            </MudTable>
         }
     </Authorized>
     <NotAuthorized>
@@ -32,14 +54,20 @@
     [Parameter]
     public string OrderId { get; set; }
 
-    private Order _Order;
+    private Order order;
+
+    private List<Change> changelog;
 
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             int id = Int32.Parse(OrderId);
-            _Order = await ctx.Orders.SingleAsync(o => o.OrderId == id);
+            order = await ctx.Orders.SingleOrDefaultAsync(p => p.OrderId == id);
+            if (order != null) {
+                changelog = order.Changelog;
+                changelog.Reverse();
+            }
         }
     }
 }

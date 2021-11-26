@@ -109,6 +109,25 @@ namespace gui_dos.Models
             Console.WriteLine(CancelId);
         }
 
+        public string GetStatusString() {
+            switch(Status) {
+                case OrderStatus.Pending:
+                    return "Afventer";
+                case OrderStatus.Accepted:
+                    return "Accepteret";
+                case OrderStatus.Finished:
+                    return "Færdig";
+                case OrderStatus.Delivered:
+                    return "Afhentet";
+                case OrderStatus.Declined:
+                    return "Afslået";
+                case OrderStatus.Cancelled:
+                    return "Annuleret";
+                default:
+                    return "Ugyldig Status";
+            }
+        }
+
         public override string ToString()
         {
             return $"Order #{OrderId} - Navn: {FirstName} {LastName} - Email: {Email} - tlf nr: {PhoneNumber} - Dato: {DateOrdered.ToString("dd/MM/yyyy")}";

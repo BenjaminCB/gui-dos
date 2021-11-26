@@ -5,16 +5,18 @@
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 
 @* Filter/cart bar *@
-<MudPaper Class="mud-primary my-4 d-flex justify-space-around border border-dark" Elevation="10">
+<div class="d-flex justify-space-around my-4">
     @* Filter button *@
-    <MudButton StartIcon="@Icons.Outlined.FilterList" IconColor="Color.Tertiary" OnClick="ToggleFilterDrawer" FullWidth="true">
-        <MudText Typo="Typo.h6" Color="Color.Tertiary">Filter</MudText>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-4 border border-dark"
+     StartIcon="@Icons.Outlined.FilterList" OnClick="ToggleFilterDrawer" FullWidth="true">
+        <MudText Typo="Typo.h6">Filter</MudText>
     </MudButton>
     @* Cart button *@
-    <MudButton EndIcon="@Icons.Outlined.ShoppingCart" IconColor="Color.Tertiary" OnClick="ToggleCartDrawer" FullWidth="true">
-        <MudText Typo="Typo.h6" Color="Color.Tertiary">Kurv</MudText>
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-4 border border-dark"
+     EndIcon="@Icons.Outlined.ShoppingCart" OnClick="ToggleCartDrawer" FullWidth="true">
+        <MudText Typo="Typo.h6">Kurv</MudText>
     </MudButton>
-</MudPaper>
+</div>
 @* Product Grid *@
 <div class="d-flex justify-center flex-wrap">
     @foreach (var product in products)
