@@ -81,7 +81,7 @@ namespace gui_dos.Models
         {
             GiftBaskets = giftBaskets;
             Changelog = new List<Change>();
-            Status = OrderStatus.Pending;
+            Status = OrderStatus.Afventer;
 
         }
 
@@ -102,30 +102,11 @@ namespace gui_dos.Models
             DateOrdered = DateTime.Now;
             DateDeadline = orderDetails.Date.GetValueOrDefault();
             CancelId = orderDetails.GetHashCode().ToString();
-            Status = OrderStatus.Pending;
+            Status = OrderStatus.Afventer;
             Price = GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price);
 
             // TODO remove once we send emails
             Console.WriteLine(CancelId);
-        }
-
-        public string GetStatusString() {
-            switch(Status) {
-                case OrderStatus.Pending:
-                    return "Afventer";
-                case OrderStatus.Accepted:
-                    return "Accepteret";
-                case OrderStatus.Finished:
-                    return "Færdig";
-                case OrderStatus.Delivered:
-                    return "Afhentet";
-                case OrderStatus.Declined:
-                    return "Afslået";
-                case OrderStatus.Cancelled:
-                    return "Annuleret";
-                default:
-                    return "Ugyldig Status";
-            }
         }
 
         public override string ToString()
