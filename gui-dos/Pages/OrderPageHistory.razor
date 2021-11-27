@@ -37,7 +37,7 @@
         </HeaderContent>
         <RowTemplate>
             <MudTd DataLabel="Nr.">@context.OrderId</MudTd>
-            <MudTd DataLabel="Status">@context.GetStatusString()</MudTd>
+            <MudTd DataLabel="Status">@context.Status</MudTd>
             <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
             <MudTd DataLabel="Oprettet">@context.DateOrdered.ToShortDateString()</MudTd>
             <MudTd DataLabel="Afsluttet">@context.DateDeadline.ToShortDateString()</MudTd>
@@ -128,7 +128,7 @@
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             oldOrders = await ctx.Orders
-                                 .Where(o => o.Status >= OrderStatus.Delivered)
+                                 .Where(o => o.Status >= OrderStatus.Afhentet)
                                  .OrderBy(t => t.DateOrdered)
                                  .ToListAsync();
         }
@@ -142,9 +142,9 @@
 
     private bool FilterFunc(Order element, string searchString)
     {
-        if ((showDelivered && element.Status == OrderStatus.Delivered) ||
-            (showCancelled && element.Status == OrderStatus.Cancelled) ||
-            (showDeclined && element.Status == OrderStatus.Declined))
+        if ((showDelivered && element.Status == OrderStatus.Afhentet) ||
+            (showCancelled && element.Status == OrderStatus.Annulleret) ||
+            (showDeclined && element.Status == OrderStatus.Afslået))
         {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
