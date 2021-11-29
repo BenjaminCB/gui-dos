@@ -34,7 +34,7 @@
             }
         </style>
 
-        <MudTable Items="@orders" Hover="true" Breakpoint="Breakpoint.Xs" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
+        <MudTable Items="@orders" Hover="true" Breakpoint="Breakpoint.Xs" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By" Class="border border-dark my-2">
             <ToolBarContent>
                 <MudText Typo="Typo.h4">Aktive Ordre</MudText>
                 <MudSpacer/>
