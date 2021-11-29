@@ -66,23 +66,23 @@
                 <MudTd>@context.OrderId</MudTd>
                 <MudTd>
                     <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.HourglassTop"
-                                Size="Size.Small" class="@((context.Status == OrderStatus.Pending ? "ButtonActivePending" : "Button"))"
-                                @onclick="() => OrderChangeStatus(context, OrderStatus.Pending)">
+                                Size="Size.Small" class="@((context.Status == OrderStatus.Afventer ? "ButtonActivePending" : "Button"))"
+                                @onclick="() => OrderChangeStatus(context, OrderStatus.Afventer)">
                         Afventer
                     </MudButton>
                     <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.CheckCircle"
-                                Size="Size.Small" class="@((context.Status == OrderStatus.Accepted ? "ButtonActiveAccepted" : "Button"))"
-                                @onclick="() => OrderChangeStatus(context, OrderStatus.Accepted)">
+                                Size="Size.Small" class="@((context.Status == OrderStatus.Accepteret ? "ButtonActiveAccepted" : "Button"))"
+                                @onclick="() => OrderChangeStatus(context, OrderStatus.Accepteret)">
                         Accepteret
                     </MudButton>
                     <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Beenhere"
-                                Size="Size.Small" class="@((context.Status == OrderStatus.Finished ? "ButtonActiveFinished" : "Button"))"
-                                @onclick="() => OrderChangeStatus(context, OrderStatus.Finished)">
+                                Size="Size.Small" class="@((context.Status == OrderStatus.Afsluttet ? "ButtonActiveFinished" : "Button"))"
+                                @onclick="() => OrderChangeStatus(context, OrderStatus.Afsluttet)">
                         Afsluttet
                     </MudButton>
                     <MudButton Variant="Variant.Outlined" StartIcon="@Icons.Material.Filled.Outbox"
-                                Size="Size.Small" class="@((context.Status == OrderStatus.Delivered ? "ButtonActiveDelivered" : "Button"))"
-                                @onclick="() => OrderChangeStatus(context, OrderStatus.Delivered)">
+                                Size="Size.Small" class="@((context.Status == OrderStatus.Afhentet ? "ButtonActiveDelivered" : "Button"))"
+                                @onclick="() => OrderChangeStatus(context, OrderStatus.Afhentet)">
                         Afhentet
                     </MudButton>
                 </MudTd>
@@ -127,15 +127,15 @@
                                                 <MudText Typo="Typo.body1"><strong>Kommentar:</strong> @context.Comment</MudText>
                                                 <div class="p-2 d-flex justify-space-between">
                                                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
-                                                     Size="Size.Small" Class="mr-2" @onclick="() => OrderChangeStatus(context, OrderStatus.Declined)">
-                                                        Cancel
+                                                     Size="Size.Small" Class="mr-2" OnClick="() => OrderChangeStatus(context, OrderStatus.Afslået)">
+                                                        Afvis
                                                     </MudButton>
                                                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.EditCalendar"
-                                                     Size="Size.Small" Class="mr-2" @onclick="() => OrderChangeDate(context)">
+                                                     Size="Size.Small" Class="mr-2" OnClick="() => OrderChangeDate(context)">
                                                         Ny Dato
                                                     </MudButton>
                                                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.History" 
-                                                     Size="Size.Small" @onclick="() => OrderChangelog(context)">
+                                                     Size="Size.Small" OnClick="() => OrderChangelog(context)">
                                                         Historik
                                                     </MudButton>
                                                 </div>
@@ -190,7 +190,7 @@
     {
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
+            orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Afhentet).ToListAsync();
         }
 
         var user = (await authenticationStateTask).User;
@@ -219,7 +219,7 @@
                 // Insure ShowDetails isn't opes as defult, if Status changes while ShowDetails = true
                 thisOrder.ShowDetails = false;
                 await ctx.SaveChangesAsync();
-                orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
+                orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Afhentet).ToListAsync();
                 StateHasChanged();
             }
         }
@@ -251,7 +251,7 @@
                 // Insure ShowDetails isn't opes as defult, if Status changes while ShowDetails = true
                 thisOrder.ShowDetails = false;
                 await ctx.SaveChangesAsync();
-                orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Delivered).ToListAsync();
+                orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Afhentet).ToListAsync();
                 StateHasChanged();
             }
         }
@@ -265,9 +265,9 @@
 
     private bool FilterFunc(Order element, string searchString)
     {
-        if((showPending && element.Status == OrderStatus.Pending) || 
-           (showAccepted && element.Status == OrderStatus.Accepted) ||
-           (showFinished && element.Status == OrderStatus.Finished)) 
+        if((showPending && element.Status == OrderStatus.Afventer) || 
+           (showAccepted && element.Status == OrderStatus.Accepteret) ||
+           (showFinished && element.Status == OrderStatus.Afsluttet)) 
         {    
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
