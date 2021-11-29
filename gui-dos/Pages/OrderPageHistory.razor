@@ -9,7 +9,7 @@
 
 <AuthorizeView Context="AuthContext">
     <Authorized>
-    <MudTable Items="@oldOrders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By">
+    <MudTable Items="@oldOrders" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true" Filter="new Func<Order,bool>(FilterFunc1)" SortLabel="Sort By" Class="border border-dark my-2">
         <ToolBarContent>
             <MudText Typo="Typo.h4">Ordrehistorik</MudText>
             <MudSpacer/>
@@ -118,6 +118,7 @@
 </AuthorizeView>
 @code
 {
+    [Inject] private IDialogService DialogService { get; set; }
     private List<Order> oldOrders;
     private string searchString = "";
     private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
@@ -165,11 +166,18 @@
 
     private async Task OrderDelete(Order o) 
     {
-        using (var ctx = DbContextFactory.CreateDbContext())
-        {
-            oldOrders.Remove(o);
-            ctx.Orders.Remove(o);
-            await ctx.SaveChangesAsync();
+        bool? result = await DialogService.ShowMessageBox(
+            "Bekræft sletning af ordre",
+            $"Er du sikker på du vil slette ordre nr. {o.OrderId}?",
+            yesText:"Ja", noText:"Nej"
+        );
+        if(result == true) {
+            using (var ctx = DbContextFactory.CreateDbContext())
+            {
+                oldOrders.Remove(o);
+                ctx.Orders.Remove(o);
+                await ctx.SaveChangesAsync();
+            }
         }
     }
 }
