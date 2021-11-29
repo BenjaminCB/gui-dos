@@ -43,8 +43,8 @@
 
                     <div>
                         <MudText Typo="Typo.body1" Class="mt-3"><strong>Kommentar til hele ordren:</strong> @_Order.Comment</MudText>
-                        <MudText Typo="Typo.body1" Class="mt-1"><strong>Dato bestilt:</strong> @_Order.DateOrdered</MudText>
-                        <MudText Typo="Typo.body1" Class="mt-1 mb-4"><strong>Ønkset afhentningsdato:</strong> @_Order.DateDeadline</MudText>
+                        <MudText Typo="Typo.body1" Class="mt-1"><strong>Dato bestilt:</strong> @_Order.DateOrdered.ToShortDateString()</MudText>
+                        <MudText Typo="Typo.body1" Class="mt-1 mb-4"><strong>Ønkset afhentningsdato:</strong> @_Order.DateDeadline.ToShortDateString()</MudText>
                     </div>
                     <div class="d-flex justify-space-between">
                         <MudText Class="mb-4"><strong>Status på ordre:</strong> @_Order.Status</MudText>
