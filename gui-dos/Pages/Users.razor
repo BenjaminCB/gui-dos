@@ -15,17 +15,21 @@
 
 <AuthorizeView Roles="superuser">
     <Authorized>
-        @foreach (var user in _Users)
-        {
-            <div>
-                <p>
-                    @user.UserName
-                </p>
-                <button @onclick="() => _DeleteUser(user)">
-                    Delete
-                </button>
-            </div>
-        }
+        <MudText Style="font-size:30px">Nuværende brugere
+        </MudText>
+        <div class="d-flex justify-center flex-wrap">
+            @foreach (var user in _Users)
+            {
+                <MudCard Class="ma-4" Outlined="true">
+                    <MudCardContent>
+                        <MudText Typo="Typo.h4">@user.UserName</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Delete" Color="Color.Error" Size="Size.Small" @onclick="() => _DeleteUser(user)">Delete</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            }
+        </div>
     </Authorized>
     <NotAuthorized>
         <LoginDisplay />

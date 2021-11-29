@@ -43,10 +43,10 @@
                 _Status = _Order.Status;
 
 
-                if (_Order.Status == OrderStatus.Pending)
+                if (_Order.Status == OrderStatus.Afventer)
                 {
                     Order o = ctx.Orders.Update(_Order).Entity;
-                    o.Status = OrderStatus.Cancelled;
+                    o.Status = OrderStatus.Annulleret;
 
                     Change c = new Change( DateTime.Now.ToString("")
                                          , "Customer cancelled order"

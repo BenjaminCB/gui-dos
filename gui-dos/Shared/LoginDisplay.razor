@@ -2,16 +2,21 @@
 @inject NavigationManager NavMan
 @inject TokenProvider TokenProvider
 
-<AuthorizeView>
-    <Authorized>
-        <h3>Hello, @context.User.Identity.Name!</h3>
-        <form action="/admin/logout?returnUrl=%2F" method="post">
-            <button class="nav-link btn btn-link" type="submit">Logout</button>
-            <input name="__RequestVerificationToken" type="hidden"
-                   value="@TokenProvider.XsrfToken">
-        </form>
-    </Authorized>
-    <NotAuthorized>
-        <a href="/admin/login">Login</a>
-    </NotAuthorized>
-</AuthorizeView>
+<div class="d-flex justify-center my-2">
+    <AuthorizeView>
+        <Authorized>
+            <form action="/admin/logout?returnUrl=%2F" method="post">
+                <MudButton StartIcon="fas fa-sign-out-alt" ButtonType="ButtonType.Submit">
+                    Log ud
+                </MudButton>
+                <input name="__RequestVerificationToken" type="hidden"
+                    value="@TokenProvider.XsrfToken">
+            </form>
+        </Authorized>
+        <NotAuthorized>
+            <MudButton Link="/admin/login" StartIcon="fas fa-sign-in-alt" Variant="Variant.Text">
+                Log ind
+            </MudButton>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>

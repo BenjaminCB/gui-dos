@@ -25,9 +25,8 @@ namespace gui_dos.Forms
         public string PhoneNumber { get; set; }
 
         [Required]
-        public DateTime? Date { get; set; } = DateTime.Now;
+        public DateTime? Date { get; set; } = DateTime.Now.AddDays(1);
 
-        [StringLength(500, ErrorMessage = "Din kommentar m� ikke v�re over 500 tegn")]
         public string Comment { get; set; }
     }
 }

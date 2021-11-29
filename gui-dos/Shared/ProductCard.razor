@@ -90,8 +90,9 @@
                 <MudText Typo="Typo.body1" Color="Color.Tertiary">@Product.Description</MudText>
 
                 @* Ordering layout add comment *@
-                <MudTextField Class="mud-theme-tertiary rounded mt-10" T="string" Lines="3" Variant="Variant.Filled" DisableUnderLine="true"
-                Label="Kommentar" Placeholder="Tilføj en kommentar med specielle ønsker til din gavekurv" @bind-Text=@commentInput/>
+                <MudTextField Class="mud-theme-tertiary rounded mt-10" T="string" Lines="4" Variant="Variant.Filled" DisableUnderLine="true"
+                Label="Kommentar" Placeholder="Tilføj en kommentar med specielle ønsker til din gavekurv" 
+                Counter="200" MaxLength="200" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" @bind-Text=@commentInput/>
 
                 @* Ordering overlay buttons *@
                 <div class="d-flex justify-space-between mt-5">
@@ -110,7 +111,7 @@
 </MudOverlay>
 
 @code{
-    
+
     [Parameter]
     public Product Product { get; set;}
 
@@ -122,7 +123,7 @@
 
     //Sets the visibility of the product card overlay
     private bool overlayVisible = false;
-    
+
     //Sets the visibility of the product ordering overlay
     private bool orderVisible = false;
 
@@ -151,6 +152,12 @@
     private TimeSpan cycleTime = TimeSpan.FromSeconds(3);
 
     private string commentInput = String.Empty;
+
+    private IEnumerable<string> MaxCharacters(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 200 < ch?.Length)
+            yield return "Max 200 karakterer";
+    }
 
     private void Elevate() {
         cycle = true;
@@ -183,7 +190,7 @@
         //if (product.Images.Count > 1) {
         //    arrow = delim = true;
         //}
-        
+
         baseElevation = ShopView ? 4 : 0;
         highlightElevation = ShopView ? 24 : 0;
         elevation = baseElevation;

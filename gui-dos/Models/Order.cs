@@ -81,7 +81,7 @@ namespace gui_dos.Models
         {
             GiftBaskets = giftBaskets;
             Changelog = new List<Change>();
-            Status = OrderStatus.Pending;
+            Status = OrderStatus.Afventer;
 
         }
 
@@ -102,7 +102,7 @@ namespace gui_dos.Models
             DateOrdered = DateTime.Now;
             DateDeadline = orderDetails.Date.GetValueOrDefault();
             CancelId = orderDetails.GetHashCode().ToString();
-            Status = OrderStatus.Pending;
+            Status = OrderStatus.Afventer;
             Price = GiftBaskets.Aggregate(0d, (acc, gb) => acc + gb.Price);
 
             // TODO remove once we send emails
