@@ -137,7 +137,7 @@
             Change c = new Change(DateTime.Now.ToString(), "Ordre oprettet", "Kunde");
             
             order.Changelog.Add(c);
-
+            
             ctx.Orders.Add(order);
             await ctx.SaveChangesAsync();
         }
