@@ -5,25 +5,26 @@
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 
-
-@if (_Order == null)
-{
-    <p>
-        Der er ikke en ordre med dette Id.
-    </p>
-}
-else if (_Status != OrderStatus.Pending)
-{
-    <p>
-        Vi har allerede acceptere denne ordre. Kontakt os venligst for mere information.
-    </p>
-}
-else
-{
-    <p>
-        Din ordre er nu annulleret.
-    </p>
-}
+<div class="text-center m-5">
+    @if (_Order == null)
+    {
+        <p>
+            Der er ikke en ordre med dette Id.
+        </p>
+    }
+    else if (_Status != OrderStatus.Pending)
+    {
+        <p>
+            Vi har allerede acceptere denne ordre. Kontakt os venligst for mere information.
+        </p>
+    }
+    else
+    {
+        <p>
+            Din ordre er nu annulleret.
+        </p>
+    }
+</div>
 
 @code {
     [Parameter]
