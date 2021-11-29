@@ -60,6 +60,7 @@ else
 
 @code
 {
+    [Inject] private IDialogService DialogService { get; set; }
     protected override void OnInitialized() {
         ShoppingCart.ComponentChanged += StateHasChanged;
     }
@@ -73,9 +74,16 @@ else
         ShoppingCart.GiftBaskets.Remove(gb);
         ShoppingCart.CallComponentChanged();
     }
-    private void removeAll() 
+    private async void removeAll() 
     {
-        ShoppingCart.GiftBaskets.Clear();
-        ShoppingCart.CallComponentChanged();
+        bool? result = await DialogService.ShowMessageBox(
+            "Bekræft",
+            "Er du sikker på du vil fjerne alle tilføjede varer fra din kurv?",
+            yesText:"Ja", noText:"Nej"
+        );
+        if(result == true) {
+            ShoppingCart.GiftBaskets.Clear();
+            ShoppingCart.CallComponentChanged();
+        }
     }
 }
