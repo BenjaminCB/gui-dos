@@ -1,29 +1,30 @@
-@page "/shop/cancel/{cancelId}"
+@page "/info/cancel/{CancelId}"
 
 @using gui_dos.Data
 @using Microsoft.EntityFrameworkCore
 
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 
-
-@if (_Order == null)
-{
-    <p>
-        There does not seem any order with this id.
-    </p>
-}
-else if (_Status != OrderStatus.Afventer)
-{
-    <p>
-        We have already accepted your order, please contact us for further details.
-    </p>
-}
-else
-{
-    <p>
-        your order has been cancelled.
-    </p>
-}
+<div class="text-center m-5">
+    @if (_Order == null)
+    {
+        <p>
+            Der er ikke en ordre med dette Id.
+        </p>
+    }
+    else if (_Status != OrderStatus.Pending)
+    {
+        <p>
+            Vi har allerede acceptere denne ordre. Kontakt os venligst for mere information.
+        </p>
+    }
+    else
+    {
+        <p>
+            Din ordre er nu annulleret.
+        </p>
+    }
+</div>
 
 @code {
     [Parameter]

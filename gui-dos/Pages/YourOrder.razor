@@ -1,0 +1,81 @@
+﻿@page "/info/{CancelId}"
+
+@using gui_dos.Forms
+@using gui_dos.Models
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+
+
+@inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject NavigationManager NavMan
+
+<div class="d-flex justify-center m-5">
+    @if (_Order == null)
+    {
+        <p>
+            Der er ikke en ordre med dette Id.
+        </p>
+    }
+    else
+    {
+        <MudPaper Width="500px" Class="border border-dark">
+            <div>
+                <MudText Typo="Typo.h4" Class="text-center">Tak for din bestilling</MudText>
+                <MudText Typo="Typo.h5" Class="ml-1">Ordrenummer: @_Order.CancelId</MudText>
+                <MudItem Class="mt-2 ml-1">
+                    <MudText Typo="Typo.body1"><strong>Navn:</strong> @_Order.FirstName @_Order.LastName</MudText>
+                </MudItem>
+            </div>
+            <div>
+                <MudItem Class="ml-1 mr-1 mt-4">
+                    <MudText Typo="Typo.h6">Din ordre</MudText>
+                    <!--GiftBaskets from the order-->
+                    @foreach (var item in _Order.GiftBaskets)
+                    {
+                        <div class="m-2 border-bottom">
+                            <div class="d-flex justify-space-between">
+                                <MudText Typo="Typo.body1" Inline="true"><strong>Navn:</strong> @item.Title</MudText>
+                                <MudText Typo="Typo.body1" Inline="true"><strong>pris:</strong> @item.Price,- kr.</MudText>
+                            </div>
+                            <MudText Typo="Typo.body1"><strong>Kommentar:</strong> @item.Comment</MudText>
+                        </div>
+                    }
+
+                    <div>
+                        <MudText Typo="Typo.body1" Class="mt-3"><strong>Kommentar til hele ordren:</strong> @_Order.Comment</MudText>
+                        <MudText Typo="Typo.body1" Class="mt-1"><strong>Dato bestilt:</strong> @_Order.DateOrdered.ToShortDateString()</MudText>
+                        <MudText Typo="Typo.body1" Class="mt-1 mb-4"><strong>Ønkset afhentningsdato:</strong> @_Order.DateDeadline.ToShortDateString()</MudText>
+                    </div>
+                    <div class="d-flex justify-space-between">
+                        <MudText Class="mb-4"><strong>Status på ordre:</strong> @_Order.Status</MudText>
+                        <MudButton Variant="Variant.Filled" Size="Size.Small" Class="mb-4" StartIcon="@Icons.Material.Filled.Cancel" @onclick="() => CancelOrder()">Annuller ordre</MudButton>
+                    </div>
+                </MudItem>
+            </div>
+        </MudPaper>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string CancelId { get; set; }
+
+    private Order _Order { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using (var context = DbContextFactory.CreateDbContext())
+        {
+            //_Order = await context.Orders.AsNoTracking().SingleOrDefaultAsync(c => c.CancelId == CancelId);
+            _Order = await context.Orders.SingleAsync(c => c.CancelId == CancelId);
+
+        }
+
+    }
+
+    private void CancelOrder()
+        {
+            NavMan.NavigateTo($"/info/cancel/{CancelId}");
+        }
+
+}
