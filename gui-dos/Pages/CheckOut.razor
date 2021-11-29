@@ -48,31 +48,8 @@
 
             @* Cart *@
             <MudItem xs="5">
-                <MudText Typo="Typo.h5" GutterBottom="true">Kurv</MudText>
-                <MudPaper Class="d-flex flex-column" Style="height:80%;" Outlined="true">
-                    <MudList Clickable="true">
-                        @foreach (var item in ShoppingCart.GiftBaskets)
-                        {
-                            <MudListItem Icon="@Icons.Material.Filled.ShoppingBasket">
-                                <div class="d-flex">
-                                    <MudText Typo="Typo.h6">@item.Title</MudText>
-                                    <MudText Inline="true" Class="ml-auto">@item.Price kr.</MudText>
-                                </div>
-                                @if(item.Comment != String.Empty)
-                                {
-                                    <MudText Typo="Typo.subtitle1">Kommentar:</MudText>
-                                    <MudText Typo="Typo.caption" Class="text-break">@item.Comment</MudText>
-                                }
-                            </MudListItem>
-                        }
-                    </MudList>
-                    <div class="mt-auto">
-                        <MudDivider />
-                        <div class="d-flex pa-4">
-                            <MudText>Total:</MudText>
-                            <MudText Class="ml-auto"><b>@ShoppingCart.Total kr.</b></MudText>
-                        </div>
-                    </div>
+                <MudPaper Class="d-flex flex-column p-2" Style="height:80%;" Outlined="true">
+                    <CartComp/>
                 </MudPaper>
             </MudItem>
         </MudGrid>

@@ -2,16 +2,18 @@
 @using System.Collections.Generic
 @using Microsoft.EntityFrameworkCore
 @using System.Linq
+
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
 @inject ShoppingCart ShoppingCart
+@inject NavigationManager NavMan
 
 @* Filter/cart bar *@
 <div class="d-flex justify-start my-4">
 
     @* Filter menu *@
-    <MudMenu AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft">
+    <MudMenu Class="mx-3" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft">
         <ActivatorContent>
-            <MudButton StartIcon="@Icons.Filled.FilterList" Color="Color.Primary" Variant="Variant.Filled" Class="border border-dark mx-2">
+            <MudButton StartIcon="@Icons.Filled.FilterList" Color="Color.Primary" Variant="Variant.Filled" Class="border border-dark">
                 Filter
             </MudButton>
         </ActivatorContent>
@@ -40,11 +42,22 @@
     </MudMenu>
 
     @* Cart button *@
-    <MudBadge Content="ShoppingCart.GiftBaskets.Count" Color="Color.Error" Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
-        <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled" Class="border border-dark mx-2" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
+    <MudBadge Content="ShoppingCart.GiftBaskets.Count" Color="Color.Error" Class="mx-3" 
+     Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
+        <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled" 
+         Class="border border-dark" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
             Kurv
         </MudButton>
     </MudBadge>
+
+    @* To checkout button *@
+    @if(ShoppingCart.GiftBaskets.Count > 0)
+    {
+        <MudButton EndIcon="@Icons.Outlined.Payment" Color="Color.Primary" Variant="Variant.Filled" 
+         Class="border border-dark mx-3" OnClick="GoToCheckout">
+            Til kassen
+        </MudButton>
+    }
 </div>
 
 <MudDivider/>
@@ -61,9 +74,9 @@
 </div>
 
 @* Cart Drawer *@
-<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2" Width="300px" Breakpoint="Breakpoint.Xl" ClipMode="DrawerClipMode.Always">
-    <MudText Typo="Typo.h4" Align="Align.Center">Indkøbskurv</MudText>
-    <CartComp/>
+<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Width="350px"
+ Class="p-2" Breakpoint="Breakpoint.Xl" ClipMode="DrawerClipMode.Always">
+    <CartComp Buttons="true"/>
 </MudDrawer>
 
 @code 
@@ -113,5 +126,9 @@
         foreach(string key in tags.Keys) {
             tags[key] = select;
         }
+    }
+
+    private void GoToCheckout() {
+        NavMan.NavigateTo("/checkout");
     }
 }

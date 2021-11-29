@@ -1,81 +1,85 @@
 @inject ShoppingCart ShoppingCart
 @inject NavigationManager NavMan
 
+<MudText Typo="Typo.h4" Align="Align.Center">Indkøbskurv</MudText>
+<MudDivider/>
 @if (ShoppingCart.GiftBaskets.Count == 0)
 {
-    <MudText Align="Align.Center">
+    <MudText Align="Align.Center" Class="my-2">
         <strong>Din indkøbskurv er tom.</strong>
     </MudText>
 }
 else
 {
-    @foreach (GiftBasket gb in ShoppingCart.GiftBaskets)
-    {
-        <div class="d-inline-block border rounded p-2 my-2">
-
-            @* Giftbasket title & delete button*@
-            <div class="d-flex justify-space-between mb-1">
-                <MudText Typo="Typo.h6">
-                    <strong>@gb.Title</strong>
-                </MudText>
-                <MudIconButton Icon="@Icons.Outlined.Delete" Size="Size.Small" OnClick="() => remove(gb)"/>
+    <MudList>
+        @foreach (var item in ShoppingCart.GiftBaskets)
+        {
+            <div class="border my-2">
+                <MudListItem Dense="true"> 
+                    <ChildContent>
+                        <div class="d-flex justify-space-between">
+                            <MudText Typo="Typo.subtitle1" Class="text-break mr-1">@item.Title</MudText>
+                            <MudText Typo="Typo.subtitle1" Class="text-nowrap">@item.Price kr.</MudText>
+                        </div>
+                    </ChildContent>
+                    <NestedList>
+                        <div class="p-2">
+                            @if(item.Comment != String.Empty)
+                            {
+                                <div class="mb-2">
+                                    <MudText Typo="Typo.subtitle2">Kommentar:</MudText>
+                                    <MudText Typo="Typo.caption" Class="text-break">@item.Comment</MudText>
+                                </div>
+                            }
+                            <MudButton StartIcon="@Icons.Outlined.Delete" Size="Size.Small" OnClick="() => Remove(item)">
+                                Fjern fra kurv
+                            </MudButton>
+                        </div>
+                    </NestedList>
+                </MudListItem>
             </div>
-
-            @* Gifbasket comment *@
-            @if(gb.Comment != String.Empty) 
-            {
-                <MudText Typo="Typo.subtitle1">Kommentar:</MudText>
-                <MudText Typo="Typo.caption" Class="text-break">
-                    "@gb.Comment"
-                </MudText>
-            }   
-
-            @* Giftbasket price *@
-            <div class="d-flex justify-space-between mt-1">
-                <MudText Typo="Typo.subtitle1">
-                    <strong>Pris: </strong>
-                </MudText>
-                <MudText>@gb.Price.ToString("N2") kr.</MudText>
-            </div>        
+        }
+    </MudList>
+    <div class="mt-auto">
+        <MudDivider />
+        <div class="d-flex justify-space-between my-2">
+            <MudText>Total:</MudText>
+            <MudText><b>@ShoppingCart.Total kr.</b></MudText>
         </div>
-    }
-    <MudDivider/>
-    @* Cart total *@
-    <div class="d-flex justify-space-between m-2">
-        <MudText Typo="Typo.subtitle1">
-            <strong>Total: </strong>
-        </MudText>
-        <MudText>@ShoppingCart.Total.ToString("N2") kr.</MudText>
     </div>
 
     @* Order cart button *@
-    <div class="d-flex justify-space-between m-2">
-        <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=removeAll>
-            Tøm kurv
-        </MudButton>
-        <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=goToOrder>
-            Gå til kassen
-        </MudButton>
-    </div>
+    @if(Buttons)
+    {
+        <div class="d-flex justify-space-between my-2">
+            <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=RemoveAll>
+                Tøm kurv
+            </MudButton>
+            <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=GoToCheckout>
+                Gå til kassen
+            </MudButton>
+        </div>
+    }
 }
 
 @code
 {
     [Inject] private IDialogService DialogService { get; set; }
+    [Parameter] public bool Buttons { get; set; } = false;
     protected override void OnInitialized() {
         ShoppingCart.ComponentChanged += StateHasChanged;
     }
-    private void goToOrder()
+    private void GoToCheckout()
     {
         NavMan.NavigateTo("/checkout");
     }
 
-    private void remove(GiftBasket gb)
+    private void Remove(GiftBasket gb)
     {
         ShoppingCart.GiftBaskets.Remove(gb);
         ShoppingCart.CallComponentChanged();
     }
-    private async void removeAll() 
+    private async void RemoveAll() 
     {
         bool? result = await DialogService.ShowMessageBox(
             "Bekræft",
