@@ -97,6 +97,8 @@
 
                 ctx.Orders.Add(order);
                 await ctx.SaveChangesAsync();
+                
+                order.SendStatusMail();
 
                 ShoppingCart.GiftBaskets.Clear();
             }

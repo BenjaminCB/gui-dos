@@ -220,6 +220,7 @@
                 thisOrder.ShowDetails = false;
                 await ctx.SaveChangesAsync();
                 orders = await ctx.Orders.Where(o => o.Status < OrderStatus.Afhentet).ToListAsync();
+                o.SendStatusMail();
                 StateHasChanged();
             }
         }
