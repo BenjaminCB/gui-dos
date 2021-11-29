@@ -203,7 +203,7 @@
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
 
-        var ConfModal = Modal.Show<ConfComp>($"Vil du ændre ordre ID: {o.OrderId} fra '{o.Status}' til '{s}'");
+        var ConfModal = Modal.Show<ConfComp>($"Vil du ændre ordre nr. {o.OrderId} fra '{o.Status}' til '{s}'?");
         //Call to popup
         var result = await ConfModal.Result;
 
@@ -227,7 +227,7 @@
 
     private async Task OrderChangeDate(Order o)
     {
-        var ConfModal = Modal.Show<Shared.DatePicker>($"Valg af ny leveringsdato for ordre ID: {o.OrderId}");
+        var ConfModal = Modal.Show<DateComp>($"Vælg en ny leveringsdato for ordre nr. {o.OrderId}");
         DateTime DateResult = o.DateDeadline;
         DateTime StatusBeforeChange = o.DateDeadline;
         //Call to popup
