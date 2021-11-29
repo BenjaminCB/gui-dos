@@ -10,9 +10,9 @@
 
 <EditForm Model="@orderForm" OnValidSubmit="OrderOrder">
     <DataAnnotationsValidator />
-    <MudContainer Class="mt-16" MaxWidth="MaxWidth.Medium">
+    <MudContainer MaxWidth="MaxWidth.Medium">
         @*<MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Checkout</MudText>*@
-        <MudGrid Spacing="6" Class="mt-16">
+        <MudGrid Spacing="6" Class="my-4">
             <MudItem xs="7">
                 <MudText Typo="Typo.h5" GutterBottom="true">Checkout</MudText>
                 <MudGrid>
@@ -35,8 +35,13 @@
                         <MudTextField T="string" Label="Kommentar: Ønsker til hele ordren" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10" 
                         Counter="500" MaxLength="500" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
                     </MudItem>
-                    <MudItem xs="12" Class="d-flex justify-center">
-                        <MudButton Class="mt-8" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Bestil ordre</MudButton>
+                    <MudItem xs="6" Class="d-flex justify-center">
+                        <MudButton Class="mt-8 border border-dark" ButtonType="ButtonType.Button" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large" Link="/shop">
+                            Tilbage
+                        </MudButton>
+                    </MudItem>
+                    <MudItem xs="6" Class="d-flex justify-center">
+                        <MudButton Class="mt-8 border border-dark" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Bestil ordre</MudButton>
                     </MudItem>
                 </MudGrid>
             </MudItem>
@@ -50,14 +55,14 @@
                         {
                             <MudListItem Icon="@Icons.Material.Filled.ShoppingBasket">
                                 <div class="d-flex">
-                                    <MudText>@item.Title</MudText>
-                                    <MudText Inline="true" Class="ml-auto">@item.Price</MudText>
+                                    <MudText Typo="Typo.h6">@item.Title</MudText>
+                                    <MudText Inline="true" Class="ml-auto">@item.Price kr.</MudText>
                                 </div>
-                            </MudListItem>
-                            <MudListItem Icon="@Icons.Material.Filled.Comment" IconSize="Size.Small">
-                                <div class="d-flex">
-                                    <MudText>@item.Comment</MudText>
-                                </div>
+                                @if(item.Comment != String.Empty)
+                                {
+                                    <MudText Typo="Typo.subtitle1">Kommentar:</MudText>
+                                    <MudText Typo="Typo.caption" Class="text-break">@item.Comment</MudText>
+                                }
                             </MudListItem>
                         }
                     </MudList>

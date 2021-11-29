@@ -15,7 +15,7 @@ else
 
             @* Giftbasket title & delete button*@
             <div class="d-flex justify-space-between mb-1">
-                <MudText Typo="Typo.body1">
+                <MudText Typo="Typo.h6">
                     <strong>@gb.Title</strong>
                 </MudText>
                 <MudIconButton Icon="@Icons.Outlined.Delete" Color="Color.Tertiary" Size="Size.Small" OnClick="() => remove(gb)"/>
@@ -24,8 +24,9 @@ else
             @* Gifbasket comment *@
             @if(gb.Comment != String.Empty) 
             {
-                <MudText Typo="Typo.body2">
-                    <strong>Kommentar: </strong> "@gb.Comment"
+                <MudText Typo="Typo.subtitle1">Kommentar:</MudText>
+                <MudText Typo="Typo.caption" Class="text-break">
+                    "@gb.Comment"
                 </MudText>
             }   
 
