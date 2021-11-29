@@ -1,4 +1,4 @@
-@page "/shop/cancel/{cancelId}"
+@page "/info/cancel/{CancelId}"
 
 @using gui_dos.Data
 @using Microsoft.EntityFrameworkCore
@@ -9,19 +9,19 @@
 @if (_Order == null)
 {
     <p>
-        There does not seem any order with this id.
+        Der er ikke en ordre med dette Id.
     </p>
 }
 else if (_Status != OrderStatus.Pending)
 {
     <p>
-        We have already accepted your order, please contact us for further details.
+        Vi har allerede acceptere denne ordre. Kontakt os venligst for mere information.
     </p>
 }
 else
 {
     <p>
-        your order has been cancelled.
+        Din ordre er nu annulleret.
     </p>
 }
 

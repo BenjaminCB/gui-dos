@@ -121,17 +121,18 @@
                                                 <MudText Typo="Typo.body1"><strong>Telefon:</strong> @context.PhoneNumber</MudText>
                                                 <MudText Typo="Typo.body1"><strong>Pris:</strong> @context.Price kr.</MudText>
                                                 <MudText Typo="Typo.body1"><strong>Kommentar:</strong> @context.Comment</MudText>
+                                                <MudText Typo="Typo.body1"><strong>CancelId:</strong> @context.CancelId</MudText>
                                                 <div class="p-2 d-flex justify-space-between">
                                                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Cancel"
-                                                     Size="Size.Small" Class="mr-2" @onclick="() => OrderChangeStatus(context, OrderStatus.Declined)">
+                                                               Size="Size.Small" Class="mr-2" @onclick="() => OrderChangeStatus(context, OrderStatus.Declined)">
                                                         Cancel
                                                     </MudButton>
                                                     <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.EditCalendar"
-                                                     Size="Size.Small" Class="mr-2" @onclick="() => OrderChangeDate(context)">
+                                                               Size="Size.Small" Class="mr-2" @onclick="() => OrderChangeDate(context)">
                                                         Ny Dato
                                                     </MudButton>
-                                                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.History" 
-                                                     Size="Size.Small" @onclick="() => OrderChangelog(context)">
+                                                    <MudButton Variant="Variant.Filled" StartIcon="@Icons.Filled.History"
+                                                               Size="Size.Small" @onclick="() => OrderChangelog(context)">
                                                         Historik
                                                     </MudButton>
                                                 </div>
