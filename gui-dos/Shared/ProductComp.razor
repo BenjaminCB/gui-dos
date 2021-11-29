@@ -77,25 +77,31 @@
         <div class="d-flex flex-wrap justify-center">
             @* Ordering layout product images *@
             <MudCarousel Class="rounded m-3 border border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex=@cycleIndex
-            ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:350px;width:400px"> 
+             ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:350px;width:400px"> 
                 <MudCarouselItem Transition="Transition.Fade" Class="rounded">
                     <img src="@Product.Image" class="rounded" style="height:100%;width:100%;"/>
                 </MudCarouselItem>
             </MudCarousel>
-            <div class="d-inline-block m-3" style="max-width:400px"> 
-                @* Ordering layout product title *@
-                <MudText Typo="Typo.h5" Color="Color.Tertiary" Align="Align.Center">@Product.Title</MudText>
+            <div class="m-3" style="max-width:400px"> 
+                <div class="mb-3">
+                    @* Ordering layout product title *@
+                    <MudText Typo="Typo.h5" Color="Color.Tertiary" Align="Align.Center">@Product.Title</MudText>
 
-                @* Ordering layout product description *@
-                <MudText Typo="Typo.body1" Color="Color.Tertiary">@Product.Description</MudText>
+                    @* Ordering layout product description *@
+                    <MudText Typo="Typo.body1" Color="Color.Tertiary">@Product.Description</MudText>
+                </div>
+
+                <MudDivider/>
 
                 @* Ordering layout add comment *@
-                <MudTextField Class="mud-theme-tertiary rounded mt-10" T="string" Lines="4" Variant="Variant.Filled" DisableUnderLine="true"
-                Label="Kommentar" Placeholder="Tilføj en kommentar med specielle ønsker til din gavekurv" 
-                Counter="200" MaxLength="200" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" @bind-Text=@commentInput/>
+                <div class="mud-tertiary rounded p-2 mt-3">
+                    <MudTextField T="string" Lines="4" DisableUnderLine="true" Label="Kommentar" Counter="200" MaxLength="200" Margin="Margin.Dense"
+                     Placeholder="Tilføj en kommentar med specielle ønsker til din gavekurv" HelperText="Ønsker til din valgte gavekurv"
+                     HelperTextOnFocus="true" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" @bind-Text=@commentInput/>
+                </div>
 
                 @* Ordering overlay buttons *@
-                <div class="d-flex justify-space-between mt-5">
+                <div class="d-flex justify-space-between mt-3">
                     <MudButton Class="m-2 rounded-pill" StartIcon="@Icons.Outlined.ArrowBack" IconColor="Color.Tertiary" 
                     Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@ToggleOrder>
                         Tilbage
