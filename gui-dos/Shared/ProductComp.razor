@@ -182,6 +182,7 @@
     private void AddToCart() {
         GiftBasket gb = new GiftBasket(Product.Title, commentInput, Product.Price);
         ShoppingCart.GiftBaskets.Add(gb);
+        ShoppingCart.CallComponentChanged();
         ToggleOrder();
     }
 

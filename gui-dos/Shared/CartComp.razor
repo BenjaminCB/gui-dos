@@ -60,6 +60,9 @@ else
 
 @code
 {
+    protected override void OnInitialized() {
+        ShoppingCart.ComponentChanged += StateHasChanged;
+    }
     private void goToOrder()
     {
         NavMan.NavigateTo("/checkout");
@@ -68,14 +71,11 @@ else
     private void remove(GiftBasket gb)
     {
         ShoppingCart.GiftBaskets.Remove(gb);
+        ShoppingCart.CallComponentChanged();
     }
     private void removeAll() 
     {
         ShoppingCart.GiftBaskets.Clear();
-    }
-
-    public void Refresh()
-    {
-        StateHasChanged();
+        ShoppingCart.CallComponentChanged();
     }
 }
