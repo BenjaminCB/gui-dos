@@ -168,7 +168,7 @@
     {
         bool? result = await DialogService.ShowMessageBox(
             "Bekræft sletning af ordre",
-            $"Er du sikker på du vil slette ordren med nr. {o.OrderId}?",
+            $"Er du sikker på du vil slette ordre nr. {o.OrderId}?",
             yesText:"Ja", noText:"Nej"
         );
         if(result == true) {
