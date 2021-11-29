@@ -1,4 +1,4 @@
-﻿<MudMenu AnchorOrigin="Origin.TopCenter" TransformOrigin="Origin.TopCenter" ActivationEvent="MouseEvent.MouseOver">
+﻿<MudMenu AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.TopRight" ActivationEvent="MouseEvent.MouseOver">
     <ActivatorContent>
         <MudButton Variant="Variant.Filled" Color="Color.Primary" Size="Size.Large"
          EndIcon="fas fa-bars" IconColor="Color.Tertiary" Class="border border-dark">
@@ -6,9 +6,8 @@
         </MudButton>
     </ActivatorContent>
     <ChildContent>
-        <MudPaper Elevation="0">
+        <MudPaper Elevation="0" MinWidth="10vw">
             <MudText Align="Align.Center" Typo="Typo.h6">Menu</MudText>
-            <MudDivider Class="my-2"/>
             <MudNavLink Match="NavLinkMatch.All" Href="" Icon="fas fa-home">
                 Forside
             </MudNavLink>
@@ -17,19 +16,19 @@
             </MudNavLink>
             <AuthorizeView>
                 <Authorized>
-                    <MudDivider Class="my-2"/>
-                    <MudNavLink Match="NavLinkMatch.All" Href="product" Icon="fas fa-box-open">
+                    <MudText Align="Align.Center" Typo="Typo.h6">Administrer</MudText>
+                    <MudNavLink Match="NavLinkMatch.All" Href="product" Icon="fas fa-boxes">
                         Produkter
                     </MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All" Href="order" Icon="fas fa-file-alt">
+                    <MudNavLink Match="NavLinkMatch.All" Href="order" Icon="fas fa-list-alt">
                         Ordre
                     </MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Href="order/history" Icon="fas fa-history">
                         Ordrehistorik
                     </MudNavLink>
-                    <MudDivider Class="my-2"/>
                 </Authorized>
             </AuthorizeView>
+            <LoginDisplay/>
         </MudPaper>
     </ChildContent>
 </MudMenu>

@@ -12,7 +12,7 @@
         There does not seem any order with this id.
     </p>
 }
-else if (_Status != OrderStatus.Pending)
+else if (_Status != OrderStatus.Afventer)
 {
     <p>
         We have already accepted your order, please contact us for further details.
@@ -42,10 +42,10 @@ else
                 _Status = _Order.Status;
 
 
-                if (_Order.Status == OrderStatus.Pending)
+                if (_Order.Status == OrderStatus.Afventer)
                 {
                     Order o = ctx.Orders.Update(_Order).Entity;
-                    o.Status = OrderStatus.Cancelled;
+                    o.Status = OrderStatus.Annulleret;
 
                     Change c = new Change( DateTime.Now.ToString("")
                                          , "Customer cancelled order"

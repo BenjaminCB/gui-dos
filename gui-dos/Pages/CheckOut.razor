@@ -4,9 +4,9 @@
 @using gui_dos.Data
 @using Microsoft.EntityFrameworkCore
 
+@inject NavigationManager NavMan
 @inject Data.ShoppingCart ShoppingCart
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
-@inject NavigationManager NavMan
 
 <EditForm Model="@orderForm" OnValidSubmit="OrderOrder">
     <DataAnnotationsValidator />
@@ -36,7 +36,7 @@
                         Counter="500" MaxLength="500" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
                     </MudItem>
                     <MudItem xs="12" Class="d-flex justify-center">
-                        <MudButton Class="mt-8" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Send order</MudButton>
+                        <MudButton Class="mt-8" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Bestil ordre</MudButton>
                     </MudItem>
                 </MudGrid>
             </MudItem>
@@ -65,7 +65,7 @@
                         <MudDivider />
                         <div class="d-flex pa-4">
                             <MudText>Total:</MudText>
-                            <MudText Class="ml-auto"><b>@ShoppingCart.Total,- kr.</b></MudText>
+                            <MudText Class="ml-auto"><b>@ShoppingCart.Total kr.</b></MudText>
                         </div>
                     </div>
                 </MudPaper>
@@ -76,22 +76,32 @@
 
 @code
 {
+    [Inject] private IDialogService DialogService { get; set; }
     private OrderForm orderForm = new OrderForm();
 
     private async Task OrderOrder()
     {
-        using (var ctx = DbContextFactory.CreateDbContext())
-        {
-            Order order = new Order(ShoppingCart.GiftBaskets);
-            order.FillInformation(orderForm);
+        bool? result = await DialogService.ShowMessageBox(
+            "Bekræft bestilling",
+            "Er du sikker på du vil bestille din ordre?",
+            yesText:"Ja", noText:"Nej");
 
-            Change c = new Change(DateTime.Now.ToString(), "Order lavet", "kunde");
-            order.Changelog.Add(c);
+        if(result == true) {
+            using (var ctx = DbContextFactory.CreateDbContext())
+            {
+                Order order = new Order(ShoppingCart.GiftBaskets);
+                order.FillInformation(orderForm);
 
-            ctx.Orders.Add(order);
-            await ctx.SaveChangesAsync();
+                Change c = new Change(DateTime.Now.ToString(), "Ordre oprettet", "Kunde");
+                order.Changelog.Add(c);
+
+                ctx.Orders.Add(order);
+                await ctx.SaveChangesAsync();
+
+                ShoppingCart.GiftBaskets.Clear();
+            }
+            NavMan.NavigateTo("/shop");
         }
-        NavMan.NavigateTo("/shop");
     }
 
     private IEnumerable<string> MaxCharacters(string ch)
