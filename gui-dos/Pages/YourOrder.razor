@@ -46,10 +46,32 @@
                         <MudText Typo="Typo.body1" Class="mt-1"><strong>Dato bestilt:</strong> @_Order.DateOrdered.ToShortDateString()</MudText>
                         <MudText Typo="Typo.body1" Class="mt-1 mb-4"><strong>Ønkset afhentningsdato:</strong> @_Order.DateDeadline.ToShortDateString()</MudText>
                     </div>
-                    <div class="d-flex justify-space-between">
+
+                    @if (_Status == OrderStatus.Afventer)
+                    {
+                        <div class="d-flex justify-space-between">
+                            <MudText Class="mb-4"><strong>Status på ordre:</strong> @_Order.Status</MudText>
+                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="mb-4" StartIcon="@Icons.Material.Filled.Cancel" OnClick="@TogglePopOver">Annuller ordre</MudButton>
+                            <MudPopover Open="@_IsOpen" Fixed="true" Class="px-4 pt-4">
+                                <div class="d-flex flex-column">
+                                    <MudText>Er du sikker på at du vil annullere denne ordre?</MudText>
+                                    <div class="d-flex justify-space-between">
+                                        <MudButton OnClick="@TogglePopOver" Class="ml-1" Color="Color.Error">Nej</MudButton>
+                                        <MudButton @onclick="() => CancelOrder()" Class="mr-1" Color="Color.Error">Ja</MudButton>
+                                    </div>
+                                </div>
+                            </MudPopover>
+                        </div>
+                    }
+                    else if (_Status == OrderStatus.Accepteret)
+                    {
+                        <MudText Class="mb-1"><strong>Status på ordre:</strong> @_Order.Status</MudText>
+                        <MudText Class="mb-4">Denne ordre er allerede accepteret. Du bedes ringe hvis du ønkser at annullere den.</MudText>
+                    }
+                    else
+                    {
                         <MudText Class="mb-4"><strong>Status på ordre:</strong> @_Order.Status</MudText>
-                        <MudButton Variant="Variant.Filled" Size="Size.Small" Class="mb-4" StartIcon="@Icons.Material.Filled.Cancel" @onclick="() => CancelOrder()">Annuller ordre</MudButton>
-                    </div>
+                    }
                 </MudItem>
             </div>
         </MudPaper>
@@ -61,6 +83,8 @@
     public string CancelId { get; set; }
 
     private Order _Order { get; set; }
+    private OrderStatus _Status;
+    public bool _IsOpen;
 
     protected override async Task OnInitializedAsync()
     {
@@ -69,6 +93,8 @@
             try
             {
                 _Order = await context.Orders.SingleAsync(c => c.CancelId == CancelId);
+                _Status = _Order.Status;
+
             }
             catch
             {
@@ -78,9 +104,39 @@
 
     }
 
-    private void CancelOrder()
+    public void TogglePopOver()
     {
-        NavMan.NavigateTo($"/info/cancel/{CancelId}");
+        if (_IsOpen)
+            _IsOpen = false;
+        else
+            _IsOpen = true;
+    }
+
+    private async Task CancelOrder()
+    {
+        using (var context = DbContextFactory.CreateDbContext())
+        {
+
+            if (_Order.Status == OrderStatus.Afventer)
+            {
+                Order o = context.Orders.Update(_Order).Entity;
+                o.Status = OrderStatus.Annulleret;
+
+                Change c = new Change(DateTime.Now.ToString("")
+                                     , "Customer cancelled order"
+                                     , "Customer");
+
+                o.Changelog.Add(c);
+
+                await context.SaveChangesAsync();
+
+                TogglePopOver();
+            }
+            else
+            {
+
+            }
+        }
     }
 
 }
