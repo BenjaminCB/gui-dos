@@ -25,7 +25,12 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" />
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-primary">Registrer</button>
+            <div class="form-group">
+                <a href="/admin/users">
+                    <button type="button" class="btn btn-primary">Tilbage</button>
+                </a>
+                <button type="submit" class="btn btn-primary">Registrer</button>
+            </div>
         </form>
     </div>
 </div>

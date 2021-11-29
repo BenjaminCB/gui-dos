@@ -7,6 +7,7 @@
     </ActivatorContent>
     <ChildContent>
         <MudPaper Elevation="0" MinWidth="10vw">
+            @* Visible for all users *@
             <MudText Align="Align.Center" Typo="Typo.h6">Menu</MudText>
             <MudNavLink Match="NavLinkMatch.All" Href="" Icon="fas fa-home">
                 Forside
@@ -14,6 +15,7 @@
             <MudNavLink Match="NavLinkMatch.All" Href="shop" Icon="fas fa-gifts">
                 Webshop
             </MudNavLink>
+            @* Visible for registered users *@
             <AuthorizeView>
                 <Authorized>
                     <MudText Align="Align.Center" Typo="Typo.h6">Administrer</MudText>
@@ -25,6 +27,14 @@
                     </MudNavLink>
                     <MudNavLink Match="NavLinkMatch.All" Href="order/history" Icon="fas fa-history">
                         Ordrehistorik
+                    </MudNavLink>
+                </Authorized>
+            </AuthorizeView>
+            @* Visible for admin of page *@
+            <AuthorizeView Roles="superuser">
+                <Authorized>
+                    <MudNavLink Match="NavLinkMatch.All" Href="admin/users" Icon="fas fa-users">
+                        Medarbejdere
                     </MudNavLink>
                 </Authorized>
             </AuthorizeView>
