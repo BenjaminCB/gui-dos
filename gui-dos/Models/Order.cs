@@ -78,7 +78,7 @@ namespace gui_dos.Models
             switch (Status)
             {
                 case OrderStatus.Afventer:
-                    return $"Hej {FirstName}, din odre er nu modtaget, men endnu ikke accepteret. Du vil få en mail mere når dette sker. Du kan annullere din odre på isvaerftet.dk/shop/cancel/{CancelId}";
+                    return $"Hej {FirstName}, din odre er nu modtaget, men endnu ikke accepteret. Du vil få en mail mere når dette sker. Du kan annullere din odre på isvaerftet.dk/info/{CancelId}";
                 case OrderStatus.Accepteret:
                     return $"Hej {FirstName}, din odre er nu accepteret. Du kan lave ændringer til din odre ved at kontakte isværftet på Mail: hej@isvaerftet.dk Mobil: 22907778.";
                 case OrderStatus.Afsluttet:
