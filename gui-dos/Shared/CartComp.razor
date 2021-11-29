@@ -15,51 +15,56 @@ else
 
             @* Giftbasket title & delete button*@
             <div class="d-flex justify-space-between mb-1">
-                <MudText Typo="Typo.body1">
+                <MudText Typo="Typo.h6">
                     <strong>@gb.Title</strong>
                 </MudText>
-                <MudIconButton Icon="@Icons.Outlined.Delete" Color="Color.Tertiary" Size="Size.Small" OnClick="() => remove(gb)"/>
+                <MudIconButton Icon="@Icons.Outlined.Delete" Size="Size.Small" OnClick="() => remove(gb)"/>
             </div>
 
             @* Gifbasket comment *@
             @if(gb.Comment != String.Empty) 
             {
-                <MudText Typo="Typo.body2">
-                    <strong>Kommentar: </strong> "@gb.Comment"
+                <MudText Typo="Typo.subtitle1">Kommentar:</MudText>
+                <MudText Typo="Typo.caption" Class="text-break">
+                    "@gb.Comment"
                 </MudText>
             }   
 
             @* Giftbasket price *@
             <div class="d-flex justify-space-between mt-1">
-                <MudText Typo="Typo.body2">
+                <MudText Typo="Typo.subtitle1">
                     <strong>Pris: </strong>
                 </MudText>
-                <MudText Typo="Typo.body2">@gb.Price.ToString("N2") kr.</MudText>
+                <MudText>@gb.Price.ToString("N2") kr.</MudText>
             </div>        
         </div>
     }
-
+    <MudDivider/>
     @* Cart total *@
     <div class="d-flex justify-space-between m-2">
-        <MudText Typo="Typo.body1">
-            <strong>Samlet pris: </strong>
+        <MudText Typo="Typo.subtitle1">
+            <strong>Total: </strong>
         </MudText>
-        <MudText Typo="Typo.body1">@ShoppingCart.Total.ToString("N2") kr.</MudText>
+        <MudText>@ShoppingCart.Total.ToString("N2") kr.</MudText>
     </div>
 
     @* Order cart button *@
     <div class="d-flex justify-space-between m-2">
-        <MudButton Class="rounded-pill" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=removeAll>
-            <MudText Typo="Typo.body2">Tøm kurv</MudText>
+        <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=removeAll>
+            Tøm kurv
         </MudButton>
-        <MudButton Class="rounded-pill" Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=goToOrder>
-            <MudText Typo="Typo.body2">Gå til kassen</MudText>
+        <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=goToOrder>
+            Gå til kassen
         </MudButton>
     </div>
 }
 
 @code
 {
+    [Inject] private IDialogService DialogService { get; set; }
+    protected override void OnInitialized() {
+        ShoppingCart.ComponentChanged += StateHasChanged;
+    }
     private void goToOrder()
     {
         NavMan.NavigateTo("/checkout");
@@ -68,14 +73,18 @@ else
     private void remove(GiftBasket gb)
     {
         ShoppingCart.GiftBaskets.Remove(gb);
+        ShoppingCart.CallComponentChanged();
     }
-    private void removeAll() 
+    private async void removeAll() 
     {
-        ShoppingCart.GiftBaskets.Clear();
-    }
-
-    public void Refresh()
-    {
-        StateHasChanged();
+        bool? result = await DialogService.ShowMessageBox(
+            "Bekræft",
+            "Er du sikker på du vil fjerne alle tilføjede varer fra din kurv?",
+            yesText:"Ja", noText:"Nej"
+        );
+        if(result == true) {
+            ShoppingCart.GiftBaskets.Clear();
+            ShoppingCart.CallComponentChanged();
+        }
     }
 }

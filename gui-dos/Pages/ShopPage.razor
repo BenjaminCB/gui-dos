@@ -3,22 +3,54 @@
 @using Microsoft.EntityFrameworkCore
 @using System.Linq
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject ShoppingCart ShoppingCart
 
 @* Filter/cart bar *@
-<div class="d-flex justify-space-around my-4">
-    @* Filter button *@
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-4 border border-dark"
-     StartIcon="@Icons.Outlined.FilterList" OnClick="ToggleFilterDrawer" FullWidth="true">
-        <MudText Typo="Typo.h6">Filter</MudText>
-    </MudButton>
+<div class="d-flex justify-start my-4">
+
+    @* Filter menu *@
+    <MudMenu AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft">
+        <ActivatorContent>
+            <MudButton StartIcon="@Icons.Filled.FilterList" Color="Color.Primary" Variant="Variant.Filled" Class="border border-dark mx-2">
+                Filter
+            </MudButton>
+        </ActivatorContent>
+        <ChildContent>
+            <div class="m-2">
+                @* Price filter *@
+                <MudText Typo="Typo.h5">Pris</MudText>
+                <div class="p-2 border rounded mb-2">
+                    <MudText Typo="Typo.body1">Maks. pris: <strong>@setPrice.ToString("N2") kr.</strong> </MudText>
+                    <MudSlider @bind-Value="setPrice" Max="maxPrice" Min="minPrice" Step="1"/>
+                </div>
+
+
+                @* Tag filter *@
+                <MudText Typo="Typo.h5">Indhold</MudText>
+                <div class="p-2 border rounded mb-2">
+                    @foreach(string key in tags.Keys) 
+                    {
+                        <MudCheckBox @bind-Checked=@tags[key] Label="@key" Dense="true" Color="Color.Primary"/> <br/>
+                    }
+                    <MudChip Variant="Variant.Outlined" Color="Color.Primary" OnClick="() => SetAllTags(true)">Vælg alle</MudChip>
+                    <MudChip Variant="Variant.Outlined" Color="Color.Primary" OnClick="() => SetAllTags(false)">Fravælg alle</MudChip>
+                </div>
+            </div>
+        </ChildContent>
+    </MudMenu>
+
     @* Cart button *@
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="mx-4 border border-dark"
-     EndIcon="@Icons.Outlined.ShoppingCart" OnClick="ToggleCartDrawer" FullWidth="true">
-        <MudText Typo="Typo.h6">Kurv</MudText>
-    </MudButton>
+    <MudBadge Content="ShoppingCart.GiftBaskets.Count" Color="Color.Error" Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
+        <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled" Class="border border-dark mx-2" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
+            Kurv
+        </MudButton>
+    </MudBadge>
 </div>
+
+<MudDivider/>
+
 @* Product Grid *@
-<div class="d-flex justify-center flex-wrap">
+<div class="d-flex justify-center flex-wrap my-4">
     @foreach (var product in products)
     {
         @if (FilterProduct(product))
@@ -28,35 +60,14 @@
     }
 </div>
 
-@* Filter Drawer *@
-<MudDrawer @bind-Open=@filterDrawerOpen Elevation="10" Anchor="Anchor.Start" Class="p-2"
- Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always" Color="Color.Primary">
-    <MudText Typo="Typo.h4" Align="Align.Center">Filter</MudText>
-    <MudText Typo="Typo.h5">Pris</MudText>
-    <div class="border rounded p-2 my-2">
-        <MudText Typo="Typo.body1">Maks. pris: @setPrice.ToString("N2") kr.</MudText>
-        <input type="range" min="@minPrice" max="@maxPrice" class="slider" step="1" @bind="setPrice" @bind:event="oninput"/>
-    </div>
-    <MudText Typo="Typo.h5">Præferencer</MudText>
-    <div class="border rounded p-2 my-2">
-        @foreach(string tag in tags.Keys) 
-        {
-            <MudCheckBox @bind-Checked=@tags[tag] Label="@tag"/>
-        }
-    </div>
-</MudDrawer>
-
 @* Cart Drawer *@
-<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2" Width="300px"
- Variant="DrawerVariant.Temporary" ClipMode="DrawerClipMode.Always" Color="Color.Primary">
+<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Class="p-2" Width="300px" Breakpoint="Breakpoint.Xl" ClipMode="DrawerClipMode.Always">
     <MudText Typo="Typo.h4" Align="Align.Center">Indkøbskurv</MudText>
-    <CartComp @ref=@cart/>
+    <CartComp/>
 </MudDrawer>
 
 @code 
 {
-    private CartComp cart;
-    private bool filterDrawerOpen = false;
     private bool cartDrawerOpen = false;
     private double maxPrice;
     private double minPrice;
@@ -66,6 +77,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+        ShoppingCart.ComponentChanged += StateHasChanged;
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             products = await ctx.Products.ToListAsync();
@@ -97,12 +109,9 @@
         return true;
     }
 
-    private void ToggleFilterDrawer() {
-        filterDrawerOpen = !filterDrawerOpen;
-    }
-
-    private void ToggleCartDrawer() {
-        cart.Refresh();
-        cartDrawerOpen = !cartDrawerOpen;
+    private void SetAllTags(bool select) {
+        foreach(string key in tags.Keys) {
+            tags[key] = select;
+        }
     }
 }

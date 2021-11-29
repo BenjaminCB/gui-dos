@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using gui_dos.Models;
@@ -7,6 +8,10 @@ namespace gui_dos.Data
     public class ShoppingCart
     {
         public List<GiftBasket> GiftBaskets { get; set; }
+        public event Action ComponentChanged;
+        public void CallComponentChanged() {
+            ComponentChanged?.Invoke();
+        }
 
         public double Total 
         {
