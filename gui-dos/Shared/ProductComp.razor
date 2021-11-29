@@ -1,8 +1,8 @@
 @inject ShoppingCart ShoppingCart
 
 @* Product card *@
-<MudPaper Width="@cardWidth" Style="position: relative;" Elevation="@elevation" Class="mud-primary m-3 border border-dark" @onmouseenter="Elevate" @onmouseleave="DeElevate">
-    
+<MudPaper Width="@cardWidth" Style="position: relative;" Elevation="@elevation" Class="mud-primary d-flex flex-column m-3 border border-dark" @onmouseenter="Elevate" @onmouseleave="DeElevate">
+  
     @* Product card image(s) *@
     <MudCarousel Class="rounded-top border-bottom border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
     ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:300px;"> 
@@ -14,20 +14,18 @@
 
     @* Product card text *@
     <div class="d-flex justify-space-between m-2">
-        <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
+        <MudText Typo="Typo.h6" Color="Color.Tertiary" Class="text-break">
             @Product.Title
         </MudText>
-        <div>
-            <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
-                @Product.Price.ToString("N2") kr.
-            </MudText>
-        </div> 
+        <MudText Typo="Typo.h6" Color="Color.Tertiary" Class="text-nowrap">
+            @Product.Price kr.
+        </MudText>
     </div>
 
     @* Show description on card if not in shopview *@
     @if(!ShopView)
     {
-        <MudText Typo="Typo.body2" Color="Color.Tertiary" Class="m-2">
+        <MudText Typo="Typo.body2" Color="Color.Tertiary" Class="text-break m-2">
             <strong>Beskrivelse: </strong>@Product.Description <br/>
             <strong>Tags: </strong>@Product.Tags
         </MudText>
@@ -37,7 +35,7 @@
     @if(ShopView) 
     {
         @* Product card buttons *@
-        <div class="d-flex justify-space-between m-2">
+        <div class="d-flex justify-space-between m-2 mt-auto">
             <MudButton Variant="Variant.Outlined" Color="Color.Tertiary" OnClick="ToggleOverlay" Class="rounded-pill">
                 Se mere
             </MudButton>
@@ -51,24 +49,21 @@
             <MudPaper Class="mud-primary border border-dark" Width="@cardWidth" Square="true">
         
                 <div class="d-flex justify-space-between p-4">
-                    <MudText Typo="Typo.h6" Color="Color.Tertiary">
+                    <MudText Typo="Typo.h6" Color="Color.Tertiary" Class="text-break">
                         @Product.Title
                     </MudText>
-                    <div>
-                        <MudText Typo="Typo.h6" Color="Color.Tertiary" Inline="true">
-                            @Product.Price.ToString("N2") kr.
-                        </MudText>
-                    </div> 
+                    <MudText Typo="Typo.h6" Color="Color.Tertiary" Class="text-nowrap">
+                        @Product.Price kr.
+                    </MudText>
                 </div>
 
-                <MudText Typo="Typo.body1" Color="Color.Tertiary" Class="p-4">
+                <MudText Typo="Typo.body1" Color="Color.Tertiary" Class="text-break p-4">
                     @Product.Description
                 </MudText>
 
             </MudPaper>
         </MudOverlay>
     }
-
 </MudPaper>
 
 @* Ordering overlay *@
@@ -85,10 +80,14 @@
             <div class="m-3" style="max-width:400px"> 
                 <div class="mb-3">
                     @* Ordering layout product title *@
-                    <MudText Typo="Typo.h5" Color="Color.Tertiary" Align="Align.Center">@Product.Title</MudText>
+                    <MudText Typo="Typo.h5" Color="Color.Tertiary" Align="Align.Center" Class="text-break">
+                        @Product.Title
+                    </MudText>
 
                     @* Ordering layout product description *@
-                    <MudText Typo="Typo.body1" Color="Color.Tertiary">@Product.Description</MudText>
+                    <MudText Typo="Typo.body1" Color="Color.Tertiary" Class="text-break">
+                        @Product.Description
+                    </MudText>
                 </div>
 
                 <MudDivider/>
@@ -101,15 +100,20 @@
                 </div>
 
                 @* Ordering overlay buttons *@
-                <div class="d-flex justify-space-between mt-3">
+                <div class="d-flex flex-row align-items-end justify-space-between mt-3">
                     <MudButton Class="m-2 rounded-pill" StartIcon="@Icons.Outlined.ArrowBack" IconColor="Color.Tertiary" 
-                    Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@ToggleOrder>
+                     Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@ToggleOrder>
                         Tilbage
                     </MudButton>
-                    <MudButton Class="m-2 rounded-pill" EndIcon="@Icons.Outlined.AddShoppingCart" IconColor="Color.Tertiary" 
-                    Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@AddToCart>
-                        Tilføj til kurv
-                    </MudButton>
+                    <div>
+                        <MudText Typo="Typo.h6" Color="Color.Tertiary" Align="Align.Right" Class="text-nowrap">
+                            @Product.Price kr.
+                        </MudText>
+                        <MudButton Class="m-2 rounded-pill" EndIcon="@Icons.Outlined.AddShoppingCart" IconColor="Color.Tertiary" 
+                         Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@AddToCart>
+                            Tilføj til kurv
+                        </MudButton>
+                    </div>
                 </div>
             </div>
         </div>
