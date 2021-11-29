@@ -10,7 +10,7 @@
 <AuthorizeView>
     <Authorized>
         <div class="text-center">
-            <MudText Typo="Typo.h2">Produkter</MudText>
+            <MudText Typo="Typo.h4">Produkter</MudText>
             <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.Add" Variant="Variant.Filled" Class="rounded-pill border border-dark" OnClick="productInsert">
                 Nyt produkt
             </MudButton>
@@ -32,13 +32,13 @@
                 @foreach (var product in products)
                 {
                     <div class="m-2 mud-secondary rounded border border-dark">
-                        <ProductCard Product="@product" ShopView="false"/>
+                        <ProductComp Product="@product" ShopView="false"/>
                         <div class="d-flex justify-space-between mx-4 mb-4">
                             <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-pill border border-dark" OnClick="() => productEdit(product)">
                                 Rediger
                             </MudButton>
                             <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-pill border border-dark" OnClick="() => productChangelog(product)">
-                                Ændringer
+                                Historik
                             </MudButton>
                             <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-pill border border-dark" OnClick="() => productDelete(product)">
                                 Slet

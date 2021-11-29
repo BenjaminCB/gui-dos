@@ -11,27 +11,25 @@
         @if (changelog == null)
         {
             <div class="text-center m-3">
-                <MudText Align="Align.Center" Typo="Typo.h6" Class="m-2">
+                <MudText Align="Align.Center" Typo="Typo.h5" Class="m-2">
                     Ingen ordre med nr. @OrderId fundet i databasen
                 </MudText>
-                <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Link="/order"
-                Variant="Variant.Filled" Class="rounded-pill border border-dark">
+                <MudButton StartIcon="@Icons.Filled.ArrowBack" Link="/order" Variant="Variant.Outlined">
                     Tilbage
                 </MudButton> 
             </div>  
         }
         else
         {
-            <div class="text-center m-3">
-                <MudText Align="Align.Center" Typo="Typo.h5" Class="m-2">
-                    Ændringshistorik af ordre nr. @order.OrderId
-                </MudText>
-                <MudButton Color="Color.Primary" StartIcon="@Icons.Filled.ArrowBack" Link="/order" 
-                Variant="Variant.Filled" Class="rounded-pill border border-dark">
-                    Tilbage
-                </MudButton> 
-            </div>   
             <MudTable Items=@changelog Hover="true" Class="border border-dark m-2">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h5" Class="mr-auto">
+                        Historik for ordre nr. @order.OrderId
+                    </MudText>
+                    <MudButton StartIcon="@Icons.Filled.ArrowBack" Link="/order" Variant="Variant.Outlined">
+                        Tilbage
+                    </MudButton> 
+                </ToolBarContent>
                 <HeaderContent>
                     <MudTh Style="width:60%">Ændring:</MudTh>
                     <MudTh Style="width:20%">Af:</MudTh>

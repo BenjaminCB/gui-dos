@@ -1,0 +1,68 @@
+@page "/admin/users"
+
+@using System
+@using System.IO
+@using System.Collections.Generic
+@using gui_dos.Models
+@using gui_dos.Forms
+@using gui_dos.Data
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.Forms
+@using gui_dos.Areas.Identity;
+@using Microsoft.AspNetCore.Identity;
+
+@inject UserManager<IdentityUser> UserManager
+
+<AuthorizeView Roles="superuser">
+    <Authorized>
+        <MudTable Items="_users" Context="content" Hover="true" Class="border border-dark m-2">
+            <ToolBarContent>
+                <MudText Typo="Typo.h4" Class="mr-auto">Brugere</MudText>
+                <MudButton Link="/admin/register" Variant="Variant.Outlined" StartIcon="@Icons.Filled.Add">Opret ny</MudButton>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh Style="width:90%">Brugernavn</MudTh>
+                <MudTh Style="width:10%">Slet</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Brugernavn">@content.UserName</MudTd>
+                <MudTd DataLabel="Slet">
+                    <MudButton StartIcon="@Icons.Filled.Delete" Color="Color.Error" Variant="Variant.Filled" OnClick="() => DeleteUser(content)">Slet</MudButton>
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    </Authorized>
+    <NotAuthorized>
+        <LoginDisplay />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    [Inject] private IDialogService DialogService { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    List<IdentityUser> _users = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        string name = (await authenticationStateTask).User.Identity.Name;
+        _users = UserManager.Users
+                            .Where(u => u.UserName != name)
+                            .ToList();
+    }
+
+    private async void DeleteUser(IdentityUser user)
+    {
+        bool? result = await DialogService.ShowMessageBox(
+            $"Bekræft sletning af bruger",
+            $"Er du sikker på du vil slette den registrerede bruger {user.UserName}?",
+            yesText:"Ja", noText:"Nej"
+        );
+        if(result == true) {
+            await UserManager.DeleteAsync(user);
+            _users.Remove(user);
+            StateHasChanged();
+        }
+    }
+}
