@@ -46,6 +46,10 @@
                         <MudText Typo="Typo.body1" Class="mt-1"><strong>Dato bestilt:</strong> @_Order.DateOrdered</MudText>
                         <MudText Typo="Typo.body1" Class="mt-1 mb-4"><strong>Ønkset afhentningsdato:</strong> @_Order.DateDeadline</MudText>
                     </div>
+                    <div class="d-flex justify-space-between">
+                        <MudText Class="mb-4"><strong>Status på ordre:</strong> @_Order.Status</MudText>
+                        <MudButton Variant="Variant.Filled" Size="Size.Small" Class="mb-4" StartIcon="@Icons.Material.Filled.Cancel" @onclick="() => CancelOrder()">Annuller ordre</MudButton>
+                    </div>
                 </MudItem>
             </div>
         </MudPaper>
@@ -58,7 +62,7 @@
 
     private Order _Order { get; set; }
 
-    private async Task LoadOrder()
+    protected override async Task OnInitializedAsync()
     {
         using (var context = DbContextFactory.CreateDbContext())
         {
@@ -68,5 +72,10 @@
         }
 
     }
+
+    private void CancelOrder()
+        {
+            NavMan.NavigateTo($"/info/cancel{CancelId}");
+        }
 
 }
