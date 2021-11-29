@@ -66,16 +66,21 @@
     {
         using (var context = DbContextFactory.CreateDbContext())
         {
-            //_Order = await context.Orders.AsNoTracking().SingleOrDefaultAsync(c => c.CancelId == CancelId);
-            _Order = await context.Orders.SingleAsync(c => c.CancelId == CancelId);
-
+            try
+            {
+                _Order = await context.Orders.SingleAsync(c => c.CancelId == CancelId);
+            }
+            catch
+            {
+                _Order = null;
+            }
         }
 
     }
 
     private void CancelOrder()
-        {
-            NavMan.NavigateTo($"/info/cancel/{CancelId}");
-        }
+    {
+        NavMan.NavigateTo($"/info/cancel/{CancelId}");
+    }
 
 }
