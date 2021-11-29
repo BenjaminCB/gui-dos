@@ -14,9 +14,11 @@
             </form>
         </Authorized>
         <NotAuthorized>
-            <MudButton Link="/admin/login" StartIcon="fas fa-sign-in-alt" Variant="Variant.Text">
-                Log ind
-            </MudButton>
+            <a href="/admin/login" style="text-decoration: none">
+                <MudButton StartIcon="fas fa-sign-in-alt" Variant="Variant.Text">
+                    Log ind
+                </MudButton>
+            </a>
         </NotAuthorized>
     </AuthorizeView>
 </div>
