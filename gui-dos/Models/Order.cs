@@ -13,8 +13,7 @@ namespace gui_dos.Models
     [Table("orders")]
     public class Order
     {
-        [Key]
-        public int OrderId { get; set; }
+        [Key] public int OrderId { get; set; }
 
         ///<summary>Gets or sets the status of the order. </summary>
         public OrderStatus Status { get; set; }
@@ -57,21 +56,42 @@ namespace gui_dos.Models
         public void SendStatusMail()
         {
             var mailMessage = new MimeMessage();
-            mailMessage.From.Add(new MailboxAddress("Isvaerftet", "noreply@Isvaerftet.dk"));
+            mailMessage.From.Add(new MailboxAddress("Isvaerftet", "no-reply@Isvaerftet.dk"));
             mailMessage.To.Add(new MailboxAddress(FirstName + " " + LastName, Email));
             mailMessage.Subject = "Din ordre er nu " + Status;
             mailMessage.Body = new TextPart("plain")
             {
-                Text = $"Hej, {FirstName} din ordre er nu {Status}"
+                Text = MailStringConstructor()
             };
 
             using (var smtpClient = new SmtpClient())
             {
-                smtpClient.Connect ("smtp.gmail.com", 465, true);
-                smtpClient.Authenticate("Username", "Password");
+                smtpClient.Connect("send.one.com", 465, true);
+                smtpClient.Authenticate("no-reply@isvaerftet.dk", "Gavekurv2021");
                 smtpClient.Send(mailMessage);
                 smtpClient.Disconnect(true);
             }
+        }
+
+        private string MailStringConstructor()
+        {
+            switch (Status)
+            {
+                case OrderStatus.Afventer:
+                    return $"Hej {FirstName}, din odre er nu modtaget, men endnu ikke accepteret. Du vil få en mail mere når dette sker. Du kan annullere din odre på isvaerftet.dk/info/{CancelId}";
+                case OrderStatus.Accepteret:
+                    return $"Hej {FirstName}, din odre er nu accepteret. Du kan lave ændringer til din odre ved at kontakte isværftet på Mail: hej@isvaerftet.dk Mobil: 22907778.";
+                case OrderStatus.Afsluttet:
+                    return $"Hej {FirstName}, din odre er nu færdig. Du kan hente din gavekurv ved Isværftet; Stjernepladsen 43, 9000 Aalborg.";
+                case OrderStatus.Annulleret:
+                    return $"Hej {FirstName}, din odre er blevet annulleret. Hvis dette er en fejl kan du kontakte på Mail: hej@isvaerftet.dk Mobil: 22907778.";
+                case OrderStatus.Afhentet:
+                    return $"Hej, {FirstName}, Du har nu afhentet din odre.";
+                case OrderStatus.Afslået:
+                    return $"Hej {FirstName}, din odre er desværre blevet afslået, dette betyder at din odre ikke bliver udarbejdet, du kan evt. kontakte isværftet på Mail: hej@isvaerftet.dk Mobil: 22907778.";
+            }
+
+            return "Der er sket en fejl i systemet, venligst kontakt isværftet på Mail: hej@isvaerftet.dk Mobil: 22907778.";
         }
 
         ///<summary>Constructs an order object.
