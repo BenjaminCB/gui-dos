@@ -78,20 +78,20 @@ namespace gui_dos.Models
             switch (Status)
             {
                 case OrderStatus.Afventer:
-                    return $"Hej {FirstName}, din odre er nu modtaget, men endnu ikke accepteret. Du vil få en mail mere når dette sker. Du kan annullere din odre på isvaerftet.dk/info/{CancelId}";
+                    return $"Hej {FirstName}, din ordre er nu modtaget, men endnu ikke accepteret. Du vil få en mail mere når dette sker. Du kan annullere din ordre på isvaerftet.dk/info/{CancelId}";
                 case OrderStatus.Accepteret:
-                    return $"Hej {FirstName}, din odre er nu accepteret. Du kan lave ændringer til din odre ved at kontakte isværftet på Mail: hej@isvaerftet.dk Mobil: 22907778.";
+                    return $"Hej {FirstName}, din ordre er nu accepteret. Du kan lave ændringer til din ordre ved at kontakte isværftet på Mail: hej@isvaerftet.dk eller Mobil: 22907778.";
                 case OrderStatus.Afsluttet:
-                    return $"Hej {FirstName}, din odre er nu færdig. Du kan hente din gavekurv ved Isværftet; Stjernepladsen 43, 9000 Aalborg.";
+                    return $"Hej {FirstName}, din ordre er nu færdig. Du kan hente din ordre ved Isværftet. Adresse: Stjernepladsen 43, 9000 Aalborg.";
                 case OrderStatus.Annulleret:
-                    return $"Hej {FirstName}, din odre er blevet annulleret. Hvis dette er en fejl kan du kontakte på Mail: hej@isvaerftet.dk Mobil: 22907778.";
+                    return $"Hej {FirstName}, din ordre er blevet annulleret. Hvis dette er en fejl kan du kontakte på Mail: hej@isvaerftet.dk eller Mobil: 22907778.";
                 case OrderStatus.Afhentet:
-                    return $"Hej, {FirstName}, Du har nu afhentet din odre.";
+                    return $"Hej, {FirstName}, Du har nu afhentet din ordre. Tak for at handle hos os, og vi håber at se dig igen!";
                 case OrderStatus.Afslået:
-                    return $"Hej {FirstName}, din odre er desværre blevet afslået, dette betyder at din odre ikke bliver udarbejdet, du kan evt. kontakte isværftet på Mail: hej@isvaerftet.dk Mobil: 22907778.";
+                    return $"Hej {FirstName}, din ordre er desværre blevet afslået, dette betyder at din ordre ikke bliver lavet. Du kan evt. kontakte Isværftet på Mail: hej@isvaerftet.dk eller Mobil: 22907778.";
             }
 
-            return "Der er sket en fejl i systemet, venligst kontakt isværftet på Mail: hej@isvaerftet.dk Mobil: 22907778.";
+            return "Der er sket en fejl i systemet, venligst kontakt isværftet på Mail: hej@isvaerftet.dk eller Mobil: 22907778.";
         }
 
         ///<summary>Constructs an order object.
