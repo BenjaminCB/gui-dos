@@ -55,7 +55,7 @@
     {
         <MudButton EndIcon="@Icons.Outlined.Payment" Color="Color.Primary" Variant="Variant.Filled" 
          Class="border border-dark mx-3" OnClick="GoToCheckout">
-            Til kassen
+            Til bestilling
         </MudButton>
     }
 </div>
@@ -94,6 +94,7 @@
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             products = await ctx.Products.ToListAsync();
+            products = new List<Product>(products.OrderBy(x => x.Price));
         }
         if(products.Count != 0) {
             maxPrice = products.Select(p => p.Price).Max();
