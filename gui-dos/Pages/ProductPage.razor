@@ -32,9 +32,9 @@
             <div class="d-flex justify-center flex-wrap">
                 @foreach (var product in products)
                 {
-                    <div class="m-2 mud-secondary rounded border border-dark">
+                    <div class="d-flex flex-column m-2 mud-secondary rounded border border-dark">
                         <ProductComp Product="@product" ShopView="false"/>
-                        <div class="d-flex justify-space-between mx-4 mb-4">
+                        <div class="d-flex justify-space-between m-3 mt-auto">
                             <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="rounded-pill border border-dark" OnClick="() => productEdit(product)">
                                 Rediger
                             </MudButton>

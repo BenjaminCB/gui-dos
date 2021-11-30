@@ -92,11 +92,22 @@
 
                 <MudDivider/>
 
+
                 @* Ordering layout add comment *@
                 <div class="mud-tertiary rounded p-2 mt-3">
-                    <MudTextField T="string" Lines="4" DisableUnderLine="true" Label="Kommentar" Counter="200" MaxLength="200" Margin="Margin.Dense"
+                    <MudTextField T="string" Lines="3" DisableUnderLine="true" Label="Kommentar" Counter="200" MaxLength="200" Margin="Margin.Dense"
                      Placeholder="Tilføj en kommentar med specielle ønsker til din gavekurv" HelperText="Ønsker til din valgte gavekurv"
                      HelperTextOnFocus="true" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" @bind-Text=@commentInput/>
+                </div>
+
+                <div class="d-flex align-items-center justify-end mt-3">
+                    <MudText Typo="Typo.h6" Color="Color.Tertiary" Align="Align.Right" Class="text-nowrap">
+                        @Product.Price kr.
+                    </MudText>
+                    <div class="mud-tertiary rounded px-2 pb-2 ml-2" style="width:20%;">
+                        <MudNumericField @bind-Value="amountInput" Min="1" Max="99" DisableUnderLine="true" Margin="Margin.Dense" 
+                         Label="Antal" Style="width:inherit" MaxLength="2"/>
+                    </div>
                 </div>
 
                 @* Ordering overlay buttons *@
@@ -105,15 +116,10 @@
                      Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@ToggleOrder>
                         Tilbage
                     </MudButton>
-                    <div>
-                        <MudText Typo="Typo.h6" Color="Color.Tertiary" Align="Align.Right" Class="text-nowrap">
-                            @Product.Price kr.
-                        </MudText>
-                        <MudButton Class="m-2 rounded-pill" EndIcon="@Icons.Outlined.AddShoppingCart" IconColor="Color.Tertiary" 
-                         Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@AddToCart>
-                            Tilføj til kurv
-                        </MudButton>
-                    </div>
+                    <MudButton Class="m-2 rounded-pill" EndIcon="@Icons.Outlined.AddShoppingCart" IconColor="Color.Tertiary" 
+                     Variant="Variant.Outlined" Color="Color.Tertiary" OnClick=@AddToCart>
+                        Tilføj til kurv
+                    </MudButton>
                 </div>
             </div>
         </div>
@@ -163,6 +169,8 @@
 
     private string commentInput = String.Empty;
 
+    private int amountInput = 1;
+
     private IEnumerable<string> MaxCharacters(string ch)
     {
         if (!string.IsNullOrEmpty(ch) && 200 < ch?.Length)
@@ -186,12 +194,15 @@
 
     private void ToggleOrder() {
         commentInput = String.Empty;
+        amountInput = 1;
         orderVisible = !orderVisible;
     }
 
     private void AddToCart() {
         GiftBasket gb = new GiftBasket(Product.Title, commentInput, Product.Price);
-        ShoppingCart.GiftBaskets.Add(gb);
+        for(int i = 0; i < amountInput; i++) {
+            ShoppingCart.GiftBaskets.Add(gb);
+        }
         ShoppingCart.CallComponentChanged();
         ToggleOrder();
     }
