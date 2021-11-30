@@ -12,28 +12,44 @@
 else
 {
     <MudList>
-        @foreach (var item in ShoppingCart.GiftBaskets)
+        @foreach (var item in ShoppingCart.GiftBaskets.Distinct())
         {
             <div class="border my-2">
                 <MudListItem Dense="true"> 
                     <ChildContent>
                         <div class="d-flex justify-space-between">
-                            <MudText Typo="Typo.subtitle1" Class="text-break mr-1">@item.Title</MudText>
-                            <MudText Typo="Typo.subtitle1" Class="text-nowrap">@item.Price kr.</MudText>
+                            <MudText Typo="Typo.subtitle1" Class="text-break mr-1">
+                                @(ShoppingCart.GiftBaskets.Count(g => g.Equals(item)))x @item.Title
+                            </MudText>
+                            <MudText Typo="Typo.subtitle1" Class="text-nowrap">
+                                @item.Price kr.
+                            </MudText>
                         </div>
                     </ChildContent>
                     <NestedList>
                         <div class="p-2">
-                            @if(item.Comment != String.Empty)
-                            {
-                                <div class="mb-2">
+                            <div class="d-flex justify-space-between">
+                                <MudButton StartIcon="@Icons.Outlined.ExposureNeg1" Size="Size.Small" OnClick="() => Remove(item)">
+                                    Fjern én
+                                </MudButton>
+                                @if(ShoppingCart.GiftBaskets.Count(g => g.Equals(item)) > 1)
+                                {
+                                    <MudButton EndIcon="@Icons.Outlined.Delete" Size="Size.Small" OnClick="() => RemoveAllSingle(item)">
+                                        Fjern alle
+                                    </MudButton>
+                                }
+                            </div>
+                            <div class="mb-2">
+                                @if(item.Comment != String.Empty)
+                                {
                                     <MudText Typo="Typo.subtitle2">Kommentar:</MudText>
                                     <MudText Typo="Typo.caption" Class="text-break">@item.Comment</MudText>
-                                </div>
-                            }
-                            <MudButton StartIcon="@Icons.Outlined.Delete" Size="Size.Small" OnClick="() => Remove(item)">
-                                Fjern fra kurv
-                            </MudButton>
+                                }
+                                else
+                                {
+                                    <MudText Typo="Typo.subtitle1">Ingen kommentar tilføjet</MudText>
+                                }
+                            </div>
                         </div>
                     </NestedList>
                 </MudListItem>
@@ -90,5 +106,10 @@ else
             ShoppingCart.GiftBaskets.Clear();
             ShoppingCart.CallComponentChanged();
         }
+    }
+
+    private void RemoveAllSingle(GiftBasket gb) {
+        ShoppingCart.GiftBaskets.RemoveAll(p => p.Equals(gb));
+        ShoppingCart.CallComponentChanged();
     }
 }

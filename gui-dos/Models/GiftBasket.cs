@@ -34,5 +34,19 @@ namespace gui_dos.Models
             Price = price;
             Status = GiftBasketStatus.Pending;
         }
+
+        public override bool Equals(object obj)
+        {
+            if(obj == null || GetType() != obj.GetType()) {
+                return false;
+            }
+            GiftBasket gb = (obj as GiftBasket);
+            return (Title == gb.Title && Comment == gb.Comment && Price == gb.Price);
+        }
+
+        public override int GetHashCode()
+        {
+            return Title.GetHashCode() ^ Comment.GetHashCode() ^ Price.GetHashCode();
+        }
     }
 }

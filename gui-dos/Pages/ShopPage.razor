@@ -42,7 +42,7 @@
     </MudMenu>
 
     @* Cart button *@
-    <MudBadge Content="ShoppingCart.GiftBaskets.Count" Color="Color.Error" Class="mx-3" 
+    <MudBadge Content="@(ShoppingCart.GiftBaskets.Distinct().Count())" Color="Color.Error" Class="mx-3" 
      Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
         <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled" 
          Class="border border-dark" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
