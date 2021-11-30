@@ -27,11 +27,11 @@
             </MudMenu>
         </ToolBarContent>
         <HeaderContent>
-            <MudTh Style="width:5%"><MudTableSortLabel SortBy="new Func<Order,object>(x=>x.OrderId)" InitialDirection="SortDirection.Ascending">Nr.</MudTableSortLabel></MudTh>
+            <MudTh Style="width:5%"><MudTableSortLabel SortBy="new Func<Order,object>(x=>x.OrderId)" >Nr.</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Status)">Status</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.FirstName)">Navn</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateOrdered)">Oprettet</MudTableSortLabel></MudTh>
-            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)">Deadline</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.DateDeadline)" InitialDirection="SortDirection.Descending">Deadline</MudTableSortLabel></MudTh>
             <MudTh><MudTableSortLabel SortBy="new Func<Order, object>(x=>x.Price)">Pris</MudTableSortLabel></MudTh>
             <MudTh Style="width:10%">Mere Info</MudTh>
         </HeaderContent>
@@ -155,6 +155,14 @@
                 return true;
             if ($"{element.OrderId} {element.PhoneNumber} {element.Price}".Contains(searchString))
                 return true;
+
+            foreach (GiftBasket giftBasket in element.GiftBaskets)
+            {
+                if (giftBasket.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -164,7 +172,7 @@
         NavMan.NavigateTo($"/order/changelog/{o.OrderId}");
     }
 
-    private async Task OrderDelete(Order o) 
+    private async Task OrderDelete(Order o)
     {
         bool? result = await DialogService.ShowMessageBox(
             "Bekræft sletning af ordre",
