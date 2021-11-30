@@ -174,7 +174,7 @@
 
 @code
 {
-    [CascadingParameter] 
+    [CascadingParameter]
     public IModalService Modal { get; set; }
     [CascadingParameter]
     private Task<AuthenticationState> authenticationStateTask { get; set; }
@@ -202,6 +202,10 @@
 
     private async Task OrderChangeStatus(Order o, OrderStatus s)
     {
+        if (o.Status >= s)
+        {
+            return;
+        }
 
         var ConfModal = Modal.Show<ConfComp>($"Vil du ændre ordre nr. {o.OrderId} fra '{o.Status}' til '{s}'?");
         //Call to popup
@@ -266,10 +270,10 @@
 
     private bool FilterFunc(Order element, string searchString)
     {
-        if((showPending && element.Status == OrderStatus.Afventer) || 
+        if((showPending && element.Status == OrderStatus.Afventer) ||
            (showAccepted && element.Status == OrderStatus.Accepteret) ||
-           (showFinished && element.Status == OrderStatus.Afsluttet)) 
-        {    
+           (showFinished && element.Status == OrderStatus.Afsluttet))
+        {
             if (string.IsNullOrWhiteSpace(searchString))
                 return true;
             if (element.FirstName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
