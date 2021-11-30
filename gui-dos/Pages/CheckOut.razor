@@ -11,22 +11,21 @@
 <EditForm Model="@orderForm" OnValidSubmit="OrderOrder">
     <DataAnnotationsValidator />
     <MudContainer MaxWidth="MaxWidth.Medium">
-        @*<MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Checkout</MudText>*@
         <MudGrid Spacing="6" Class="my-4">
             <MudItem xs="7">
-                <MudText Typo="Typo.h5" GutterBottom="true">Checkout</MudText>
+                <MudText Typo="Typo.h5" GutterBottom="true">Bestilling</MudText>
                 <MudGrid>
                     <MudItem xs="12">
                         <MudTextField T="string" Label="Email" @bind-Value="orderForm.Email" For="@(() => orderForm.Email)" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudTextField T="string" Label="Mobile nummer" @bind-Value="orderForm.PhoneNumber" For="@(() => orderForm.PhoneNumber)" />
+                        <MudTextField T="string" Label="Telefon nummer" @bind-Value="orderForm.PhoneNumber" For="@(() => orderForm.PhoneNumber)" />
                     </MudItem>
                     <MudItem xs="6">
-                        <MudTextField T="string" Label="First name" @bind-Value="orderForm.FirstName" For="@(() => orderForm.FirstName)" />
+                        <MudTextField T="string" Label="Fornavn" @bind-Value="orderForm.FirstName" For="@(() => orderForm.FirstName)" />
                     </MudItem>
                     <MudItem xs="6">
-                        <MudTextField T="string" Label="Last name" @bind-Value="orderForm.LastName" For="@(() => orderForm.LastName)" />
+                        <MudTextField T="string" Label="Efternavn" @bind-Value="orderForm.LastName" For="@(() => orderForm.LastName)" />
                     </MudItem>
                     <MudItem xs="12">
                         <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" />
@@ -35,13 +34,21 @@
                         <MudTextField T="string" Label="Kommentar: Ønsker til hele ordren" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10" 
                         Counter="500" MaxLength="500" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))"/>
                     </MudItem>
+                    <MudItem xs="12">
+                        <MudCheckBox @bind-Checked="DoNotErase" Color="Color.Info" @onclick="TOS">
+                            Vilkår og betingelser
+                        </MudCheckBox>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudText Class="text-center" Style=@($"color:{Colors.Grey.Default}")>Betaling foregår i butikken, ved afhentning.</MudText>
+                    </MudItem>
                     <MudItem xs="6" Class="d-flex justify-center">
                         <MudButton Class="mt-8 border border-dark" ButtonType="ButtonType.Button" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large" Link="/shop">
                             Tilbage
                         </MudButton>
                     </MudItem>
                     <MudItem xs="6" Class="d-flex justify-center">
-                        <MudButton Class="mt-8 border border-dark" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Bestil ordre</MudButton>
+                        <MudButton Class="mt-8 border border-dark" Disabled="@IsTOSAccepted" ButtonType="ButtonType.Submit" Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large">Bestil ordre</MudButton>
                     </MudItem>
                 </MudGrid>
             </MudItem>
@@ -61,6 +68,14 @@
     [Inject] private IDialogService DialogService { get; set; }
     private OrderForm orderForm = new OrderForm();
 
+    public bool DoNotErase = false;
+    public bool IsTOSAccepted = true;
+
+    private void TOS()
+    {
+        IsTOSAccepted = !IsTOSAccepted;
+    }
+
     private async Task OrderOrder()
     {
         bool? result = await DialogService.ShowMessageBox(
@@ -71,6 +86,11 @@
         if(result == true) {
             using (var ctx = DbContextFactory.CreateDbContext())
             {
+                if (ShoppingCart.GiftBaskets.Count == 0)
+                {
+                    NavMan.NavigateTo("/shop");
+                    return;
+                }
                 Order order = new Order(ShoppingCart.GiftBaskets);
                 order.FillInformation(orderForm);
 
@@ -79,7 +99,7 @@
 
                 ctx.Orders.Add(order);
                 await ctx.SaveChangesAsync();
-                
+
                 order.SendStatusMail();
 
                 ShoppingCart.GiftBaskets.Clear();
