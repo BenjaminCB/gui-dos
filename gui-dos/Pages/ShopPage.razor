@@ -94,6 +94,7 @@
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             products = await ctx.Products.ToListAsync();
+            products = new List<Product>(products.OrderBy(x => x.Price));
         }
         if(products.Count != 0) {
             maxPrice = products.Select(p => p.Price).Max();
