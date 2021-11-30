@@ -1,6 +1,7 @@
 @page "/product"
 
 @using System.Collections.Generic
+@using System.Linq
 @using gui_dos.Data
 @using Microsoft.EntityFrameworkCore;
 
@@ -64,6 +65,7 @@
         using (var ctx = DbContextFactory.CreateDbContext())
         {
             products = await ctx.Products.ToListAsync();
+            products = new List<Product>(products.OrderBy(x => x.Price));
         }
     }
 
