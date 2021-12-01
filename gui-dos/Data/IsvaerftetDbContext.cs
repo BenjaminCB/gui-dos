@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using gui_dos.Models;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Linq;
 
 namespace gui_dos.Data
 {
@@ -22,7 +24,12 @@ namespace gui_dos.Data
                         .HasConversion
                         (
                             v => JsonSerializer.Serialize<List<GiftBasket>>(v, default),
-                            v => JsonSerializer.Deserialize<List<GiftBasket>>(v, default)
+                            v => JsonSerializer.Deserialize<List<GiftBasket>>(v, default),
+                            new ValueComparer<List<GiftBasket>>(
+                                (g1, g2) => g1.SequenceEqual(g2),
+                                g => g.Aggregate(0, (acc, val) => HashCode.Combine(acc, val.GetHashCode())),
+                                g => g.ToList()
+                            )
                         );
 
             modelBuilder.Entity<Order>()
@@ -30,7 +37,12 @@ namespace gui_dos.Data
                         .HasConversion
                         (
                             v => JsonSerializer.Serialize<List<Change>>(v, default),
-                            v => JsonSerializer.Deserialize<List<Change>>(v, default)
+                            v => JsonSerializer.Deserialize<List<Change>>(v, default),
+                            new ValueComparer<List<Change>>(
+                                (c1, c2) => c1.SequenceEqual(c2),
+                                c => c.Aggregate(0, (acc, val) => HashCode.Combine(acc, val.GetHashCode())),
+                                c => c.ToList()
+                            )
                         );
 
             modelBuilder.Entity<Product>()
@@ -38,7 +50,12 @@ namespace gui_dos.Data
                         .HasConversion
                         (
                             v => JsonSerializer.Serialize<List<Change>>(v, default),
-                            v => JsonSerializer.Deserialize<List<Change>>(v, default)
+                            v => JsonSerializer.Deserialize<List<Change>>(v, default),
+                            new ValueComparer<List<Change>>(
+                                (c1, c2) => c1.SequenceEqual(c2),
+                                c => c.Aggregate(0, (acc, val) => HashCode.Combine(acc, val.GetHashCode())),
+                                c => c.ToList()
+                            )
                         );
         }
 

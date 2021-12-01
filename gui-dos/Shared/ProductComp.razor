@@ -1,14 +1,14 @@
 @inject ShoppingCart ShoppingCart
 
 @* Product card *@
-<MudPaper Width="@cardWidth" Style="position: relative;" Elevation="@elevation" Class="mud-primary d-flex flex-column m-3 border border-dark" @onmouseenter="Elevate" @onmouseleave="DeElevate">
+<MudPaper Width="350px" Style="position: relative;" Elevation="@elevation" Class="mud-primary d-flex flex-column m-3 border border-dark" @onmouseenter="Elevate" @onmouseleave="DeElevate">
   
     @* Product card image(s) *@
     <MudCarousel Class="rounded-top border-bottom border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
-    ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:300px;"> 
+    ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height: 350px; width: 350px;"> 
         @* foreach over flere billeder *@
         <MudCarouselItem Transition="Transition.Fade" Class="rounded-top">
-            <img src="@Product.Image" class="rounded-top" style="width:100%;height:100%;"/>
+            <img src="@Product.Image" class="rounded-top" style="width: 100%; height: auto;"/>
         </MudCarouselItem>
     </MudCarousel>
 
@@ -46,7 +46,7 @@
 
         @* Product card overlay for more info *@
         <MudOverlay @bind-Visible=@overlayVisible Absolute="true" AutoClose="true" DarkBackground="true" @onmouseover=@Elevate @onmouseleave=@ToggleOverlay>
-            <MudPaper Class="mud-primary border border-dark" Width="@cardWidth" Square="true">
+            <MudPaper Class="mud-primary border border-dark" Width="350px" Square="true">
         
                 <div class="d-flex justify-space-between p-4">
                     <MudText Typo="Typo.h6" Color="Color.Tertiary" Class="text-break">
@@ -72,9 +72,9 @@
         <div class="d-flex flex-wrap justify-center">
             @* Ordering layout product images *@
             <MudCarousel Class="rounded m-3 border border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex=@cycleIndex
-             ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:350px;width:400px"> 
+             ShowArrows="arrow" NavigationButtonsClass="white-text" ShowDelimiters="delim" DelimitersClass="white-text" Style="height:400px;width:400px"> 
                 <MudCarouselItem Transition="Transition.Fade" Class="rounded">
-                    <img src="@Product.Image" class="rounded" style="height:100%;width:100%;"/>
+                    <img src="@Product.Image" class="rounded" style="height: auto; width: 100%;"/>
                 </MudCarouselItem>
             </MudCarousel>
             <div class="m-3" style="max-width:400px"> 
@@ -133,9 +133,6 @@
 
     [Parameter]
     public bool ShopView { get; set; } = true;
-
-    //Sets the width of a product card
-    private static string cardWidth = "350px";
 
     //Sets the visibility of the product card overlay
     private bool overlayVisible = false;

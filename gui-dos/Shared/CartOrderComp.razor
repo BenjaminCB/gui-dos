@@ -1,0 +1,46 @@
+
+<MudList Bordered="true">
+    @foreach (var item in Order.GiftBaskets.Distinct())
+    {
+        <div class="border my-2">
+            <MudListItem Dense="true"> 
+                <ChildContent>
+                    <div class="d-flex justify-space-between">
+                        <MudText Typo="Typo.subtitle1" Class="text-break mr-1">
+                            @(Order.GiftBaskets.Count(g => g.Equals(item)))x @item.Title
+                        </MudText>
+                        <MudText Typo="Typo.subtitle1" Class="text-nowrap">
+                            @item.Price kr.
+                        </MudText>
+                    </div>
+                </ChildContent>
+                <NestedList>
+                    <div class="p-2">
+                        <div class="mb-2">
+                            @if(item.Comment != String.Empty)
+                            {
+                                <MudText Typo="Typo.subtitle2">Kommentar:</MudText>
+                                <MudText Typo="Typo.caption" Class="text-break">@item.Comment</MudText>
+                            }
+                            else
+                            {
+                                <MudText Typo="Typo.subtitle1">Ingen kommentar tilføjet</MudText>
+                            }
+                        </div>
+                    </div>
+                </NestedList>
+            </MudListItem>
+        </div>
+    }
+</MudList>
+<div class="mt-auto">
+    <MudDivider />
+    <div class="d-flex justify-space-between my-2">
+        <MudText>Total:</MudText>
+        <MudText><b>@Order.Price kr.</b></MudText>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Order Order { get; set; }
+}

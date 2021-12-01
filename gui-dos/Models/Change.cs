@@ -27,12 +27,24 @@ namespace gui_dos.Models
             ChangeString = changeString;
             Name = name;
         }
-        
 
-        ///<summary>Converts the Change object to a string. </summary>
         public override string ToString()
         {
             return $"{ChangeString} den {Date} af {Name}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(obj == null || GetType() != obj.GetType()) {
+                return false;
+            }
+            Change c = (obj as Change);
+            return (ChangeId == c.ChangeId && Date == c.Date && ChangeString == c.ChangeString && Name == c.Name);
+        }
+
+        public override int GetHashCode()
+        {
+            return ChangeId.GetHashCode() ^ Date.GetHashCode() ^ ChangeString.GetHashCode() ^ Name.GetHashCode();
         }
     }
 }
