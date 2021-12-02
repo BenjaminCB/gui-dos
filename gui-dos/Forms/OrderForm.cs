@@ -24,8 +24,7 @@ namespace gui_dos.Forms
         [RegularExpression((@"^\d{8}?"), ErrorMessage = "Skal v�re et gyldigt Telefon nr.")]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        public DateTime? Date { get; set; } = DateTime.Now.AddDays(1);
+        [Required] public DateTime? Date { get; set; }
 
         public string Comment { get; set; }
     }

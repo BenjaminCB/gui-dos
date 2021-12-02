@@ -28,7 +28,7 @@
                         <MudTextField T="string" Label="Efternavn" @bind-Value="orderForm.LastName" For="@(() => orderForm.LastName)" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" />
+                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" /> 
                     </MudItem>
                     <MudItem xs="12">
                         <MudTextField T="string" Label="Kommentar: Ønsker til hele ordren" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10" 
