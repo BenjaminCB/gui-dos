@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Razor.Language
 @inject ShoppingCart ShoppingCart
 @inject NavigationManager NavMan
 
@@ -40,15 +41,8 @@ else
                                 }
                             </div>
                             <div class="mb-2">
-                                @if(item.Comment != String.Empty)
-                                {
-                                    <MudText Typo="Typo.subtitle2">Kommentar:</MudText>
-                                    <MudText Typo="Typo.caption" Class="text-break">@item.Comment</MudText>
-                                }
-                                else
-                                {
-                                    <MudText Typo="Typo.subtitle1">Ingen kommentar tilføjet</MudText>
-                                }
+                                <MudTextField T="string" Lines="3" DisableUnderLine="true" Label="Kommentar" Counter="200" MaxLength="200" Margin="Margin.Dense"
+                                              HelperTextOnFocus="true" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" @bind-Text=item.Comment/>
                             </div>
                         </div>
                     </NestedList>
@@ -88,6 +82,11 @@ else
     private void GoToCheckout()
     {
         NavMan.NavigateTo("/checkout");
+    }
+    private IEnumerable<string> MaxCharacters(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 200 < ch?.Length)
+            yield return "Max 200 karakterer";
     }
 
     private void Remove(GiftBasket gb)
