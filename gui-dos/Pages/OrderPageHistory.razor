@@ -134,7 +134,7 @@
         {
             DateTime now = DateTime.Now;
             delOrders = await ctx.Orders
-                .Where(d => d.DateOrdered.AddDays(1825) < now)
+                .Where(d => d.DateOrdered.AddDays(120) < now)
                 .ToListAsync();
 
             foreach (Order expired in oldOrders)
