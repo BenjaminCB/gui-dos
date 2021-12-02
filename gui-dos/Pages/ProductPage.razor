@@ -60,6 +60,8 @@
 {
     private List<Product> products;
 
+    [Inject] private IDialogService DialogService { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
@@ -75,11 +77,19 @@
 
     private async Task productDelete(Product p)
     {
+        bool? result = await DialogService.ShowMessageBox(
+            "Bekræft sletning af produkt",
+            "Er du sikker på du vil slette dette produkt?",
+            yesText: "Ja", noText: "Nej");
+
         using (var ctx = DbContextFactory.CreateDbContext())
         {
-            ctx.Products.Remove(p);
-            await ctx.SaveChangesAsync();
-            products = await ctx.Products.ToListAsync();
+
+            if(result == true) {
+                ctx.Products.Remove(p);
+                await ctx.SaveChangesAsync();
+                products = await ctx.Products.ToListAsync();
+            }
         }
     }
 
