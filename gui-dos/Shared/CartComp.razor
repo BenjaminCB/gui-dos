@@ -27,19 +27,17 @@ else
                         </div>
                     </ChildContent>
                     <NestedList>
-                        <div class="p-2">
-                            <div class="d-flex justify-space-between">
-                                <MudButton StartIcon="@Icons.Outlined.ExposureNeg1" Size="Size.Small" OnClick="() => Remove(item)">
-                                    Fjern én
+                        <div class="px-2">
+                            <MudDivider/>
+                            <div class="d-flex my-2">
+                                <MudIconButton Color="Color.Primary" Variant="Variant.Filled" Icon="@Icons.Outlined.ExposurePlus1" Size="Size.Small" OnClick="() => Add(item)" Class="mr-2"/>
+                                <MudIconButton Color="Color.Primary" Variant="Variant.Filled" Icon="@Icons.Outlined.ExposureNeg1" Size="Size.Small" OnClick="() => Remove(item)"/>
+                                <MudButton Class="ml-auto" Color="Color.Primary" Variant="Variant.Filled" EndIcon="@Icons.Outlined.Delete" Size="Size.Small" OnClick="() => RemoveAllSingle(item)">
+                                    Fjern alle
                                 </MudButton>
-                                @if(ShoppingCart.GiftBaskets.Count(g => g.Equals(item)) > 1)
-                                {
-                                    <MudButton EndIcon="@Icons.Outlined.Delete" Size="Size.Small" OnClick="() => RemoveAllSingle(item)">
-                                        Fjern alle
-                                    </MudButton>
-                                }
                             </div>
-                            <div class="mb-2">
+                            <MudDivider/>
+                            <div class="my-2">
                                 @if(item.Comment != String.Empty)
                                 {
                                     <MudText Typo="Typo.subtitle2">Kommentar:</MudText>
@@ -88,6 +86,12 @@ else
     private void GoToCheckout()
     {
         NavMan.NavigateTo("/checkout");
+    }
+
+    private void Add(GiftBasket gb)
+    {
+        ShoppingCart.GiftBaskets.Add(gb);
+        ShoppingCart.CallComponentChanged();
     }
 
     private void Remove(GiftBasket gb)
