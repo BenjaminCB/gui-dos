@@ -8,128 +8,136 @@
 @inject NavigationManager NavMan
 
 @* Filter/cart bar *@
-<div class="d-flex justify-start my-4">
+<div class="d-flex justify-space-between py-2 px-1 mt-6">
+    <div class="d-flex justify-start py-2 px-1 mt-6">
 
-    @* Filter menu *@
-    <MudMenu Class="mx-3" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft">
-        <ActivatorContent>
-            <MudButton StartIcon="@Icons.Filled.FilterList" Color="Color.Primary" Variant="Variant.Filled" Class="border border-dark">
-                Filter
+        @* Filter menu *@
+        <MudMenu Class="mx-3" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft">
+            <ActivatorContent>
+                <MudButton StartIcon="@Icons.Filled.FilterList" Color="Color.Primary" Variant="Variant.Filled" Class="border border-dark">
+                    Filter
+                </MudButton>
+            </ActivatorContent>
+            <ChildContent>
+                <div class="m-2">
+                    @* Price filter *@
+                    <MudText Typo="Typo.h5">Pris</MudText>
+                    <div class="p-2 border rounded mb-2">
+                        <MudText Typo="Typo.body1">Maks. pris: <strong>@setPrice.ToString("N2") kr.</strong> </MudText>
+                        <MudSlider @bind-Value="setPrice" Max="maxPrice" Min="minPrice" Step="1" />
+                    </div>
+
+
+                    @* Tag filter *@
+                    <MudText Typo="Typo.h5">Indhold</MudText>
+                    <div class="p-2 border rounded mb-2">
+                        @foreach (string key in tags.Keys)
+                        {
+                            <MudCheckBox @bind-Checked=@tags[key] Label="@key" Dense="true" Color="Color.Primary" /> <br />
+                        }
+                        <MudChip Variant="Variant.Outlined" Color="Color.Primary" OnClick="() => SetAllTags(true)">Vælg alle</MudChip>
+                        <MudChip Variant="Variant.Outlined" Color="Color.Primary" OnClick="() => SetAllTags(false)">Fravælg alle</MudChip>
+                    </div>
+                </div>
+            </ChildContent>
+        </MudMenu>
+    </div>
+    <div class="d-flex justify-end py-2 px-1 mt-6">
+        @* Cart button *@
+        <MudBadge Content="@(ShoppingCart.GiftBaskets.Distinct().Count())" Color="Color.Error" Class="mx-3"
+                  Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
+            <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled"
+                       Class="border border-dark" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
+                Kurv
             </MudButton>
-        </ActivatorContent>
-        <ChildContent>
-            <div class="m-2">
-                @* Price filter *@
-                <MudText Typo="Typo.h5">Pris</MudText>
-                <div class="p-2 border rounded mb-2">
-                    <MudText Typo="Typo.body1">Maks. pris: <strong>@setPrice.ToString("N2") kr.</strong> </MudText>
-                    <MudSlider @bind-Value="setPrice" Max="maxPrice" Min="minPrice" Step="1"/>
-                </div>
+        </MudBadge>
 
-
-                @* Tag filter *@
-                <MudText Typo="Typo.h5">Indhold</MudText>
-                <div class="p-2 border rounded mb-2">
-                    @foreach(string key in tags.Keys) 
-                    {
-                        <MudCheckBox @bind-Checked=@tags[key] Label="@key" Dense="true" Color="Color.Primary"/> <br/>
-                    }
-                    <MudChip Variant="Variant.Outlined" Color="Color.Primary" OnClick="() => SetAllTags(true)">Vælg alle</MudChip>
-                    <MudChip Variant="Variant.Outlined" Color="Color.Primary" OnClick="() => SetAllTags(false)">Fravælg alle</MudChip>
-                </div>
-            </div>
-        </ChildContent>
-    </MudMenu>
-
-    @* Cart button *@
-    <MudBadge Content="@(ShoppingCart.GiftBaskets.Distinct().Count())" Color="Color.Error" Class="mx-3" 
-     Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
-        <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled" 
-         Class="border border-dark" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
-            Kurv
-        </MudButton>
-    </MudBadge>
-
-    @* To checkout button *@
-    @if(ShoppingCart.GiftBaskets.Count > 0)
-    {
-        <MudButton EndIcon="@Icons.Outlined.Payment" Color="Color.Primary" Variant="Variant.Filled" 
-         Class="border border-dark mx-3" OnClick="GoToCheckout">
-            Til bestilling
-        </MudButton>
-    }
+        @* To checkout button *@
+        @if (ShoppingCart.GiftBaskets.Count > 0)
+        {
+            <MudButton EndIcon="@Icons.Outlined.Payment" Color="Color.Primary" Variant="Variant.Filled"
+                       Class="border border-dark mx-3" OnClick="GoToCheckout">
+                Til bestilling
+            </MudButton>
+        }
+    </div>  
 </div>
 
-<MudDivider/>
+    <MudDivider />
 
-@* Product Grid *@
-<div class="d-flex justify-center flex-wrap my-4">
-    @foreach (var product in products)
-    {
-        @if (FilterProduct(product))
+    @* Product Grid *@
+    <div class="d-flex justify-center flex-wrap my-4">
+        @foreach (var product in products)
         {
-            <ProductComp Product="@product"/>
-        }
-    }
-</div>
-
-@* Cart Drawer *@
-<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Width="350px"
- Class="p-2" Breakpoint="Breakpoint.Xl" ClipMode="DrawerClipMode.Always">
-    <CartComp Buttons="true"/>
-</MudDrawer>
-
-@code 
-{
-    private bool cartDrawerOpen = false;
-    private double maxPrice;
-    private double minPrice;
-    private double setPrice;
-    private List<Product> products;
-    private Dictionary<string, bool> tags = new Dictionary<string, bool>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        ShoppingCart.ComponentChanged += StateHasChanged;
-        using (var ctx = DbContextFactory.CreateDbContext())
-        {
-            products = await ctx.Products.ToListAsync();
-            products = new List<Product>(products.OrderBy(x => x.Price));
-        }
-        if(products.Count != 0) {
-            maxPrice = products.Select(p => p.Price).Max();
-            minPrice = products.Select(p => p.Price).Min();
-            setPrice = maxPrice;
-            foreach (Product p in products)
+            @if (FilterProduct(product))
             {
-                p.Tags.Split(' ').Distinct().ToList().ForEach(delegate(string s) {
-                    tags.TryAdd(s, true);
-                });
+                <ProductComp Product="@product" />
             }
         }
-    }
+    </div>
 
-    private bool FilterProduct(Product p)
-    {
-        @* Price filtering *@
-        if (p.Price > setPrice) return false;
+    @* Cart Drawer *@
+    <MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Width="350px"
+               Class="p-2" Breakpoint="Breakpoint.Xl" ClipMode="DrawerClipMode.Always">
+        <CartComp Buttons="true" />
+    </MudDrawer>
 
-        @* Tag filtering *@
-        foreach (string tag in p.Tags.Split(' '))
+    @code
+{
+        private bool cartDrawerOpen = false;
+        private double maxPrice;
+        private double minPrice;
+        private double setPrice;
+        private List<Product> products;
+        private Dictionary<string, bool> tags = new Dictionary<string, bool>();
+
+        protected override async Task OnInitializedAsync()
         {
-            if(!tags[tag]) return false;
+            ShoppingCart.ComponentChanged += StateHasChanged;
+            using (var ctx = DbContextFactory.CreateDbContext())
+            {
+                products = await ctx.Products.ToListAsync();
+                products = new List<Product>(products.OrderBy(x => x.Price));
+            }
+            if (products.Count != 0)
+            {
+                maxPrice = products.Select(p => p.Price).Max();
+                minPrice = products.Select(p => p.Price).Min();
+                setPrice = maxPrice;
+                foreach (Product p in products)
+                {
+                    p.Tags.Split(' ').Distinct().ToList().ForEach(delegate (string s)
+                    {
+                        tags.TryAdd(s, true);
+                    });
+                }
+            }
         }
 
-        return true;
-    }
+        private bool FilterProduct(Product p)
+        {
+            @* Price filtering *@
+            if (p.Price > setPrice) return false;
 
-    private void SetAllTags(bool select) {
-        foreach(string key in tags.Keys) {
-            tags[key] = select;
+            @* Tag filtering *@
+            foreach (string tag in p.Tags.Split(' '))
+            {
+                if (!tags[tag]) return false;
+            }
+
+            return true;
+        }
+
+        private void SetAllTags(bool select)
+        {
+            foreach (string key in tags.Keys)
+            {
+                tags[key] = select;
+            }
+        }
+
+        private void GoToCheckout()
+        {
+            NavMan.NavigateTo("/checkout");
         }
     }
-
-    private void GoToCheckout() {
-        NavMan.NavigateTo("/checkout");
-    }
-}
