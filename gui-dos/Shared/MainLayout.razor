@@ -26,7 +26,7 @@
 @code
 {
     // MudBlazor theme customizations
-    MudTheme BrandTheme = new MudTheme() 
+    MudTheme BrandTheme = new MudTheme()
     {
         Palette = new Palette()
         {
@@ -37,7 +37,16 @@
         LayoutProperties = new LayoutProperties()
         {
             AppbarHeight = "2cm",
+        },
+        ZIndex = new ZIndex()
+        {
+            Tooltip = 1000,
+            Popover = 1200,
+            AppBar = 1300,
+            Dialog = 1400,
+            Snackbar = 1500,
+            Drawer = 2000,
         }
-        
+
     };
 }

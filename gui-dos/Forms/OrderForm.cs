@@ -25,7 +25,7 @@ namespace gui_dos.Forms
         public string PhoneNumber { get; set; }
 
         [Required]
-        public DateTime? Date { get; set; } = DateTime.Now.AddDays(1);
+        public DateTime? Date { get; set; }
 
         public string Comment { get; set; }
     }
