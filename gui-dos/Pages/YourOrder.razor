@@ -51,16 +51,7 @@
                     {
                         <div class="d-flex justify-space-between">
                             <MudText Class="mb-4"><strong>Status på ordre:</strong> @_Order.Status</MudText>
-                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="mb-4" StartIcon="@Icons.Material.Filled.Cancel" OnClick="@TogglePopOver">Annuller ordre</MudButton>
-                            <MudPopover Open="@_IsOpen" Fixed="true" Class="px-4 pt-4">
-                                <div class="d-flex flex-column">
-                                    <MudText>Er du sikker på at du vil annullere denne ordre?</MudText>
-                                    <div class="d-flex justify-space-between">
-                                        <MudButton OnClick="@TogglePopOver" Class="ml-1" Color="Color.Error">Nej</MudButton>
-                                        <MudButton @onclick="() => CancelOrder()" Class="mr-1" Color="Color.Error">Ja</MudButton>
-                                    </div>
-                                </div>
-                            </MudPopover>
+                            <MudButton Variant="Variant.Filled" Size="Size.Small" Class="mb-4" StartIcon="@Icons.Material.Filled.Cancel" OnClick="@CancelOrder">Annuller ordre</MudButton>
                         </div>
                     }
                     else if (_Status == OrderStatus.Accepteret)
@@ -81,6 +72,8 @@
 @code {
     [Parameter]
     public string CancelId { get; set; }
+
+    [Inject] private IDialogService DialogService { get; set; }
 
     private Order _Order { get; set; }
     private OrderStatus _Status;
@@ -104,20 +97,18 @@
 
     }
 
-    public void TogglePopOver()
-    {
-        if (_IsOpen)
-            _IsOpen = false;
-        else
-            _IsOpen = true;
-    }
 
     private async Task CancelOrder()
     {
+        bool? result = await DialogService.ShowMessageBox(
+            "Bekræft annullering af ordre",
+            "Er du sikker på du vil annullere din ordre?",
+            yesText: "Ja", noText: "Nej");
+
+
         using (var context = DbContextFactory.CreateDbContext())
         {
-
-            if (_Order.Status == OrderStatus.Afventer)
+            if (_Order.Status == OrderStatus.Afventer && result == true)
             {
                 Order o = context.Orders.Update(_Order).Entity;
                 o.Status = OrderStatus.Annulleret;
@@ -130,10 +121,7 @@
 
                 await context.SaveChangesAsync();
 
-                TogglePopOver();
-            }
-            else
-            {
+                NavMan.NavigateTo($"info/{CancelId}", true);
 
             }
         }
