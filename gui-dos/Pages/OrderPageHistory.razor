@@ -115,10 +115,6 @@
     private bool FilterFunc1(Order element) => FilterFunc(element, searchString);
     private bool showDelivered = true, showDeclined = true, showCancelled = true;
 
-    //Expired Order Inforamtion that should be deleted
-    private List<Order> delOrders;
-    private Order expOrder;
-
     protected override async Task OnInitializedAsync()
     {
         using (var ctx = DbContextFactory.CreateDbContext())
@@ -127,23 +123,6 @@
                                  .Where(o => o.Status >= OrderStatus.Afhentet)
                                  .OrderBy(t => t.DateOrdered)
                                  .ToListAsync();
-        }
-
-        //Delete expired order information
-        using (var ctx = DbContextFactory.CreateDbContext())
-        {
-            DateTime now = DateTime.Now;
-            delOrders = await ctx.Orders
-                .Where(d => d.DateOrdered.AddDays(120) < now)
-                .ToListAsync();
-
-            foreach (Order expired in oldOrders)
-            {
-                expOrder = await ctx.Orders.SingleAsync(p => p.OrderId == expired.OrderId);
-                Order dbExpOrder = ctx.Orders.Update(expOrder).Entity;
-                dbExpOrder.StripInformation();
-                await ctx.SaveChangesAsync();
-            }
         }
     }
 
