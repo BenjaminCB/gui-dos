@@ -28,7 +28,10 @@
                         <MudTextField T="string" Label="Efternavn" @bind-Value="orderForm.LastName" For="@(() => orderForm.LastName)" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" />
+                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date="pickUpDate"  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" StartMonth="DateTime.Now"/>
+                    </MudItem>
+                    <MudItem>
+                        <MudTimePicker Label="Ønsket afhentningstidspunkt" TimeChanged="@((args) => { pickUpDate = pickUpDate.Value.AddHours(args.Value.Hours); pickUpDate = pickUpDate.Value.AddMinutes(args.Value.Minutes); } )" Color="Color.Primary"/>
                     </MudItem>
                     <MudItem xs="12">
                         <MudTextField T="string" Label="Kommentar: Ønsker til hele ordren" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10" 
@@ -36,7 +39,7 @@
                     </MudItem>
                     <MudItem xs="12">
                         <MudCheckBox @bind-Checked="DoNotErase" Color="Color.Info" @onclick="TOS">
-                            Vilkår og betingelser
+                            Ved afkrydsning accepterer du Isværftets <MudLink Href="Handelsbetingelser_hos_IsVrftet_ApS.pdf" Target="_blank">handelsbetingelser</MudLink> & <MudLink Href="PERSONDATAPOLITIK_HOS_ISVRFTET_APS.pdf" Target="_blank">Persondatapolitik</MudLink>
                         </MudCheckBox>
                     </MudItem>
                     <MudItem xs="12">
@@ -71,6 +74,8 @@
     public bool DoNotErase = false;
     public bool IsTOSAccepted = true;
 
+    DateTime? pickUpDate = new System.DateTime();
+
     private void TOS()
     {
         IsTOSAccepted = !IsTOSAccepted;
@@ -84,6 +89,10 @@
             yesText:"Ja", noText:"Nej");
 
         if(result == true) {
+
+            
+            orderForm.Date = pickUpDate;
+
             using (var ctx = DbContextFactory.CreateDbContext())
             {
                 if (ShoppingCart.GiftBaskets.Count == 0)
