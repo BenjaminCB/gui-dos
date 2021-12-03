@@ -204,7 +204,7 @@
                 .Where(d => d.DateOrdered.AddDays(120) < now)
                 .ToListAsync();
 
-            foreach (Order expired in oldOrders)
+            foreach (Order expired in delOrders)
             {
                 expOrder = await ctx.Orders.SingleAsync(p => p.OrderId == expired.OrderId);
                 Order dbExpOrder = ctx.Orders.Update(expOrder).Entity;
