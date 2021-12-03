@@ -8,8 +8,8 @@
 @inject NavigationManager NavMan
 
 @* Filter/cart bar *@
-<div class="d-flex justify-space-between py-2 px-1 mt-6">
-    <div class="d-flex justify-start py-2 px-1 mt-6">
+<MudPaper Class="mud-primary d-flex justify-space-between" Style="position: -webkit-sticky; position: sticky; top: 2.4cm; z-index: 10;">
+    <div class="d-flex justify-start my-2">
 
         @* Filter menu *@
         <MudMenu Class="mx-3" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.TopLeft"> 
@@ -42,16 +42,7 @@
             </ChildContent>
         </MudMenu>
     </div>
-    <div class="d-flex justify-end py-2 px-1 mt-6">
-        @* Cart button *@
-        <MudBadge Content="@(ShoppingCart.GiftBaskets.Distinct().Count())" Color="Color.Error" Class="mx-3"
-                  Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
-            <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled"
-                       Class="border border-dark" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
-                Kurv
-            </MudButton>
-        </MudBadge>
-
+    <div class="d-flex justify-end my-2">
         @* To checkout button *@
         @if (ShoppingCart.GiftBaskets.Count > 0)
         {
@@ -60,29 +51,37 @@
                 Til bestilling
             </MudButton>
         }
+
+        @* Cart button *@
+        <MudBadge Content="@(ShoppingCart.GiftBaskets.Distinct().Count())" Color="Color.Error" Class="mx-3"
+                  Overlap="true" Visible="@(ShoppingCart.GiftBaskets.Count > 0)">
+            <MudButton EndIcon="@Icons.Outlined.ShoppingCart" Color="Color.Primary" Variant="Variant.Filled"
+                       Class="border border-dark" OnClick="() => cartDrawerOpen = !cartDrawerOpen">
+                Kurv
+            </MudButton>
+        </MudBadge>
     </div>  
+</MudPaper>
+
+
+@* Product Grid *@
+<div class="d-flex justify-center flex-wrap my-4">
+    @foreach (var product in products)
+    {
+        @if (FilterProduct(product))
+        {
+            <ProductComp Product="@product" />
+        }
+    }
 </div>
 
-    <MudDivider />
+@* Cart Drawer *@
+<MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Width="350px"
+            Class="p-2" Breakpoint="Breakpoint.Xl" ClipMode="DrawerClipMode.Always">
+    <CartComp Buttons="true" />
+</MudDrawer>
 
-    @* Product Grid *@
-    <div class="d-flex justify-center flex-wrap my-4">
-        @foreach (var product in products)
-        {
-            @if (FilterProduct(product))
-            {
-                <ProductComp Product="@product" />
-            }
-        }
-    </div>
-
-    @* Cart Drawer *@
-    <MudDrawer @bind-Open=@cartDrawerOpen Elevation="10" Anchor="Anchor.End" Width="350px"
-               Class="p-2" Breakpoint="Breakpoint.Xl" ClipMode="DrawerClipMode.Always">
-        <CartComp Buttons="true" />
-    </MudDrawer>
-
-    @code
+@code
 {
         private bool cartDrawerOpen = false;
         private double maxPrice;
@@ -90,6 +89,7 @@
         private double setPrice;
         private List<Product> products;
         private Dictionary<string, bool> tags = new Dictionary<string, bool>();
+        private string[] tagSeparator = { ", ", "," };
 
         protected override async Task OnInitializedAsync()
         {
@@ -106,7 +106,7 @@
                 setPrice = maxPrice;
                 foreach (Product p in products)
                 {
-                    p.Tags.Split(' ').Distinct().ToList().ForEach(delegate (string s)
+                    p.Tags.Split(tagSeparator, StringSplitOptions.RemoveEmptyEntries).Distinct().ToList().ForEach(delegate (string s)
                     {
                         tags.TryAdd(s, true);
                     });
@@ -120,7 +120,7 @@
             if (p.Price > setPrice) return false;
 
             @* Tag filtering *@
-            foreach (string tag in p.Tags.Split(' '))
+            foreach (string tag in p.Tags.Split(tagSeparator, StringSplitOptions.RemoveEmptyEntries))
             {
                 if (!tags[tag]) return false;
             }

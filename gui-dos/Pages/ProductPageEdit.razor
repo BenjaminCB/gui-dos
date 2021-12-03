@@ -30,10 +30,11 @@
                         <DataAnnotationsValidator/>
                         <ValidationSummary/>
 
-                        <MudTextField @bind-Value=productForm.Title Class="mud-theme-tertiary rounded m-2" Label="Titel" Variant="Variant.Filled"/>
-                        <MudTextField @bind-Value=productForm.Description Class="mud-theme-tertiary rounded m-2" Label="Beskrivelse" Variant="Variant.Filled" Lines="3"/>
-                        <MudNumericField @bind-Value=productForm.Price Class="mud-theme-tertiary rounded m-2" Label="Pris" Variant="Variant.Filled" Adornment="Adornment.End" AdornmentText="kr." Min="0"/>
-                        <MudTextField @bind-Value=productForm.Tags Class="mud-theme-tertiary rounded m-2" Label="Tags" Variant="Variant.Filled"/>
+                        <MudTextField @bind-Value=productForm.Title Class="mud-theme-tertiary rounded m-2" Label="Titel" Variant="Variant.Outlined"/>
+                        <MudTextField @bind-Value=productForm.Description Class="mud-theme-tertiary rounded m-2" Label="Beskrivelse" Variant="Variant.Outlined" Lines="3"/>
+                        <MudNumericField @bind-Value=productForm.Price Class="mud-theme-tertiary rounded m-2" Label="Pris" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentText="kr." Min="0"/>
+                        <MudTextField @bind-Value=productForm.Tags Class="mud-theme-tertiary rounded m-2" Variant="Variant.Outlined" 
+                         Label="Tags" HelperTextOnFocus="true" HelperText="Tags skal være komma-separeret"/>
                         <div class="m-2">
                             <label style="font-weight: bold;">Billede(r): </label>
                             <InputFile OnChange="@fileUpload"/>
