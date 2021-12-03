@@ -87,7 +87,7 @@
                     </MudButton>
                 </MudTd>
                 <MudTd DataLabel="Oprettet">@context.DateOrdered.ToShortDateString()</MudTd>
-                <MudTd DataLabel="Deadline">@context.DateDeadline.ToShortDateString()</MudTd>
+                <MudTd DataLabel="Deadline">@context.DateDeadline.ToString("dd/MM/yyyy HH:mm")</MudTd>
                 <MudTd DataLabel="Navn">@context.FirstName @context.LastName</MudTd>
                 <MudTd DataLabel="Pris">@context.Price kr.</MudTd>
                 <MudTd>
