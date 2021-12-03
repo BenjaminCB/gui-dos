@@ -17,7 +17,7 @@ namespace gui_dos.Forms
         // [\w.-]+ capture atleast one letter number or .-_
         // ([^\W-])+ capture at least one letter or number
         // (\.([^\W_]|[.-])+)+ capture at least one . followed by atleast one
-        [RegularExpression((@"^[\w.-]+@([^\W_])+-*(\.([^\W_]|[.-])+)+([^\W_])+$"), ErrorMessage = "Skal v�re en gyldig Email")]
+        [RegularExpression((@"^[\w.-]+@([^\W_])+-*(\.([^\W_]|[.-])+)+([^\W_])+$"), ErrorMessage = "Skal være en gyldig Email")]
         public string Email { get; set; }
 
         [Required]

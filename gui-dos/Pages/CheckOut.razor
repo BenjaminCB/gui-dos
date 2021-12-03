@@ -7,8 +7,9 @@
 @inject NavigationManager NavMan
 @inject Data.ShoppingCart ShoppingCart
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject IJSRuntime JsRuntime
 
-<EditForm Model="@orderForm" OnValidSubmit="OrderOrder">
+<EditForm Model="@orderForm" OnValidSubmit="OrderOrder" OnInvalidSubmit="scroll">
     <DataAnnotationsValidator />
     <MudContainer MaxWidth="MaxWidth.Medium">
         <MudGrid Spacing="6" Class="my-4">
@@ -28,7 +29,7 @@
                         <MudTextField T="string" Label="Efternavn" @bind-Value="orderForm.LastName" For="@(() => orderForm.LastName)" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" /> 
+                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date=orderForm.Date MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" For="() => orderForm.Date"/> 
                     </MudItem>
                     <MudItem xs="12">
                         <MudTextField T="string" Label="Kommentar: Ønsker til hele ordren" @bind-Value="orderForm.Comment" Variant="Variant.Outlined" Lines="10" 
@@ -108,9 +109,15 @@
         }
     }
 
+    private async void scroll()
+    {
+        await JsRuntime.InvokeVoidAsync("OnScrollEvent");
+    }
+
     private IEnumerable<string> MaxCharacters(string ch)
     {
         if (!string.IsNullOrEmpty(ch) && 500 < ch?.Length)
             yield return "Max 500 karakterer";
+        
     }
 }
