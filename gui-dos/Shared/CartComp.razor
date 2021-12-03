@@ -66,10 +66,10 @@ else
     @if(Buttons)
     {
         <div class="d-flex justify-space-between my-2">
-            <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=RemoveAll>
+            <MudButton Class="rounded-pill" Variant="Variant.Outlined" StartIcon="@Icons.Outlined.Delete" OnClick=RemoveAll>
                 Tøm kurv
             </MudButton>
-            <MudButton Class="rounded-pill" Variant="Variant.Outlined" OnClick=GoToCheckout>
+            <MudButton Class="rounded-pill" Variant="Variant.Outlined" EndIcon="@Icons.Outlined.Payment" OnClick=GoToCheckout>
                 Gå til bestilling
             </MudButton>
         </div>
