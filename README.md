@@ -1,5 +1,10 @@
 # GUI-DOS
-Online Gift-Basket ordering system.
+Repository for our gift-basket ordering and fulfilment system.
+
+## Running the server
+To run the server you will have have installed .NET 5.0. The newly released .NET 6.0 can not be used as we use features that are not yet supported on that version. To build and run simply run the following command within the gui-dos subdirectory.
+
+`dotnet run`
 
 ## Setting up the server
 ### Creating an admin user
@@ -21,32 +26,4 @@ if (identityResult.Succeeded)
 Then run the server and navigate to `/admin/register` and create a user. This will create a user that has the "superuser" role which has the option to delete other users. Once you have created your superuser, you will want to toggle the comments seen in the previous snippets. The system will now be good to go.
 
 ### Chosing font for webpages
-In /mainLayout.razor under the shared folder, the shared layout and style is created. To change the font to calibri uncomment the code under "BrandTheme" by removing the "@* *@". To change the font, change "Calibri, sans-serif" to the desired font(s). 
-
-## Packages
-|Package     |.NET CLI.                          |
-|------------|-----------------------------------|
-|FsCheck|dotnet add package FsCheck --version 2.16.3|
-|FsCheck.Xunit|dotnet add package FsCheck.Xunit --version 2.16.3      |
-|MailKit|dotnet add package MailKit --version 2.15.0|
-|Blazored Modal|dotnet add package Blazored.Modal|
-|MudBlazor|dotnet add package MudBlazor --version 5.2.0|
-
-## endpoints
-- /shop
-    - /basket
-    - /purchase
-    - /fill-in (email, number...)
-    - /review  (order summary)
-    - /cancel
-- /admin
-    - /product: all products
-        - /insert
-        - /edit/{id}: id of product that is being edited
-        - /changelog{id}: -||-
-    - /order: all orders
-        - /change/{id}: id of order that we are changing
-        - /changelog/{id}: id of order that we want to see changelog of
-    - /employee: all employee
-        - /register
-        - /login
+In /mainLayout.razor under the shared folder, the shared layout and style is created. To change the font to calibri uncomment the code under "BrandTheme" by removing the "@* *@". To change the font, change "Calibri, sans-serif" to the desired font(s).
