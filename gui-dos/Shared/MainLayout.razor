@@ -26,7 +26,7 @@
 @code
 {
     // MudBlazor theme customizations
-    MudTheme BrandTheme = new MudTheme() 
+    MudTheme BrandTheme = new MudTheme()
     {
         Palette = new Palette()
         {
@@ -37,7 +37,14 @@
         LayoutProperties = new LayoutProperties()
         {
             AppbarHeight = "2cm",
+        },
+        Typography = new Typography()
+        {
+            Default = new Default()
+            {
+                FontFamily = new[] { "Calibri, sans-serif" }
+            }
         }
-        
+
     };
 }
