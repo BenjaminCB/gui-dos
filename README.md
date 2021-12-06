@@ -2,6 +2,7 @@
 Online Gift-Basket ordering system.
 
 ## Setting up the server
+### Creating an admin user
 The first time running the server the following should be in `Areas/Identity/Pages/Account/Register.cshtml.cs`.
 
 ```
@@ -18,6 +19,9 @@ if (identityResult.Succeeded)
 ```
 
 Then run the server and navigate to `/admin/register` and create a user. This will create a user that has the "superuser" role which has the option to delete other users. Once you have created your superuser, you will want to toggle the comments seen in the previous snippets. The system will now be good to go.
+
+### Chosing font for webpages
+In /mainLayout.razor under the shared folder, the shared layout and style is created. To change the font to calibri uncomment the code under "BrandTheme" by removing the "@* *@". To change the font, change "Calibri, sans-serif" to the desired font(s). 
 
 ## Packages
 |Package     |.NET CLI.                          |
