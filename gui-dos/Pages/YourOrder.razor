@@ -44,7 +44,7 @@
                     <div>
                         <MudText Typo="Typo.body1" Class="mt-3"><strong>Kommentar til hele ordren:</strong> @_Order.Comment</MudText>
                         <MudText Typo="Typo.body1" Class="mt-1"><strong>Dato bestilt:</strong> @_Order.DateOrdered.ToShortDateString()</MudText>
-                        <MudText Typo="Typo.body1" Class="mt-1 mb-4"><strong>Ønkset afhentningsdato:</strong> @_Order.DateDeadline.ToShortDateString()</MudText>
+                        <MudText Typo="Typo.body1" Class="mt-1 mb-4"><strong>Ønkset afhentningstidspunkt:</strong> @_Order.DateDeadline.ToString("dd/MM/yyyy HH:mm")</MudText>
                     </div>
 
                     @if (_Status == OrderStatus.Afventer)
