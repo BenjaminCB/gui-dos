@@ -14,9 +14,6 @@ namespace gui_dos.Models
 
         public string Title { get; set; }
 
-        ///<summary>Gets or sets the status of the gift-basket. </summary>
-        public GiftBasketStatus Status { get; set; }
-
         ///<summary>Gets or sets the comment on the gift-basket. </summary>
         public string Comment { get; set; }
 
@@ -32,7 +29,6 @@ namespace gui_dos.Models
             Title = title;
             Comment = comment;
             Price = price;
-            Status = GiftBasketStatus.Pending;
         }
 
         public override bool Equals(object obj)
