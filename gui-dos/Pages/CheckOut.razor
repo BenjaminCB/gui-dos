@@ -7,8 +7,9 @@
 @inject NavigationManager NavMan
 @inject Data.ShoppingCart ShoppingCart
 @inject IDbContextFactory<IsvaerftetDbContext> DbContextFactory
+@inject IJSRuntime JsRuntime
 
-<EditForm Model="@orderForm" OnValidSubmit="OrderOrder">
+<EditForm Model="@orderForm" OnValidSubmit="OrderOrder" OnInvalidSubmit="scroll">
     <DataAnnotationsValidator />
     <MudContainer MaxWidth="MaxWidth.Medium">
         <MudGrid Spacing="6" Class="my-4">
@@ -117,9 +118,15 @@
         }
     }
 
+    private async void scroll()
+    {
+        await JsRuntime.InvokeVoidAsync("OnScrollEvent");
+    }
+
     private IEnumerable<string> MaxCharacters(string ch)
     {
         if (!string.IsNullOrEmpty(ch) && 500 < ch?.Length)
             yield return "Max 500 karakterer";
+        
     }
 }
