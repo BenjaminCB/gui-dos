@@ -4,7 +4,9 @@ Repository for our gift-basket ordering and fulfilment system.
 ## Running the server
 To run the server you will have have installed .NET 5.0. The newly released .NET 6.0 can not be used as we use features that are not yet supported on that version. To build and run simply run the following command within the gui-dos subdirectory.
 
-`dotnet run`
+```
+dotnet run
+```
 
 ## Setting up the server
 ### Creating an admin user
