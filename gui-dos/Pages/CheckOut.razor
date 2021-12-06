@@ -29,7 +29,7 @@
                         <MudTextField T="string" Label="Efternavn" @bind-Value="orderForm.LastName" For="@(() => orderForm.LastName)" />
                     </MudItem>
                     <MudItem xs="12">
-                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date="pickUpDate"  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" StartMonth="DateTime.Now"/>
+                        <MudDatePicker Label="Ønsket afhentnings dato" @bind-Date="pickUpDate"  DisableToolbar="true" HelperText="Dobbelt tjek at denne er rigitg" MinDate="@DateTime.Now" MaxDate="@DateTime.Now.AddMonths(2)" StartMonth="DateTime.Now" For="@(() => orderForm.Date)"/>
                     </MudItem>
                     <MudItem>
                         <MudTimePicker Label="Ønsket afhentningstidspunkt" TimeChanged="@((args) => { pickUpDate = pickUpDate.Value.AddHours(args.Value.Hours); pickUpDate = pickUpDate.Value.AddMinutes(args.Value.Minutes); } )" Color="Color.Primary"/>
