@@ -1,7 +1,7 @@
 @inject ShoppingCart ShoppingCart
 
 @* Product card *@
-<MudPaper Width="350px" Style="position: relative;" Elevation="@elevation" Class="mud-primary d-flex flex-column m-3 border border-dark" @onmouseenter="Elevate" @onmouseleave="DeElevate">
+<MudPaper Width="352px" Style="position: relative;" Elevation="@elevation" Class="mud-primary d-flex flex-column m-3 border border-dark" @onmouseenter="Elevate" @onmouseleave="DeElevate">
   
     @* Product card image(s) *@
     <MudCarousel Class="rounded-top border-bottom border-dark" TData="object" AutoCycle="cycle" AutoCycleTime="cycleTime" @bind-SelectedIndex="@cycleIndex"
