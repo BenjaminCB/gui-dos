@@ -20,7 +20,7 @@ using gui_dos.Data;
 namespace gui_dos.Tests
 {
     
-    public class TestClass
+    public class UnitTests
         {
         public List<GiftBasket> genericGiftBaskets;
         public Order genericOrder;
@@ -34,7 +34,7 @@ namespace gui_dos.Tests
         public Func<int, bool> FuncToTest = (xs) => true;
         public Func<string, bool> CheckSearchStrings = (xs) => true;
         private readonly ITestOutputHelper testOutputHelper;
-        public TestClass(ITestOutputHelper testOutput)
+        public UnitTests(ITestOutputHelper testOutput)
         {
             testOutputHelper = testOutput;
         }
@@ -173,14 +173,7 @@ namespace gui_dos.Tests
             Assert.Equal(genericOrder, datebaseOrder);
 
         }*/
-        [Fact]
-        public async void EndToEndTest()
-        {
-            Tests endtoendTester = new Tests();
-            Console.WriteLine("Shit");
-            await endtoendTester.Main();
-            Console.WriteLine("Shit worked");
-        }
+        
     }
     public class OutputHelper : ITestOutputHelper
         {
@@ -196,9 +189,10 @@ namespace gui_dos.Tests
         }
 
     
-    public class Tests
+    public class EndToEndTests
     {
-        public async Task Main()
+        [Fact]
+        public async Task OrderBasket()
         {
             using var playwright = await Playwright.CreateAsync();
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
@@ -255,8 +249,78 @@ namespace gui_dos.Tests
         }*/);
 
         }
-}
+        [Fact]
+        public async void OrderGiftbasket()
+        {
+            using var playwright = await Playwright.CreateAsync();
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            {
+                Headless = false,
+            });
+            var context = await browser.NewContextAsync();
+            // Open new page
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
+            // Go to https://localhost:44367/shop
+            await page.GotoAsync("https://localhost:44367/shop");
+            // Click text=Lille gavekurv 300 kr. Se mere Bestil >> :nth-match(button, 2)
+            await page.ClickAsync("text=Lille gavekurv 300 kr. Se mere Bestil >> :nth-match(button, 2)");
+            // Click button:has-text("Tilføj til kurv")
+            await page.ClickAsync("button:has-text(\"Tilføj til kurv\")");
+            // Click button:has-text("Til bestilling")
+            await page.ClickAsync("text=Lille gavekurv 300 kr. Se mere Bestil >> :nth-match(button, 2)");
+            // Click button:has-text("Tilføj til kurv")
+            await page.ClickAsync("button:has-text(\"Tilføj til kurv\")");
+
+            await page.RunAndWaitForNavigationAsync(async () =>
+            {
+                await page.ClickAsync("button:has-text(\"Til bestilling\")");
+            }/*, new PageWaitForNavigationOptions
+        {
+            UrlString = "https://localhost:44367/checkout"
+        }*/);
+            // Click input[type="text"]
+            await page.ClickAsync("input[type=\"text\"]");
+            // Fill input[type="text"]
+            await page.FillAsync("input[type=\"text\"]", "nn@nn.nn");
+            // Click .mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input
+            await page.ClickAsync(".mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input");
+            // Fill .mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input
+            await page.FillAsync(".mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input", "11111111");
+            // Click .mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input
+            await page.ClickAsync(".mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input");
+            // Fill .mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input
+            await page.FillAsync(".mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input", "n");
+            // Click form div div >> :nth-match(div:has-text("Efternavn"), 5)
+            await page.ClickAsync("form div div >> :nth-match(div:has-text(\"Efternavn\"), 5)");
+            // Fill div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input
+            await page.FillAsync("div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input", "n");
+            // Click p div:has-text("Dobbelt tjek at denne er rigitg")
+            await page.ClickAsync("p div:has-text(\"Dobbelt tjek at denne er rigitg\")");
+            // Click text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> input[type="text"]
+            await page.ClickAsync("text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> input[type=\"text\"]");
+            // Click [aria-label="Go to next month januar 2022"]
+            await page.ClickAsync("[aria-label=\"Go to next month januar 2022\"]");
+            // Click [aria-label="Go to next month februar 2022"]
+            await page.ClickAsync("[aria-label=\"Go to next month februar 2022\"]");
+            // Click [aria-label="torsdag, 03 februar 2022"]
+            await page.ClickAsync("[aria-label=\"torsdag, 03 februar 2022\"]");
+            // Check input[type="checkbox"]
+            await page.CheckAsync("input[type=\"checkbox\"]");
+            // Click button:has-text("Bestil ordre")
+            await page.ClickAsync("button:has-text(\"Bestil ordre\")");
+            // Click button:has-text("Ja")
+            await page.RunAndWaitForNavigationAsync(async () =>
+            {
+                await page.ClickAsync("button:has-text(\"Ja\")");
+            }/*, new PageWaitForNavigationOptions
+        {
+            UrlString = "https://localhost:44367/shop"
+        }*/);
+        }
+
+
     }
+}
 
 
 
