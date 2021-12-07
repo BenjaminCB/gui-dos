@@ -132,7 +132,7 @@
         tmpPerson.ShowDetails = !tmpPerson.ShowDetails;
     }
 
-    private bool FilterFunc(Order element, string searchString)
+    public bool FilterFunc(Order element, string searchString)
     {
         if ((showDelivered && element.Status == OrderStatus.Afhentet) ||
             (showCancelled && element.Status == OrderStatus.Annulleret) ||
