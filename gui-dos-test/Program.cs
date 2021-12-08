@@ -190,65 +190,84 @@ namespace gui_dos.Tests
 
     
     public class EndToEndTests
-    {
+    {// These two should be set to the appropriate values. URL to the link to test,
+     // and ORDERFIND to the appropriate order number and dates.
+     // You should also set DATETOFIND to an apropriate value
+        public string URL = "https://localhost:44367/";
+        public string ORDERFIND = "text=24 Afventer Accepteret Afsluttet Afhentet 08-12-2021 03-02-2022 00:00 n n 600 kr";
+        public string DATETOFIND = "";
         [Fact]
-        public async Task OrderBasket()
+        public async void CreateProduct()
         {
             using var playwright = await Playwright.CreateAsync();
             await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = false
+                Headless = false,
             });
             var context = await browser.NewContextAsync();
             // Open new page
             var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
-            await page.GotoAsync("https://localhost:44367/shop");
-            // Click text=Mellem gavekurv 350 kr. Se mere Bestil >> :nth-match(button, 2)
-            await page.ClickAsync("text=Mellem gavekurv 350 kr. Se mere Bestil >> :nth-match(button, 2)");
-            // Click button:has-text("Tilføj til kurv")
-            await page.ClickAsync("button:has-text(\"Tilføj til kurv\")");
-            // Click button:has-text("Kurv")
-            await page.ClickAsync("button:has-text(\"Kurv\")");
-            // Click button:has-text("Gå til bestilling")
-            await page.ClickAsync("button:has-text(\"Gå til bestilling\")");
-            // Assert.AreEqual("https://localhost:5001/checkout", page.Url);
+            // Go to https://localhost:44367/
+            page.FileChooser += async (_, fileChooser) => {
+
+
+                await fileChooser.SetFilesAsync("Den bedste kurv.jpeg");
+            };
+            await page.GotoAsync(URL);
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click button:has-text("Log ind")
+            await page.ClickAsync("button:has-text(\"Log ind\")");
+            // Assert.AreEqual("https://localhost:44367/admin/login", page.Url);
+            // Click input[name="Input.UserName"]
+            await page.ClickAsync("input[name=\"Input.UserName\"]");
+            // Fill input[name="Input.UserName"]
+            await page.FillAsync("input[name=\"Input.UserName\"]", "superuser");
+            // Click input[name="Input.Password"]
+            await page.ClickAsync("input[name=\"Input.Password\"]");
+            // Fill input[name="Input.Password"]
+            await page.FillAsync("input[name=\"Input.Password\"]", "superuser");
+            // Click text=Log ind
+            await page.ClickAsync("text=Log ind");
+            // Assert.AreEqual("https://localhost:44367/", page.Url);
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Produkter
+            await page.ClickAsync("text=Produkter");
+            // Assert.AreEqual("https://localhost:44367/product", page.Url);
+            // Click button:has-text("Nyt produkt")
+            await page.ClickAsync("button:has-text(\"Nyt produkt\")");
+            // Assert.AreEqual("https://localhost:44367/product/insert", page.Url);
             // Click input[type="text"]
             await page.ClickAsync("input[type=\"text\"]");
             // Fill input[type="text"]
-            await page.FillAsync("input[type=\"text\"]", "bbenne20@student.aau.dk");
-            // Press Tab
-            await page.PressAsync("input[type=\"text\"]", "Tab");
-            // Fill .mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input
-            await page.FillAsync(".mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input", "24948698");
-            // Press Tab
-            await page.PressAsync(".mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input", "Tab");
-            // Fill .mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input
-            await page.FillAsync(".mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input", "Benjamin");
-            // Press Tab
-            await page.PressAsync(".mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input", "Tab");
-            // Fill div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input
-            await page.FillAsync("div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input", "Bennetzen");
-            // Press Tab
-            await page.PressAsync("div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input", "Tab");
-            // Click text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> button
-            await page.ClickAsync("text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> button");
-            // Click [aria-label="Friday, 17 December 2021"]
-            await page.ClickAsync("[aria-label=\"Friday, 17 December 2021\"]");
-            // Check input[type="checkbox"]
-            await page.CheckAsync("input[type=\"checkbox\"]");
-            await page.ScreenshotAsync(new PageScreenshotOptions { Path = "screenshot.png" });
-            // Click button:has-text("Bestil ordre")
-            await page.ClickAsync("button:has-text(\"Bestil ordre\")");
-            // Click button:has-text("Ja")
-            await page.RunAndWaitForNavigationAsync(async () =>
-            {
-                await page.ClickAsync("button:has-text(\"Ja\")");
-            }/*, new PageWaitForNavigationOptions
-        {
-            UrlString = "https://localhost:5001/shop"
-        }*/);
+            await page.FillAsync("input[type=\"text\"]", "cool kurv");
+            // Click textarea[type="text"]
+            await page.ClickAsync("textarea[type=\"text\"]");
+            // Fill textarea[type="text"]
+            await page.FillAsync("textarea[type=\"text\"]", "cool kurv");
+            // Click text=TagsTags skal være komma-separeret >> input[type="text"]
+            await page.ClickAsync("text=TagsTags skal være komma-separeret >> input[type=\"text\"]");
+            // Fill text=TagsTags skal være komma-separeret >> input[type="text"]
+            await page.FillAsync("text=TagsTags skal være komma-separeret >> input[type=\"text\"]", "Chokolade");
+            // Click input[type="file"]
+            await page.ClickAsync("input[type=\"file\"]");
+            // Upload Den bedste kurv.jpeg
+            await page.SetInputFilesAsync("input[type=\"file\"]", new[] { "Den bedste kurv.jpeg" });
 
+            // Click button:has-text("Opret")
+
+            /*, new PageWaitForNavigationOptions
+        {
+            UrlString = "https://localhost:44367/product"
+        }*/
+
+            await System.Threading.Tasks.Task.Delay(1000);
+            await page.ClickAsync("button:has-text(\"Opret\")");
         }
+
         [Fact]
         public async void OrderGiftbasket()
         {
@@ -261,16 +280,25 @@ namespace gui_dos.Tests
             // Open new page
             var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
             // Go to https://localhost:44367/shop
-            await page.GotoAsync("https://localhost:44367/shop");
-            // Click text=Lille gavekurv 300 kr. Se mere Bestil >> :nth-match(button, 2)
-            await page.ClickAsync("text=Lille gavekurv 300 kr. Se mere Bestil >> :nth-match(button, 2)");
+            await page.GotoAsync("https://localhost:44367/");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Webshop
+            await page.ClickAsync("text=Webshop");
+            // Assert.AreEqual("https://localhost:44367/shop", page.Url);
+            // Double click text=Menu
+            await page.DblClickAsync("text=Menu");
+            // Click button:has-text("Bestil")
+            await page.ClickAsync("button:has-text(\"Bestil\")");
+            // Click button:has-text("Tilføj til kurv")
+            await page.ClickAsync("button:has-text(\"Tilføj til kurv\")");
+            // Click text=Se mere Bestil >> :nth-match(button, 2)
+            await page.ClickAsync("text=Se mere Bestil >> :nth-match(button, 2)");
             // Click button:has-text("Tilføj til kurv")
             await page.ClickAsync("button:has-text(\"Tilføj til kurv\")");
             // Click button:has-text("Til bestilling")
-            await page.ClickAsync("text=Lille gavekurv 300 kr. Se mere Bestil >> :nth-match(button, 2)");
-            // Click button:has-text("Tilføj til kurv")
-            await page.ClickAsync("button:has-text(\"Tilføj til kurv\")");
-
             await page.RunAndWaitForNavigationAsync(async () =>
             {
                 await page.ClickAsync("button:has-text(\"Til bestilling\")");
@@ -281,31 +309,31 @@ namespace gui_dos.Tests
             // Click input[type="text"]
             await page.ClickAsync("input[type=\"text\"]");
             // Fill input[type="text"]
-            await page.FillAsync("input[type=\"text\"]", "nn@nn.nn");
+            await page.FillAsync("input[type=\"text\"]", "n@nn.nn");
             // Click .mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input
             await page.ClickAsync(".mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input");
             // Fill .mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input
-            await page.FillAsync(".mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input", "11111111");
+            await page.FillAsync(".mud-grid.mud-grid-spacing-xs-3 div:nth-child(2) .mud-input-control .mud-input-control-input-container .mud-input input", "12345678");
             // Click .mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input
             await page.ClickAsync(".mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input");
             // Fill .mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input
             await page.FillAsync(".mud-grid-item.mud-grid-item-xs-6 .mud-input-control .mud-input-control-input-container .mud-input input", "n");
-            // Click form div div >> :nth-match(div:has-text("Efternavn"), 5)
-            await page.ClickAsync("form div div >> :nth-match(div:has-text(\"Efternavn\"), 5)");
+            // Click div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input
+            await page.ClickAsync("div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input");
             // Fill div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input
             await page.FillAsync("div:nth-child(4) .mud-input-control .mud-input-control-input-container .mud-input input", "n");
-            // Click p div:has-text("Dobbelt tjek at denne er rigitg")
-            await page.ClickAsync("p div:has-text(\"Dobbelt tjek at denne er rigitg\")");
             // Click text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> input[type="text"]
             await page.ClickAsync("text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> input[type=\"text\"]");
             // Click [aria-label="Go to next month januar 2022"]
             await page.ClickAsync("[aria-label=\"Go to next month januar 2022\"]");
-            // Click [aria-label="Go to next month februar 2022"]
-            await page.ClickAsync("[aria-label=\"Go to next month februar 2022\"]");
-            // Click [aria-label="torsdag, 03 februar 2022"]
-            await page.ClickAsync("[aria-label=\"torsdag, 03 februar 2022\"]");
+            // Click [aria-label="fredag, 21 januar 2022"]
+            await page.ClickAsync("[aria-label=\"mandag, 31 januar 2022\"]");
             // Check input[type="checkbox"]
             await page.CheckAsync("input[type=\"checkbox\"]");
+            // Click textarea[type="text"]
+            await page.ClickAsync("textarea[type=\"text\"]");
+            // Fill textarea[type="text"]
+            await page.FillAsync("textarea[type=\"text\"]", "hej");
             // Click button:has-text("Bestil ordre")
             await page.ClickAsync("button:has-text(\"Bestil ordre\")");
             // Click button:has-text("Ja")
@@ -319,8 +347,113 @@ namespace gui_dos.Tests
         }
 
 
-    }
-}
+        [Fact]
+        public async void DeleteProduct()
+        {
+            using var playwright = await Playwright.CreateAsync();
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            {
+                Headless = false,
+            });
+            var context = await browser.NewContextAsync();
+            // Open new page
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
+            // Go to https://localhost:44367/shop
+            await page.GotoAsync("https://localhost:44367/");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click button:has-text("Log ind")
+            await page.ClickAsync("button:has-text(\"Log ind\")");
+            // Assert.AreEqual("https://localhost:44367/admin/login", page.Url);
+            // Click input[name="Input.UserName"]
+            await page.ClickAsync("input[name=\"Input.UserName\"]");
+            // Fill input[name="Input.UserName"]
+            await page.FillAsync("input[name=\"Input.UserName\"]", "superuser");
+            // Click input[name="Input.Password"]
+            await page.ClickAsync("input[name=\"Input.Password\"]");
+            // Fill input[name="Input.Password"]
+            await page.FillAsync("input[name=\"Input.Password\"]", "superuser");
+            // Click text=Log ind
+            await page.ClickAsync("text=Log ind");
+            // Assert.AreEqual("https://localhost:44367/", page.Url);
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Produkter
+            await page.ClickAsync("text=Produkter");
+            // Assert.AreEqual("https://localhost:44367/product", page.Url);
+            // Click button:has-text("Slet")
+            await page.ClickAsync("button:has-text(\"Slet\")");
+            // Click button:has-text("Ja")
+            await page.ClickAsync("button:has-text(\"Ja\")");
+        }
 
+        [Fact]
+        public async void FinishOrder()
+        {
+            using var playwright = await Playwright.CreateAsync();
+            await using var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
+            {
+                Headless = false,
+            });
+            var context = await browser.NewContextAsync();
+            // Open new page
+            var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
+            // Go to https://localhost:44367/
+            await page.GotoAsync(URL);
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click button:has-text("Log ind")
+            await page.RunAndWaitForNavigationAsync(async () =>
+            {
+                await page.ClickAsync("button:has-text(\"Log ind\")");
+            }/*, new PageWaitForNavigationOptions
+        {
+            UrlString = "https://localhost:44367/admin/login"
+        }*/);
+            // Assert.AreEqual("https://localhost:44367/admin/login", page.Url);
+            // Click input[name="Input.UserName"]
+            await page.ClickAsync("input[name=\"Input.UserName\"]");
+            // Fill input[name="Input.UserName"]
+            await page.FillAsync("input[name=\"Input.UserName\"]", "superuser");
+            // Click input[name="Input.Password"]
+            await page.ClickAsync("input[name=\"Input.Password\"]");
+            // Fill input[name="Input.Password"]
+            await page.FillAsync("input[name=\"Input.Password\"]", "superuser");
+            // Click text=Log ind
+            await page.ClickAsync("text=Log ind");
+            // Assert.AreEqual("https://localhost:44367/", page.Url);
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Menu
+            await page.ClickAsync("text=Menu");
+            // Click text=Ordre
+            await page.ClickAsync("text=Ordre");
+
+            
+            // Assert.AreEqual("https://localhost:44367/order", page.Url);
+            // Click text=22 Afventer Accepteret Afsluttet Afhentet 08-12-2021 03-02-2022 00:00 n n 600 kr >> :nth-match(button, 2)
+            await page.ClickAsync(ORDERFIND + " >> :nth-match(button, 2)");
+            // Click button:has-text("Ja")
+            await page.ClickAsync("button:has-text(\"Ja\")");
+            // Click text=22 Afventer Accepteret Afsluttet Afhentet 08-12-2021 03-02-2022 00:00 n n 600 kr >> :nth-match(button, 3)
+            await page.ClickAsync(ORDERFIND + " >> :nth-match(button, 3)");
+            // Click button:has-text("Ja")
+            await page.ClickAsync("button:has-text(\"Ja\")");
+            // Click text=22 Afventer Accepteret Afsluttet Afhentet 08-12-2021 03-02-2022 00:00 n n 600 kr >> :nth-match(button, 4)
+            await page.ClickAsync(ORDERFIND + " >> :nth-match(button, 4)");
+            // Click button:has-text("Ja")
+            
+            await page.ClickAsync("button:has-text(\"Ja\")");
+        }
+    }
+
+}
+        
 
 
