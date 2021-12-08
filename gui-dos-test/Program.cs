@@ -39,7 +39,7 @@ namespace gui_dos.Tests
             testOutputHelper = testOutput;
         }
         [Fact]
-        public void Test1()
+        public void TestTestingFrameworkWorks()
         {
             Prop.ForAll(FuncToTest).VerboseCheckThrowOnFailure(testOutputHelper);
             
@@ -194,7 +194,7 @@ namespace gui_dos.Tests
      // and ORDERFIND to the appropriate order number and dates.
      // You should also set DATETOFIND to an apropriate value
         public string URL = "https://localhost:44367/";
-        public string ORDERFIND = "text=24 Afventer Accepteret Afsluttet Afhentet 08-12-2021 03-02-2022 00:00 n n 600 kr";
+        public string ORDERFIND = "text=26 Afventer Accepteret Afsluttet Afhentet 08-12-2021 31-01-2022 00:00 n n 0 kr";
         public string DATETOFIND = "";
         [Fact]
         public async void CreateProduct()
@@ -216,8 +216,7 @@ namespace gui_dos.Tests
             await page.GotoAsync(URL);
             // Click text=Menu
             await page.ClickAsync("text=Menu");
-            // Click text=Menu
-            await page.ClickAsync("text=Menu");
+    
             // Click button:has-text("Log ind")
             await page.ClickAsync("button:has-text(\"Log ind\")");
             // Assert.AreEqual("https://localhost:44367/admin/login", page.Url);
@@ -281,8 +280,7 @@ namespace gui_dos.Tests
             var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
             // Go to https://localhost:44367/shop
             await page.GotoAsync("https://localhost:44367/");
-            // Click text=Menu
-            await page.ClickAsync("text=Menu");
+            
             // Click text=Menu
             await page.ClickAsync("text=Menu");
             // Click text=Webshop
@@ -327,6 +325,9 @@ namespace gui_dos.Tests
             // Click [aria-label="Go to next month januar 2022"]
             await page.ClickAsync("[aria-label=\"Go to next month januar 2022\"]");
             // Click [aria-label="fredag, 21 januar 2022"]
+            var locator = page.Locator("text=Bestil ordre");
+            await locator.ScrollIntoViewIfNeededAsync();
+            
             await page.ClickAsync("[aria-label=\"mandag, 31 januar 2022\"]");
             // Check input[type="checkbox"]
             await page.CheckAsync("input[type=\"checkbox\"]");
@@ -360,8 +361,7 @@ namespace gui_dos.Tests
             var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
             // Go to https://localhost:44367/shop
             await page.GotoAsync("https://localhost:44367/");
-            // Click text=Menu
-            await page.ClickAsync("text=Menu");
+            
             // Click text=Menu
             await page.ClickAsync("text=Menu");
             // Click button:has-text("Log ind")
@@ -380,8 +380,7 @@ namespace gui_dos.Tests
             // Assert.AreEqual("https://localhost:44367/", page.Url);
             // Click text=Menu
             await page.ClickAsync("text=Menu");
-            // Click text=Menu
-            await page.ClickAsync("text=Menu");
+            
             // Click text=Produkter
             await page.ClickAsync("text=Produkter");
             // Assert.AreEqual("https://localhost:44367/product", page.Url);
@@ -404,8 +403,7 @@ namespace gui_dos.Tests
             var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
             // Go to https://localhost:44367/
             await page.GotoAsync(URL);
-            // Click text=Menu
-            await page.ClickAsync("text=Menu");
+            
             // Click text=Menu
             await page.ClickAsync("text=Menu");
             // Click button:has-text("Log ind")
@@ -428,8 +426,7 @@ namespace gui_dos.Tests
             // Click text=Log ind
             await page.ClickAsync("text=Log ind");
             // Assert.AreEqual("https://localhost:44367/", page.Url);
-            // Click text=Menu
-            await page.ClickAsync("text=Menu");
+            
             // Click text=Menu
             await page.ClickAsync("text=Menu");
             // Click text=Ordre
