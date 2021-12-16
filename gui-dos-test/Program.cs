@@ -66,8 +66,12 @@ namespace gui_dos.Tests
 
         }
 
+        [Fact]
+        public void FilterFuncFindsSearchstringFirstName()
+        {
+            Prop.ForAll(FilterFuncFirstName).VerboseCheckThrowOnFailure();
+        }
 
-        
         public Func<string, bool> FilterFuncFirstName = (s) => 
         {
             List<Models.GiftBasket> genericGiftBaskets = new List<Models.GiftBasket>();
@@ -83,7 +87,7 @@ namespace gui_dos.Tests
             Order newOrder = new Order(genericGiftBaskets);
             newOrder.FillInformation(orderForm);
             OrderPage orderpage = new OrderPage();
-            return true; //orderpage.FilterFunc(newOrder, s); 
+            return orderpage.FilterFunc(newOrder, s); 
         };
         public Func<string, bool> FilterFuncLastName = (s) =>
         {
@@ -100,7 +104,7 @@ namespace gui_dos.Tests
             Order newOrder = new Order(genericGiftBaskets);
             newOrder.FillInformation(orderForm);
             OrderPage orderpage = new OrderPage();
-            return true;//orderpage.FilterFunc(newOrder, s);
+            return orderpage.FilterFunc(newOrder, s);
         };
         public Func<string, bool> FilterFuncPhoneNr = (s) =>
         {
@@ -117,20 +121,13 @@ namespace gui_dos.Tests
             Order newOrder = new Order(genericGiftBaskets);
             newOrder.FillInformation(orderForm);
             OrderPage orderpage = new OrderPage();
-            return true; //orderpage.FilterFunc(newOrder, s);
+            return orderpage.FilterFunc(newOrder, s);
         };
-        [Fact]
-        public void FilterFuncFindsSearchstringFirstName()
-        {
-            Prop.ForAll(FilterFuncFirstName).VerboseCheckThrowOnFailure();
-
-
-        }
+        
         [Fact]
         public void FilterFuncFindsSearchstringLastName()
         {
             Prop.ForAll(FilterFuncLastName).VerboseCheckThrowOnFailure();
-
         }
         [Fact]
         public void FilterFuncFindsSearchstringPhoneNumber()
@@ -138,41 +135,6 @@ namespace gui_dos.Tests
             Prop.ForAll(FilterFuncPhoneNr).VerboseCheckThrowOnFailure();
 
         }
-        /*[Fact]
-        public void HelloWorldComponentRendersCorrectly()
-        {
-            // Arrange
-            using var ctx = new TestContext();
-
-            // Act
-            var cut = ctx.RenderComponent<gui_dos.Shared.CartComp>();
-
-            // Assert
-            cut.MarkupMatches("< MudText Align = 'Align.Center' >< strong > Din indkøbskurv er tom.</ strong ></ MudText >");
-        }*/
-        /*[Fact]
-        public void testDatabaseDoesNotChangeOrder()
-        {
-            
-            genericGiftBaskets = new List<Models.GiftBasket>();
-            genericOrder = new Models.Order(genericGiftBaskets);
-            genericOrderForm = new OrderForm
-            {
-                FirstName = "Firstname",
-                LastName = "Lastname",
-                PhoneNumber = "00000000",
-                Email = "a@a.a",
-                Comment = "comment"
-            };
-            genericOrder.FillInformation(genericOrderForm);
-            
-            
-            testDb.Orders.Add(genericOrder);
-            
-            Order datebaseOrder = testDb.Orders.Find("Firstname");
-            Assert.Equal(genericOrder, datebaseOrder);
-
-        }*/
         
     }
     public class OutputHelper : ITestOutputHelper
@@ -190,12 +152,13 @@ namespace gui_dos.Tests
 
     
     public class EndToEndTests
-    {// These two should be set to the appropriate values. URL to the link to test,
+    {// These 3 variables should be set to the appropriate values. URL to the adress of the website,
      // and ORDERFIND to the appropriate order number and dates.
      // You should also set DATETOFIND to an apropriate value
-        public string URL = "https://localhost:44367/";
-        public string ORDERFIND = "text=26 Afventer Accepteret Afsluttet Afhentet 08-12-2021 31-01-2022 00:00 n n 0 kr";
-        public string DATETOFIND = "";
+        string URL = "https://localhost:44367/";
+        string ORDERFIND = "text=26 Afventer Accepteret Afsluttet Afhentet 08-12-2021 31-01-2022 00:00 n n 0 kr";
+        string NEXTMONTH = "januar 2022";
+        string DATETOFIND = "mandag, 31 januar 2022";
         [Fact]
         public async void CreateProduct()
         {
@@ -279,13 +242,12 @@ namespace gui_dos.Tests
             // Open new page
             var page = await browser.NewPageAsync(new BrowserNewPageOptions { IgnoreHTTPSErrors = true });
             // Go to https://localhost:44367/shop
-            await page.GotoAsync("https://localhost:44367/");
+            await page.GotoAsync(URL);
             
             // Click text=Menu
             await page.ClickAsync("text=Menu");
             // Click text=Webshop
             await page.ClickAsync("text=Webshop");
-            // Assert.AreEqual("https://localhost:44367/shop", page.Url);
             // Double click text=Menu
             await page.DblClickAsync("text=Menu");
             // Click button:has-text("Bestil")
@@ -300,10 +262,7 @@ namespace gui_dos.Tests
             await page.RunAndWaitForNavigationAsync(async () =>
             {
                 await page.ClickAsync("button:has-text(\"Til bestilling\")");
-            }/*, new PageWaitForNavigationOptions
-        {
-            UrlString = "https://localhost:44367/checkout"
-        }*/);
+            });
             // Click input[type="text"]
             await page.ClickAsync("input[type=\"text\"]");
             // Fill input[type="text"]
@@ -323,12 +282,12 @@ namespace gui_dos.Tests
             // Click text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> input[type="text"]
             await page.ClickAsync("text=Ønsket afhentnings datoDobbelt tjek at denne er rigitg >> input[type=\"text\"]");
             // Click [aria-label="Go to next month januar 2022"]
-            await page.ClickAsync("[aria-label=\"Go to next month januar 2022\"]");
+            await page.ClickAsync("[aria-label=\"Go to next month " + NEXTMONTH + "\"]");
             // Click [aria-label="fredag, 21 januar 2022"]
             var locator = page.Locator("text=Bestil ordre");
             await locator.ScrollIntoViewIfNeededAsync();
             
-            await page.ClickAsync("[aria-label=\"mandag, 31 januar 2022\"]");
+            await page.ClickAsync("[aria-label=\"" + DATETOFIND + "\"]");
             // Check input[type="checkbox"]
             await page.CheckAsync("input[type=\"checkbox\"]");
             // Click textarea[type="text"]
@@ -341,10 +300,7 @@ namespace gui_dos.Tests
             await page.RunAndWaitForNavigationAsync(async () =>
             {
                 await page.ClickAsync("button:has-text(\"Ja\")");
-            }/*, new PageWaitForNavigationOptions
-        {
-            UrlString = "https://localhost:44367/shop"
-        }*/);
+            });
         }
 
 
